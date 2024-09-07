@@ -10,6 +10,7 @@
                     <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                     <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
                     <li><a href="/contacts" class="nav-link px-2 text-white">Contacts</a></li>
+                    <li><a href="/designSystem" class="nav-link px-2 text-white">Design System</a></li>
                 </ul>
             </div>
         </div>

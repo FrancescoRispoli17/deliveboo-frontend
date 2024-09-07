@@ -1,6 +1,5 @@
 <script>
-//importare store
-//imporare axios
+
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 
@@ -16,12 +15,13 @@ export default {
 </script>
 
 <template>
-    <!--sfondo scuro-->
-    <section class="bg-dark">
+    <section>
         <HeaderComponent />
         <router-view></router-view>
         <FooterComponent />
     </section>
 </template>
 
-<style></style>
+<style lang="scss">
+@use 'src/style.scss' as*
+</style>

@@ -1,17 +1,19 @@
-import { createApp } from 'vue';
-import router from './router';
-import './style.scss';
+import { createApp } from 'vue'
+import router from './router'
+import './style.scss' // Assicurati che il file SCSS sia qui
+
 import App from './App.vue';
 
-// bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
+// Importa Poppins (ad esempio pesi 400 e 700)
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/700.css';
 
-// fontawesome
+// Bootstrap
+
+
+// FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-//importare l'icona
 import { faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase } from '@fortawesome/free-solid-svg-icons';
 
 // Aggiungi le icone alla libreria
@@ -19,5 +21,5 @@ library.add(faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileA
 
 const app = createApp(App);
 app.use(router);
-app.component('font-awesome-icon', FontAwesomeIcon); // Registrazione globale del componente FontAwesome
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.mount('#app');
