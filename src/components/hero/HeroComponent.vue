@@ -64,6 +64,7 @@ export default {
         display:none;
     }
 }
+
 // desktop
 @media screen and (max-width: 1440px) {
     .card-container{

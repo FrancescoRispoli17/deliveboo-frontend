@@ -2,13 +2,15 @@
 
 import HeaderComponent from '../components/headers/HeaderComponent.vue';
 import HeroComponent from '../components/hero/HeroComponent.vue';
+import MapCardComponent from '../components/cards/MapCardComponent.vue';
 
 export default {
     name: 'DesignSystem',
 
     components:{
         HeaderComponent,
-        HeroComponent
+        HeroComponent,
+        MapCardComponent
     },
 }
 
@@ -45,6 +47,15 @@ export default {
     </div>
     <div class="mb-3">
        <HeroComponent/> 
+    </div>
+    <!-- hero -->
+    <div class="container">
+        <div class="col md-12">
+            <h5 class="text-light">Map Card</h5>
+        </div>
+    </div>
+    <div class="mb-3">
+       <MapCardComponent/> 
     </div>
 
 
