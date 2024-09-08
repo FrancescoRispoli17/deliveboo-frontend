@@ -1,10 +1,15 @@
-// Importa Bootstrap
+//file importati
+@use './assets/partials/variables' as vars;
 @import "bootstrap/scss/bootstrap";
 
+
+
+
+//Stili globali  
 body {
     background-color: rgb(62, 62, 62);
     font-family: 'Poppins', sans-serif;
-
+    font-size: vars.$font-size-base; //16px
 }
 
 // h1,h2,h3,h4,h5{
