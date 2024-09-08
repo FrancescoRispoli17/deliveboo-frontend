@@ -19,7 +19,7 @@ export default {
 
 <template>
 
-    <button class="btn user">
+    <button class="btn bg-light user">
         <font-awesome-icon :icon="['fas', 'user']" class="icon"/>
         <span></span>
     </button>

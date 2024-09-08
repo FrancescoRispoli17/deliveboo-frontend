@@ -6,3 +6,8 @@
     border-radius: 5px;
 
 }
+
+@mixin border-radius-solid {
+    border: 1px solid $border-light;
+    border-radius: 100px;
+}

@@ -17,7 +17,7 @@ export default {
 </script>
 
 <template>
-    <button class="btn favorites mx-2">
+    <button class="btn bg-light favorites mx-2">
         <font-awesome-icon :icon="['fas', 'heart']" class="icon"/>
     </button>
 </template>

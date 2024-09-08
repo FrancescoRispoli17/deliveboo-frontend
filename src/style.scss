@@ -1,5 +1,5 @@
 //file importati
-@use './assets/partials/variables';
+@use './assets/partials/variables' as*;
 @import "bootstrap/scss/bootstrap";
 
 
@@ -13,6 +13,10 @@ body {
 }
 
 
-// h1,h2,h3,h4,h5{
-//     color:
-// }
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: $secondary-color;
+}

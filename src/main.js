@@ -20,10 +20,10 @@ import '@fontsource/poppins/800.css';
 // FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 // Aggiungi le icone alla libreria
-library.add(faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser);
+library.add(faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt);
 
 const app = createApp(App);
 app.use(router);

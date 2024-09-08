@@ -12,12 +12,12 @@ component structure
 
 <script>
 export default {
-    name: ,
+    name: '' ,
 
     data(){
     return{}
     },
-    component: {
+    components: {
 
     },
     methods: {
@@ -37,3 +37,6 @@ export default {
 
 
 </style>
+
+@use 'src/assets/partials/_variables.scss' as *;
+@use 'src/assets/partials/_mixin.scss' as *;

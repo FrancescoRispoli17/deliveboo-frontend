@@ -1,12 +1,14 @@
 <script>
 
 import HeaderComponent from '../components/headers/HeaderComponent.vue';
+import HeroComponent from '../components/hero/HeroComponent.vue';
 
 export default {
     name: 'DesignSystem',
 
     components:{
-        HeaderComponent
+        HeaderComponent,
+        HeroComponent
     },
 }
 
@@ -31,8 +33,19 @@ export default {
             <h5 class="text-light">Header white filled</h5>
         </div>
     </div>
-    <HeaderComponent/>
-    <!-- header -->
+    <div class="mb-3">
+        <HeaderComponent/>
+    </div>
+
+    <!-- hero -->
+    <div class="container">
+        <div class="col md-12">
+            <h5 class="text-light">Hero with header transparent</h5>
+        </div>
+    </div>
+    <div class="mb-3">
+       <HeroComponent/> 
+    </div>
 
 
     </section>
