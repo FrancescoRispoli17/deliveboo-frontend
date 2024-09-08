@@ -1,6 +1,16 @@
 <script>
+import LogoComponent from '../containers/logoComponent.vue';
+import HeaderCta from '../header-buttons/HeaderCta.vue';
+import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
+
 export default {
     name:'HeaderComponent',
+
+    components:{
+        SearchBarComponent,
+        LogoComponent,
+        HeaderCta
+    },
 
     data(){
         return{}
@@ -19,20 +29,20 @@ export default {
         <div class="container py-3">
             <div class="d-flex">
 
-                <div class="col-lg-2 col-sm-6 bg-danger py-3 border border-dark side-div">
-                    <!-- logo -->
+                <div class="col-lg-2 side-div">
+                    <LogoComponent/>
                 </div>
-                <div class="col-lg-8 bg-success search-bar-desktop ">
-                    <!-- search-bar per desktop -->
+                <div class="col-lg-8 search-bar-desktop py-1">
+                    <SearchBarComponent/>
                 </div>
-                <div class="col-lg-2 col-sm-6   bg-danger py-3 border border-dark side-div">
-                    <!-- logo -->
+                <div class="col-lg-2 py-2 side-div">
+                    <HeaderCta/>
                 </div>
 
             </div>
             <!-- search-bar tablet -->
-            <div class="col-md-12 bg-success py-3 d-lg-none d-{sm, md}-block">
-                    <!-- search-bar -->
+            <div class="col-md-12 py-3 d-lg-none d-sm-none">
+                <SearchBarComponent/>
             </div>
         </div>
     </header>
@@ -41,17 +51,51 @@ export default {
 
 <style lang="scss" scoped>
 
-@media screen and (max-width: 991px) {
-    .search-bar-desktop{
-    
+
+@media screen and (max-width: 1024px) {
+    .side-div {
+        width: 20%;
+    }
+
+    .search-bar-desktop {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .side-div {
+        width: 20%;
+    }
+
+    .search-bar-desktop {
+        width: 60%;
+        display: block; 
+    }
+
+    .col-md-12 {
+        display: block; 
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .side-div {
+        width: 50%; 
+    }
+
+    .search-bar-desktop {
         display: none;
     }
 }
 
-@media screen and (max-width: 573px) {
-    .side-div{
+@media screen and (max-width: 425px) {
+    .side-div {
         width: 50%;
     }
+
+    .search-bar-desktop {
+        display: none;
+    }
 }
+
 
 </style>

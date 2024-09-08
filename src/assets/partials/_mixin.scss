@@ -1,0 +1,8 @@
+//mixin
+@use '../partials/variables' as*;
+
+@mixin border-solid {
+    border: 1px solid $border-light;
+    border-radius: 5px;
+
+}

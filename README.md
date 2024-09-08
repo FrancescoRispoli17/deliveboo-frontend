@@ -17,6 +17,9 @@ export default {
     data(){
     return{}
     },
+    component: {
+
+    },
     methods: {
         
     }
