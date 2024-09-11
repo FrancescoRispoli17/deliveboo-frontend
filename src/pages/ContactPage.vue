@@ -1,22 +1,18 @@
 <script>
 
-import FindUs from '../components/FindUsComponent.vue';
-import FormComponent from '../components/FormComponent.vue';
+//pagina non utilizzata su deliveboo
 
 export default {
     name: 'ContactPage',
 
     components: {
-        FindUs,
-        FormComponent
     }
 }
 
 </script>
 
 <template>
-    <FormComponent />
-    <FindUs />
+
 </template>
 
 <style lang="scss" scoped></style>
