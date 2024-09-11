@@ -24,13 +24,13 @@ export default {
 
 <template>
 
-    <section class="bg-image">
+    <section class="bg-image ">
 
         <HeaderEmptyComponent />
 
-        <div class="container-lg py-5">
+        <div class="container-lg">
             <div class="row justify-content-center">
-                <div class="col-md-6 py-4 d-flex justify-content-center card-container">
+                <div class="col-md-12 py-4 d-flex justify-content-center card-container">
                     <CardHeroComponent/>
                 </div>
                 <div class="col-md-6 py-4 empty-container">
@@ -48,11 +48,14 @@ export default {
 
 
 .bg-image{
-    background-image: url('https://thumbs.dreamstime.com/b/paper-bag-different-health-food-white-background-top-view-flat-lay-86071119.jpg');
+    background-image: url('/background_image_deliveroo_variant.png');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
 }
+
+
+
 
 // large desktop
 @media screen and (max-width: 2560px) {
@@ -78,7 +81,11 @@ export default {
 
 
 // tablet
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 769px) {
+    .bg-image{
+        background-image: url('/background_image_deliveroo_tablet_variant.png');
+    }
+
     .card-container{
         width: 50%;
     }
@@ -87,9 +94,13 @@ export default {
         width: 50%;
         display: block;
     }
+
+    .bg{
+        background-position: left;
+    }
 }
 // smartphone
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 426px) {
     .card-container{
         width: 100%;
     }
