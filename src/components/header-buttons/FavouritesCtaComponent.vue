@@ -36,4 +36,8 @@ export default {
     @include border-solid;
 }
 
+button {
+    @include shadow
+}
+
 </style>
