@@ -1,25 +1,55 @@
 <script>
-import HeroComponent from '../components/HeroComponent.vue';
-import AboutComponent from '../components/AboutComponent.vue';
-import ServiceComponent from '../components/ServiceComponent.vue'
-import ProjectComponent from '../components/ProjectComponent.vue'
+// import AboutComponent from '../components/AboutComponent.vue';
+// import ProjectComponent from '../components/ProjectComponent.vue';
+
+
+//importazione prova
+
+import HeroComponent from '../components/hero/HeroComponent.vue';
+import CarouselComponent from '../components/containers/CarouselComponent.vue';
+import MapCardComponent from '../components/cards/MapCardComponent.vue';
+import FooterComponent from '../components/footers/FooterComponent.vue';
+import ServiceComponent from '../components/containers/ServiceComponent.vue';
+import OffersComponent from '../components/containers/OffersComponent.vue';
+import CarouselContainerComponent from '../components/containers/CarouselContainerComponent.vue';
+
+
 
 export default {
     components: {
+        // HeroComponent,
+        // AboutComponent,
+        // ServiceComponent,
+        // ProjectComponent,
+
+        //prova dichiarazione
         HeroComponent,
-        AboutComponent,
+        CarouselContainerComponent,
+        MapCardComponent,
+        OffersComponent,
         ServiceComponent,
-        ProjectComponent
+        FooterComponent
+
     }
 }
 
 </script>
 
 <template>
-    <HeroComponent />
+    <!-- <HeroComponent />
     <AboutComponent />
     <ServiceComponent />
-    <ProjectComponent />
+    <ProjectComponent /> -->
+
+    <HeroComponent/>
+    <CarouselContainerComponent/>
+    <MapCardComponent/> 
+    <OffersComponent/>
+    <ServiceComponent/> 
+    <FooterComponent/>
+
+
+
 </template>
 
 <style lang="scss" scoped></style>
