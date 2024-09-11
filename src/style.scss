@@ -7,7 +7,7 @@
 
 //Stili globali  
 body {
-    background-color: rgb(62, 62, 62);
+    background-color: rgb(130, 130, 130);
     font-family: 'Poppins', sans-serif;
     font-size: $font-size-base; //16px
 }
@@ -19,4 +19,24 @@ h3,
 h4,
 h5 {
     color: $secondary-color;
+}
+
+p,
+li {
+    font-family: 'Inter', sans-serif;
+    color: $secondary-color;
+    font-weight: 300;
+    line-height: 1.5rem;
+}
+
+
+* {
+    list-style: none;
+    text-decoration: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+ul {
+    padding: 0px;
 }
