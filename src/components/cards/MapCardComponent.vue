@@ -17,31 +17,25 @@ export default {
 </script>
 
 <template>
-    <section class="bg-light py-3">
-        <div class="container custom-card bg-light">
+    <section class="bg-light py-5">
+        <div class="container custom-card bg-light margin">
             <div class="row">
-                <div class="col-md-5 p-5 text-side">
-                    <h2 class="mb-3">Segui gli ordini passo passo</h2>
-
+                <div class="col-md-5 p-5 orange-col">
+                    <h2 class=" title mb-4">Segui gli ordini passo passo</h2>
                     <p class="mb-5">I piatti e i prodotti che ami, consegnati in pochissimo tempo. Vedrai quando il rider ha ritirato l'ordine, che potrai seguire passo passo, e riceverai una notifica quando sarà quasi da te.</p>
-
                     <div class="row">
-                        <div class="col-md-6">
-                            <a href="">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzRNHdGo9kEMQfYp97VJI-cGl0FOb6NiCY3w&s" class="download" alt="">
-                            </a>
+                        <div class="col-md-6 bg-danger">
+
                         </div>
-                        <div class="col-md-6">
-                            <a href="">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzRNHdGo9kEMQfYp97VJI-cGl0FOb6NiCY3w&s" class="download" alt="">
-                            </a>
+                        <div class="col-md-6 bg-primary">
+
                         </div>
                     </div>
 
                 </div>
 
                 <div class="col-md-7 bg-danger text-end map-side">
-                    <img src="https://img2.storyblok.com/filters:format(webp)/f/62776/731x276/e6a58efba4/notification-itit.png"  alt="">
+                    <img src="https://img2.storyblok.com/filters:format(webp)/f/62776/731x276/e6a58efba4/notification-itit.png"  alt="" class="baloon">
                 </div>
             </div>
         </div>
@@ -52,18 +46,29 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
-h2{
+.title{
     font-size: 2.5rem;
-    font-weight: 600;
+    font-weight: 700;
+    line-height: 3.5rem;
+    color: $quaternary-color;
+}
+
+.orange-col{
+    background-image: url('/offers.png');
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+
+p{
+    color: $quaternary-color;
 }
 
 .map-side{
     background-image: url('https://img2.storyblok.com/filters:format(webp)/f/62776/x/ca59b51c51/map-min.svg');
-    background-size: cover;
-    border-radius: 10px;
+    object-fit: cover;
+    border-radius: 0.5rem;
 }
 
-img{
+.baloon{
     width: 60%;
 }
 
@@ -74,26 +79,30 @@ img{
 .custom-card{
 
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 6px 6px  rgba(0, 0, 0, 0.1);  
 }
 
-/* On screens that are 992px or less, set the background color to blue */
+//tablet
 @media screen and (max-width: 768px) {
     .map-side{
         width: 100%;
+        padding: 5.5rem;
     }
 
-    h2{
-        font-size: 2rem;
+    .title{
+        font-size: 1.2rem;
+        line-height: 2rem;
     }
 
-    .text-side{
+    .orange-col{
         width: 100%;
+        border-radius: 0.5rem 0.5rem 0 0;
     }
 
     .download{
         width: 50%;
     }
+
 }
 
 </style>
