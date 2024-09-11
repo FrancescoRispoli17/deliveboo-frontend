@@ -16,9 +16,9 @@ export default {
 
 <template>
     <section>
-        <HeaderComponent />
+         <HeaderComponent /> 
         <router-view></router-view>
-        <FooterComponent />
+        <!-- <FooterComponent /> -->
     </section>
 </template>
 
