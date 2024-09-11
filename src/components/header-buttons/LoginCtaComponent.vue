@@ -21,7 +21,7 @@ export default {
 
     <button class="btn bg-light user">
         <font-awesome-icon :icon="['fas', 'user']" class="icon"/>
-        <span></span>
+        <span class="icon"> </span>
     </button>
 
 </template>
@@ -39,6 +39,11 @@ export default {
     width: 50%;
     @include border-solid;
 }
+
+button {
+ @include shadow
+}
+
 
 
 </style>
