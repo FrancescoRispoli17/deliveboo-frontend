@@ -19,7 +19,7 @@ export default {
 <template>
 
     <div class="logo-container">
-        <img src="https://loghi-famosi.com/wp-content/uploads/2021/03/Deliveroo-Logo.png" alt="">
+        <img src="/deliveboo_logo_light.png" alt="">
     </div>
 
 </template>
@@ -34,6 +34,7 @@ export default {
     img{
         width: 65%;
     }
+
 }
 
 @media screen and (max-width: 991px) {
