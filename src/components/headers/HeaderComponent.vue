@@ -1,5 +1,8 @@
 <script>
-import LogoComponent from '../containers/logoComponent.vue';
+
+//navbar sia per il backend per il frontend
+
+import LogoFilledComponent from '../containers/LogoFilledComponent.vue';
 import HeaderCta from '../header-buttons/HeaderCta.vue';
 import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
 
@@ -8,7 +11,7 @@ export default {
 
     components:{
         SearchBarComponent,
-        LogoComponent,
+        LogoFilledComponent,
         HeaderCta
     },
 
@@ -24,13 +27,12 @@ export default {
 </script>
 
 <template>
-
     <header class="bg-light">
         <div class="container py-3">
             <div class="d-flex">
 
-                <div class="col-lg-2 side-div">
-                    <LogoComponent/>
+                <div class="col-lg-2 side-div py-2">
+                    <LogoFilledComponent/>
                 </div>
                 <div class="col-lg-8 search-bar-desktop py-1">
                     <SearchBarComponent/>
@@ -46,11 +48,9 @@ export default {
             </div>
         </div>
     </header>
-
 </template>
 
 <style lang="scss" scoped>
-
 
 @media screen and (max-width: 1024px) {
     .side-div {
