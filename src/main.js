@@ -14,16 +14,32 @@ import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
 import '@fontsource/poppins/800.css';
 
+
+
+//Importa inter
+import '@fontsource/inter/100.css';
+import '@fontsource/inter/200.css';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+
+
 // Bootstrap
 
 
 // FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+
+import { faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt, } from '@fortawesome/free-solid-svg-icons';
+
+// font-awesome brand
+import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 // Aggiungi le icone alla libreria
-library.add(faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt);
+library.add(faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt, faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt, faInstagram, faFacebook, faTwitter);
 
 const app = createApp(App);
 app.use(router);
