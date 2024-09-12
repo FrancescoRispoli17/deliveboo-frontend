@@ -8,6 +8,9 @@ import AboutPage from './pages/AboutPage.vue';
 import ContactPage from './pages/ContactPage.vue';
 import DesignSystem from './pages/DesignSystem.vue'
 
+//importazione pagina per ristoranti e piatti
+import RestaurantPage from './pages/RestaurantPage.vue';
+
 
 //2 definiamo la rotta con Name, Path e Component.
 const routes = [
@@ -16,6 +19,12 @@ const routes = [
         name: 'homePage',
         path: '/',
         component: HomePage
+    },
+    //ristoranti
+    {
+        name: 'restaurant',
+        path: '/restaurant',
+        component: RestaurantPage
     },
     {
         name: 'aboutPage',
