@@ -36,7 +36,7 @@ export default {
                     </h1>
 
                     <p class="label mb-3">
-                        modifica su test
+                        Inserisci un indirizzo per scoprire le opzioni disponibili nella tua zona
                     </p>
                     <!-- input address -->
                      <InputAddressComponent/>
