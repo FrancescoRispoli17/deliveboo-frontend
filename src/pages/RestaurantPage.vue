@@ -5,14 +5,15 @@ export default {
     name: 'RestaurantPage' ,
 
     data(){
-    return{}
+    return{
+    }
     },
     components: {
         RestaurantCardComponent
     },
     methods: {
         
-    }
+    },
 }
 
 
@@ -20,12 +21,14 @@ export default {
 
 <template>
 
-<h1 class="text-light fw-light mb-3">Qui verranno filtrati tutti i ristoranti</h1>
-    <div class="container">
-        <div class="row">
-            <RestaurantCardComponent/>
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="text-light fw-light mb-3">Ristoranti</h1>
         </div>
     </div>
+</div>
+    <RestaurantCardComponent/>
 </template>
 
 <style lang="scss" scoped>
