@@ -17,6 +17,12 @@ export default {
     methods: {
         
     },
+   mounted() {
+    if(localStorage.getItem('cart')){
+                 console.log(localStorage.getItem('cart'));
+                 localStorage.removeItem('cart');
+             }
+   },
 }
 
 
