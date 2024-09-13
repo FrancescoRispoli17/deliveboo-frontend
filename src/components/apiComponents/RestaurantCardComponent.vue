@@ -1,8 +1,4 @@
 <script>
-
-//qui avviene il filtraggio tramite tipologia ed è la pagina index dei prodotti
-
-
 import axios from 'axios';
 import { store } from '../../store';
 
@@ -134,7 +130,7 @@ export default {
   }
 
   .btn-sm {
-    padding: 0.25rem 0.5rem; 
+    padding: 0.25rem 0.5rem; /* Riduci il padding del pulsante per la tabella */
   }
 </style>
 

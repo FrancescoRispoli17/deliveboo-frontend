@@ -1,7 +1,4 @@
 <script>
-
-// Inserire Carrello
-
 import axios from 'axios';
 import { store } from '../store';
 
@@ -14,7 +11,7 @@ export default {
   },
   methods: {
     getRestaurantDetails() {
-      const slug = this.$route.params.slug;  // Ottiengo lo slug dalla rotta
+      const slug = this.$route.params.slug;  // Ottieni lo slug dalla rotta
       const apiUrl = `${store.url}${store.restaurants}${slug}`;
 
       axios.get(apiUrl)
@@ -51,7 +48,7 @@ export default {
               <div class="card bg-secondary text-white">
                 <div class="card-body">
                   <h5 class="card-title fs-6">{{ dish.name }}</h5>
-                  <p class="card-text text-light">Descrizione: {{ dish.description }}</p>
+                  <p class="card-text text-light">Descrizione{{ dish.description }}</p>
                   <p class="card-text text-light">Prezzo: €{{ dish.price }}</p>
                 </div>
               </div>
@@ -59,7 +56,7 @@ export default {
           </div>
         </div>
         <div v-else>
-          <p class="text-danger">Non ci sono piatti disponibili per questo ristorante.</p>
+          <p>Non ci sono piatti disponibili per questo ristorante.</p>
         </div>
       </div>
     </div>
