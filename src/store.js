@@ -5,7 +5,11 @@ import { reactive } from 'vue';
 export const store = reactive({
 
     //currentPage: 1;
-    // results: [],
-    // url: placeholder,
-    // endPoint:
+
+    results: [],
+    url: 'http://localhost:8000/api/',
+
+    //endpoint per ristoranti
+    restaurants: 'restaurants',
+
 })
