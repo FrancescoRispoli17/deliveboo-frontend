@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 
-// 1.importare la pagina
 import HomePage from './pages/HomePage.vue';
+
 import DesignSystem from './pages/DesignSystem.vue'
 
 //importazione pagina per ristoranti e piatti
