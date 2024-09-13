@@ -10,6 +10,6 @@ export const store = reactive({
     url: 'http://localhost:8000/api/',
 
     //endpoint per ristoranti
-    restaurants: 'restaurants/',
+    restaurants: 'restaurants',
 
 })

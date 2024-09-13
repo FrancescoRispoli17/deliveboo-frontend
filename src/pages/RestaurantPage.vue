@@ -1,4 +1,7 @@
 <script>
+
+//contenitore padre della pagina index ristorante
+
 import RestaurantCardComponent from '../components/apiComponents/RestaurantCardComponent.vue';
 
 export default {
@@ -20,14 +23,6 @@ export default {
 </script>
 
 <template>
-
-<div class="container py-4">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1 class="text-light fw-light mb-3">Ristoranti</h1>
-        </div>
-    </div>
-</div>
     <RestaurantCardComponent/>
 </template>
 

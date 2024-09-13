@@ -1,4 +1,7 @@
 <script>
+
+//contenitore padre carosello
+
 import CarouselComponent from './CarouselComponent.vue';
 
 export default {

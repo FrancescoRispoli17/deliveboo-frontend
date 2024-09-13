@@ -1,11 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import './style.scss';
 
 // 1.importare la pagina
 import HomePage from './pages/HomePage.vue';
-import AboutPage from './pages/AboutPage.vue';
-import ContactPage from './pages/ContactPage.vue';
 import DesignSystem from './pages/DesignSystem.vue'
 
 //importazione pagina per ristoranti e piatti
@@ -32,16 +29,6 @@ const routes = [
         name: 'dishes',
         path: '/restaurant/:slug',  // Path con lo slug come parametro
         component: DishesPage,  // Componente che visualizzerà i dettagli
-    },
-    {
-        name: 'aboutPage',
-        path: '/about',
-        component: AboutPage
-    },
-    {
-        name: 'contactPage',
-        path: '/contacts',
-        component: ContactPage
     },
     {
         name: 'designSystem',
