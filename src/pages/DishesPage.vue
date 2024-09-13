@@ -101,6 +101,7 @@ export default {
             <div class="col-md-5">
               <p v-for="dish in cart" class="text-white">{{ dish.name }} <span class="ms-5">x{{ dish.quantity }}</span></p>
               <button class="btn btn-primary" @click="deleteCart()">svuota carello</button>
+              <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link>
             </div>
           </div>
         </div>
