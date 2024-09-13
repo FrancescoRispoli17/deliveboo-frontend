@@ -8,6 +8,7 @@ export default {
     return {
       restaurant: {},
       currentDish:null,
+      dishQuantity:1,
       cart:[],
     };
   },
@@ -24,12 +25,8 @@ export default {
           console.error('Errore nel recupero dei piatti del ristorante:', error);
         });
     },
-    infoDish(dish){
-                let obj={name:dish.name, description:dish.description, price:dish.price, quantity:1}
-                this.currentDish=obj;
-            },
     addToKart(dish){
-        const obj={name:dish.name, price:dish.price, quantity:dish.quantity};
+        const obj={name:dish.name, price:dish.price, quantity:this.dishQuantity};
         if(this.cart.length){
             let ciclo=false;
             this.cart.forEach(cartDish => {
@@ -55,14 +52,13 @@ export default {
         localStorage.setItem('cart',parsed);
         console.log(localStorage.getItem('cart'))
         this.currentDish=null;
+        this.dishQuantity=1;
     },
     deleteCart(){
                 this.cart=[];
                 const parsed = JSON.stringify(this.cart);
                 localStorage.setItem('cart',parsed);
             },
-
-    
 },
   mounted() {
     this.getRestaurantDetails();
@@ -94,14 +90,18 @@ export default {
                   <h5 class="card-title fs-6">{{ dish.name }}</h5>
                   <p class="card-text text-light">Descrizione{{ dish.description }}</p>
                   <p class="card-text text-light">Prezzo: €{{ dish.price }}</p>
-                  <button @click="infoDish(dish)" class="btn btn-primary"> + </button>
+                  <button @click="currentDish=dish" class="btn btn-primary"> + </button>
                 </div>
               </div>
             </div>
+             <!-- Carrello -->
             <div class="col-md-5">
               <p v-for="dish in cart" class="text-white">{{ dish.name }} <span class="ms-5">x{{ dish.quantity }}</span></p>
-              <button class="btn btn-primary" @click="deleteCart()">svuota carello</button>
-              <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link>
+              <div v-if="cart.length">
+                <button class="btn btn-primary" @click="deleteCart()">svuota carello</button>
+                <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link>
+              </div>
+              <p v-else class="text-white mx-auto">Il tuo carello è vuoto</p>
             </div>
           </div>
         </div>
@@ -110,23 +110,22 @@ export default {
         </div>
       </div>
     </div>
+    <!-- Modale -->
     <div class="infoDish p-4" v-if="currentDish">
             <p> {{ currentDish.name }} </p>
             <p> {{ currentDish.description }} </p>
             <p> €{{ currentDish.price }} </p>
             <div class="">
-                <button v-if="currentDish.quantity>1" class="mx-5" @click="currentDish.quantity--">-</button>
+                <button v-if="dishQuantity>1" class="mx-5" @click="dishQuantity--">-</button>
                 <button v-else class="mx-5" disabled>-</button>
-                <span class="mx-5"> {{ currentDish.quantity }}</span>
-                <button v-if="currentDish.quantity<7" class="mx-5" @click="currentDish.quantity++">+</button>
+                <span class="mx-5"> {{ dishQuantity }}</span>
+                <button v-if="dishQuantity<7" class="mx-5" @click="dishQuantity++">+</button>
                 <button v-else class="mx-5" disabled>-</button>
             </div>
             <button class="btn btn-primary m-3" @click="currentDish=null">indietro</button>
             <button class="btn btn-primary m-3" @click="addToKart(currentDish)">aggiungi all carello</button>
         </div>
   </div>
-  <!-- Modale -->
-
 </template>
 
 <style lang="scss">
