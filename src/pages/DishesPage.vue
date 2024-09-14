@@ -7,7 +7,6 @@ export default {
   data() {
     return {
       restaurant: {},
-      currentDish:null,
       dishQuantity:1,
       cart:[],
     };
@@ -25,12 +24,11 @@ export default {
           console.error('Errore nel recupero dei piatti del ristorante:', error);
         });
     },
-    addToKart(dish){
+    addToCart(dish){
         const obj={name:dish.name, price:dish.price, quantity:this.dishQuantity};
         if(this.cart.length){
             let ciclo=false;
             this.cart.forEach(cartDish => {
-                
                 if(cartDish.name == obj.name){
                     cartDish.quantity += obj.quantity;
                     if(cartDish.quantity>7){
@@ -90,7 +88,36 @@ export default {
                   <h5 class="card-title fs-6">{{ dish.name }}</h5>
                   <p class="card-text text-light">Descrizione{{ dish.description }}</p>
                   <p class="card-text text-light">Prezzo: €{{ dish.price }}</p>
-                  <button @click="currentDish=dish" class="btn btn-primary"> + </button>
+                  <!-- Button trigger modal -->
+                  <button @click="currentDish=dish" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#'+dish.id"> + </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" :id="dish.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ dish.name }}</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p> {{ dish.name }} </p>
+                          <p> {{ dish.description }} </p>
+                          <p> €{{ dish.price }} </p>
+                          <div class="">
+                              <button v-if="dishQuantity>1" class="mx-5" @click="dishQuantity--">-</button>
+                              <button v-else class="mx-5" disabled>-</button>
+                              <span class="mx-5 text-dark"> {{ dishQuantity }}</span>
+                              <button v-if="dishQuantity<7" class="mx-5" @click="dishQuantity++">+</button>
+                              <button v-else class="mx-5" disabled>-</button>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Indietro</button>
+                          <button @click="addToCart(dish)" type="button" class="btn btn-primary"  data-bs-dismiss="modal">Aggiungi al carrello</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -110,21 +137,6 @@ export default {
         </div>
       </div>
     </div>
-    <!-- Modale -->
-    <div class="infoDish p-4" v-if="currentDish">
-            <p> {{ currentDish.name }} </p>
-            <p> {{ currentDish.description }} </p>
-            <p> €{{ currentDish.price }} </p>
-            <div class="">
-                <button v-if="dishQuantity>1" class="mx-5" @click="dishQuantity--">-</button>
-                <button v-else class="mx-5" disabled>-</button>
-                <span class="mx-5"> {{ dishQuantity }}</span>
-                <button v-if="dishQuantity<7" class="mx-5" @click="dishQuantity++">+</button>
-                <button v-else class="mx-5" disabled>-</button>
-            </div>
-            <button class="btn btn-primary m-3" @click="currentDish=null">indietro</button>
-            <button class="btn btn-primary m-3" @click="addToKart(currentDish)">aggiungi all carello</button>
-        </div>
   </div>
 </template>
 

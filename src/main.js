@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import router from './router'
 import './style.scss' // Assicurati che il file SCSS sia qui
 
+
 import App from './App.vue';
 
 // Importa Poppins (ad esempio pesi 400 e 700)
@@ -27,7 +28,7 @@ import '@fontsource/inter/700.css';
 
 
 // Bootstrap
-
+import * as bootstrap from 'bootstrap';
 
 // FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
