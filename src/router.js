@@ -9,6 +9,8 @@ import DesignSystem from './pages/DesignSystem.vue'
 import RestaurantPage from './pages/RestaurantPage.vue';
 import DishesPage from './pages/DishesPage.vue';
 
+import PayPage from './pages/PayPage.vue';
+
 
 //2 definiamo la rotta con Name, Path e Component.
 const routes = [
@@ -34,7 +36,12 @@ const routes = [
         name: 'designSystem',
         path: '/designSystem',
         component: DesignSystem
-    }
+    },
+    {
+        name: 'payPage',
+        path: '/pay',
+        component: PayPage
+    },
 
 ]
 

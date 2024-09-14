@@ -11,7 +11,15 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: $font-size-base; //16px
 }
-
+.infoDish{
+    width: 500px;
+    height: 60vh;
+    background-color: aqua;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+}
 
 h1,
 h2,
