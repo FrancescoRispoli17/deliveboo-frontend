@@ -19,6 +19,13 @@ export default {
       axios.get(apiUrl)
         .then(response => {
           this.restaurant = response.data;
+          if(localStorage.getItem('cart')){
+            if(localStorage.getItem('lastRestaurant')==this.restaurant.id){
+              this.cart = JSON.parse(localStorage.getItem('cart'));
+              console.log(localStorage.getItem('lastRestaurant'));
+            }else
+              this.cart = [];
+          }
         })
         .catch(error => {
           console.error('Errore nel recupero dei piatti del ristorante:', error);
@@ -48,8 +55,8 @@ export default {
             }
         const parsed = JSON.stringify(this.cart);
         localStorage.setItem('cart',parsed);
-        console.log(localStorage.getItem('cart'))
-        this.currentDish=null;
+        const id = JSON.stringify(this.restaurant.id);
+        localStorage.setItem('lastRestaurant',id);
         this.dishQuantity=1;
     },
     deleteCart(){
@@ -60,10 +67,7 @@ export default {
 },
   mounted() {
     this.getRestaurantDetails();
-    if(localStorage.getItem('cart')){
-                 this.cart = JSON.parse(localStorage.getItem('cart'));
-             }
-  },
+      }
 };
 </script>
 
