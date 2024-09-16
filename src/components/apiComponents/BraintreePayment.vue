@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="dropin-container"></div>
-        <button @click="processPayment">Paga ora</button>
+        <button class="btn btn-primary py-2 mb-2" @click="processPayment">Paga ora</button>
     </div>
 </template>
 
@@ -83,6 +83,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Aggiungi il tuo stile qui */
-</style>
+<style scoped></style>
