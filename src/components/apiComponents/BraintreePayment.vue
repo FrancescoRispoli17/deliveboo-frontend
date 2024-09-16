@@ -3,7 +3,7 @@
         <div id="dropin-container"></div>
         <button @click="processPayment" class="btn btn-primary">Paga ora</button>
 
-        <!-- Modal Bootstrap per pagamento riuscito -->
+        <!-- modale bootstrap per pagamento riuscito -->
         <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <!-- Modal Bootstrap per pagamento fallito -->
+        <!-- modale bootstrap per pagamento fallito -->
         <div class="modal fade" id="paymentErrorModal" tabindex="-1" aria-labelledby="paymentErrorModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -52,7 +52,7 @@
 import axios from 'axios';
 import dropin from 'braintree-web-drop-in';
 import { Modal } from 'bootstrap';
-// import { useRouter } from 'vue-router';
+
 
 export default {
 
@@ -125,7 +125,7 @@ export default {
                     .then((response) => {
                         this.transactionId = response.data.transaction_id;
 
-                        // Mostra la modal di Bootstrap per il pagamento riuscito
+                        // mostra la modal di bootstrap per il pagamento riuscito
                         const successModal = new Modal(document.getElementById('paymentSuccessModal'));
                         successModal.show();
                     })

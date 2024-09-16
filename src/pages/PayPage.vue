@@ -35,7 +35,7 @@ export default {
             </col-12>
             <div class="container">
                 <div class="row">
-                    <!-- Passa il totale come prop al componente di pagamento -->
+                    <!-- passa il totale come prop a braintree -->
                     <BraintreePayment :total="totale"></BraintreePayment>
                 </div>
             </div>
