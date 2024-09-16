@@ -7,8 +7,8 @@ export default {
   data() {
     return {
       restaurant: {},
-      dishQuantity:1,
       cart:[],
+      totale:null
     };
   },
   methods: {
@@ -22,53 +22,75 @@ export default {
           if(localStorage.getItem('cart')){
             if(localStorage.getItem('lastRestaurant')==this.restaurant.id){
               this.cart = JSON.parse(localStorage.getItem('cart'));
-              console.log(localStorage.getItem('lastRestaurant'));
+              this.totale = JSON.parse(localStorage.getItem('tot'));
             }else
               this.cart = [];
           }
         })
         .catch(error => {
           console.error('Errore nel recupero dei piatti del ristorante:', error);
-        });
+        })
+    },
+    confirim(dish){
+      if(localStorage.getItem('lastRestaurant') && localStorage.getItem('lastRestaurant')!=this.restaurant.id ){
+        console.log(localStorage.getItem('lastRestaurant'));
+        console.log(this.restaurant.id);
+        if(confirm("Se crei un nuovo carrello eliminerai quello vecchio\n Vuoi proseguire?")==true){
+          this.addToCart(dish);
+        }
+      }else
+        this.addToCart(dish);
     },
     addToCart(dish){
-        const obj={name:dish.name, price:dish.price, quantity:this.dishQuantity};
+      this.totale=0;
+        const obj={name:dish.name, price:dish.price, quantity:1};
         if(this.cart.length){
             let ciclo=false;
             this.cart.forEach(cartDish => {
-                if(cartDish.name == obj.name){
-                    cartDish.quantity += obj.quantity;
-                    if(cartDish.quantity>7){
-                        cartDish.quantity=7;
-                        alert("PUOI ORDINARE MASSIMO 7 VOLTE LO STESSO PIATTO");
-                    }
-                    ciclo=true;
-                    return ciclo;
-                }
+              if(cartDish.name == obj.name){
+                cartDish.quantity += obj.quantity;
+                ciclo=true;
+                return ciclo;
+              }
             });
-            if(!ciclo){
-                this.cart.push(obj);
-            }
+            if(!ciclo)
+              this.cart.push(obj);
         }else
-            {
-                this.cart.push(obj);
-            }
+            this.cart.push(obj);
+
         const parsed = JSON.stringify(this.cart);
         localStorage.setItem('cart',parsed);
         const id = JSON.stringify(this.restaurant.id);
         localStorage.setItem('lastRestaurant',id);
-        this.dishQuantity=1;
-    },
+        this.calcoloTotale();
+    },       
     deleteCart(){
-                this.cart=[];
-                const parsed = JSON.stringify(this.cart);
-                localStorage.setItem('cart',parsed);
-            },
-},
+      this.cart=[];
+      this.totale=null;
+      localStorage.clear();
+    },
+    calcoloTotale(){
+      this.cart.forEach(cartDish => {
+        for(let i=0;i<cartDish.quantity;i++){
+            this.totale+=parseFloat(cartDish.price);
+            }
+        });
+        const parsed = JSON.stringify(this.totale);
+        localStorage.setItem('tot',parsed);
+      },
+      deleteSingleDish(dish){
+        dish.quantity--;
+        this.totale=null;
+        if(dish.quantity<1){
+          this.cart.splice(dish.id,1)
+        }
+          this.calcoloTotale();
+      }     
+    },
   mounted() {
     this.getRestaurantDetails();
       }
-};
+    }
 </script>
 
 <template>
@@ -95,46 +117,25 @@ export default {
                   <p class="card-text text-light">Descrizione{{ dish.description }}</p>
                   <p class="card-text text-light">Prezzo: €{{ dish.price }}</p>
                   <!-- Button trigger modal -->
-                  <button @click="currentDish=dish" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#'+dish.id"> + </button>
-
-                  <!-- Modal -->
-                  <div class="modal fade" :id="dish.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ dish.name }}</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <p> {{ dish.name }} </p>
-                          <p> {{ dish.description }} </p>
-                          <p> €{{ dish.price }} </p>
-                          <div class="">
-                              <button v-if="dishQuantity>1" class="mx-5" @click="dishQuantity--">-</button>
-                              <button v-else class="mx-5" disabled>-</button>
-                              <span class="mx-5 text-dark"> {{ dishQuantity }}</span>
-                              <button v-if="dishQuantity<7" class="mx-5" @click="dishQuantity++">+</button>
-                              <button v-else class="mx-5" disabled>-</button>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Indietro</button>
-                          <button @click="addToCart(dish)" type="button" class="btn btn-primary"  data-bs-dismiss="modal">Aggiungi al carrello</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <button @click="confirim(dish)" class="btn btn-primary"> + </button>
                 </div>
               </div>
             </div>
+
              <!-- Carrello -->
             <div class="col-md-5">
-              <p v-for="dish in cart" class="text-white">{{ dish.name }} <span class="ms-5">x{{ dish.quantity }}</span></p>
+              <div v-for="dish in cart" class="mt-4">
+                <p class="text-white m-0"><span class="me-3">{{ dish.quantity }}x</span>{{ dish.name }}</p>
+                <button class="btn text-white me-3" @click="deleteSingleDish(dish)">-</button>
+                <span>edit</span>
+                <button class="btn text-white ms-3"@click="addToCart(dish)">+</button>
+              </div>
               <div v-if="cart.length">
+                <p class="text-white">Toale: €{{ totale }}</p>
                 <button class="btn btn-primary" @click="deleteCart()">svuota carello</button>
                 <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link>
               </div>
-              <p v-else class="text-white mx-auto">Il tuo carello è vuoto</p>
+              <p v-else class="text-white mx-auto"><font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo carello è vuoto</p>
             </div>
           </div>
         </div>
