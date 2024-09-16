@@ -91,6 +91,7 @@ export default {
           <thead>
             <tr>
               <th>Nome</th>
+              <th>Immagine</th>
               <th>Descrizione</th>
               <th>Città</th>
               <th>Tipi</th>
@@ -99,6 +100,8 @@ export default {
           </thead>
           <tbody>
             <tr v-for="restaurant in results" :key="restaurant.id">
+              <td><img :src="restaurant.image_path_url" alt="Restaurant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" /></td>
+              <td>{{ restaurant.name }}</td>
               <td>{{ restaurant.name }}</td>
               <td>{{ restaurant.description }}</td>
               <td>{{ restaurant.city }}</td>
