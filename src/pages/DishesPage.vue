@@ -83,10 +83,12 @@ export default {
         
         <!-- Sezione dei piatti -->
         <div v-if="restaurant.dishes && restaurant.dishes.length">
+          
           <h4 class="mt-4 text-light">Piatti:</h4>
           <div class="row">
             <!-- Card per ciascun piatto -->
             <div class="col-md-7 mb-3" v-for="dish in restaurant.dishes" :key="dish.id">
+              <img :src="dish.image_path_url" alt="" style="max-width: 100px; max-height: 100px;">
               <div class="card bg-secondary text-white">
                 <div class="card-body">
                   <h5 class="card-title fs-6">{{ dish.name }}</h5>
