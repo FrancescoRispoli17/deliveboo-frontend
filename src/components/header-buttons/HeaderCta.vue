@@ -1,13 +1,15 @@
 <script>
 import FavouritesCtaComponent from './FavouritesCtaComponent.vue';
 import LoginCtaComponent from './LoginCtaComponent.vue';
+import CartCtaComponent from './CartCtaComponent.vue';
 
 export default {
     name: 'HeaderCta',
 
     components: {
         FavouritesCtaComponent, 
-        LoginCtaComponent
+        LoginCtaComponent,
+        CartCtaComponent
     },
 
     data(){
@@ -26,6 +28,8 @@ export default {
             <FavouritesCtaComponent />
 
             <LoginCtaComponent/>
+
+            <CartCtaComponent/>
         </div>
     </div>
 </template>

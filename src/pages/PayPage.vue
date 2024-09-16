@@ -9,24 +9,17 @@ export default {
     data(){
         return{
             cart:[],
-            totale:0,
+            totale:null,
         }
     },
     mounted(){
              if(localStorage.getItem('cart')){
                  this.cart = JSON.parse(localStorage.getItem('cart'));
+                 this.totale=JSON.parse(localStorage.getItem('tot'));
              }
-             console.log(this.cart);
-             this.calcoloTotale();
         },
     methods:{
-        calcoloTotale(){
-            this.cart.forEach(cartDish => {
-                        for(let i=0;i<cartDish.quantity;i++){
-                            this.totale+=parseFloat(cartDish.price);
-                        }
-                    });
-        }
+      
     },
 }
 
