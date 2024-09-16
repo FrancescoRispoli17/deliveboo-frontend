@@ -7,20 +7,20 @@ export default {
     components: {
         BraintreePayment
     },
-    data(){
-        return{
-            cart:[],
-            totale:null,
+    data() {
+        return {
+            cart: [],
+            totale: null,
         }
     },
-    mounted(){
-             if(localStorage.getItem('cart')){
-                 this.cart = JSON.parse(localStorage.getItem('cart'));
-                 this.totale=JSON.parse(localStorage.getItem('tot'));
-             }
-        },
-    methods:{
-      
+    mounted() {
+        if (localStorage.getItem('cart')) {
+            this.cart = JSON.parse(localStorage.getItem('cart'));
+            this.totale = JSON.parse(localStorage.getItem('tot'));
+        }
+    },
+    methods: {
+
     },
 }
 </script>
@@ -30,11 +30,12 @@ export default {
         <div class="row">
             <col-12>
                 <p v-for="dish in cart" :key="dish.id">{{ dish.name }} <span class="ms-2">x{{ dish.quantity }}</span></p>
-                <p class="mt-5">Prezzo totale: €{{ parseFloat(totale).toFixed(2) }}</p>
+                <p class="mt-5">Prezzo totale: €{{ parseFloat(totale).toFixed(2) }} </p>
+
             </col-12>
             <div class="container">
                 <div class="row">
-                    <!-- Passa il totale come prop al componente di pagamento -->
+                    <!-- passa il totale come prop a braintree -->
                     <BraintreePayment :total="totale"></BraintreePayment>
                 </div>
             </div>
