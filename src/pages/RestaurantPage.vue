@@ -3,6 +3,8 @@
 //contenitore padre della pagina index ristorante
 
 import RestaurantCardComponent from '../components/apiComponents/RestaurantCardComponent.vue';
+import HeaderComponent from '../components/headers/HeaderComponent.vue';
+
 
 export default {
     name: 'RestaurantPage' ,
@@ -12,7 +14,8 @@ export default {
     }
     },
     components: {
-        RestaurantCardComponent
+        RestaurantCardComponent,
+        HeaderComponent
     },
     methods: {
         
@@ -29,6 +32,7 @@ export default {
 </script>
 
 <template>
+    <HeaderComponent/>
     <RestaurantCardComponent/>
 </template>
 

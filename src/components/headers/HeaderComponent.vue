@@ -3,6 +3,7 @@
 //navbar sia per il backend per il frontend
 
 import LogoFilledComponent from '../containers/LogoFilledComponent.vue';
+import LogoComponent from '../containers/logoComponent.vue';
 import HeaderCta from '../header-buttons/HeaderCta.vue';
 import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
 
@@ -11,6 +12,9 @@ export default {
 
     components:{
         SearchBarComponent,
+        //modifiche
+        LogoComponent,
+        //modifiche
         LogoFilledComponent,
         HeaderCta
     },
@@ -27,15 +31,16 @@ export default {
 </script>
 
 <template>
-    <header class="bg-light">
+    <header>
         <div class="container py-3">
             <div class="d-flex">
 
                 <div class="col-lg-2 side-div py-2">
-                    <LogoFilledComponent/>
+                    <!-- <LogoFilledComponent/> -->
+                     <LogoComponent/>
                 </div>
                 <div class="col-lg-8 search-bar-desktop py-1">
-                    <SearchBarComponent/>
+                    <!-- <SearchBarComponent/> -->
                 </div>
                 <div class="col-lg-2 py-2 side-div">
                     <HeaderCta/>
@@ -43,9 +48,9 @@ export default {
 
             </div>
             <!-- search-bar tablet -->
-            <div class="col-md-12 py-3 d-lg-none d-sm-none">
+            <!-- <div class="col-md-12 py-3 d-lg-none d-sm-none">
                 <SearchBarComponent/>
-            </div>
+            </div> -->
         </div>
     </header>
 </template>
