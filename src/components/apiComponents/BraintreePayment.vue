@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="dropin-container"></div>
-        <button @click="processPayment" class="btn btn-primary">Paga ora</button>
+        <button @click="processPayment" class="btn btn-primary py-2 mb-2">Paga ora</button>
 
         <!-- modale bootstrap per pagamento riuscito -->
         <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel"
