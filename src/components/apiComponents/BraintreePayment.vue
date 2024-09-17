@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="dropin-container"></div>
-        <button @click="processPayment" class="btn btn-primary py-2 mb-2">Paga ora</button>
+        <button @click="formAndPayment" class="btn btn-primary py-2 mb-2">Paga ora</button>
 
         <!-- modale bootstrap per pagamento riuscito -->
         <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel"
@@ -47,18 +47,19 @@
     </div>
 </template>
   
-  
 <script>
 import axios from 'axios';
 import dropin from 'braintree-web-drop-in';
 import { Modal } from 'bootstrap';
 
-
 export default {
-
     props: {
         total: {
             type: Number,
+            required: true
+        },
+        formData: {
+            type: Object,
             required: true
         }
     },
@@ -74,6 +75,7 @@ export default {
         this.getClientToken();
     },
     methods: {
+        // Ottiene il client token per Braintree
         async getClientToken() {
             try {
                 const response = await axios.get('/api/payment/token');
@@ -88,6 +90,8 @@ export default {
                 console.error('Errore nel recuperare il token:', error);
             }
         },
+
+        // Inizializza Braintree Drop-in
         initializeBraintree() {
             dropin.create(
                 {
@@ -103,6 +107,26 @@ export default {
                 }
             );
         },
+
+        // Metodo che gestisce sia il pagamento che l'invio dei dati del form
+        async formAndPayment() {
+            await this.submitToBackend(); // Invia i dati del form prima di processare il pagamento
+            this.processPayment();
+        },
+
+        // Funzione per inviare i dati del form al backend
+        async submitToBackend() {
+            try {
+                const response = await axios.post('/api/order', this.formData);
+                console.log('Ordine inviato con successo', response.data);
+            } catch (error) {
+                if (error.response && error.response.data.errors) {
+                    console.error('Errore nell\'invio dell\'ordine:', error.response.data.errors);
+                }
+            }
+        },
+
+        // Processa il pagamento con Braintree
         processPayment() {
             if (!this.dropinInstance) {
                 console.error("L'istanza di Braintree Drop-In non è stata inizializzata.");
@@ -125,7 +149,7 @@ export default {
                     .then((response) => {
                         this.transactionId = response.data.transaction_id;
 
-                        // mostra la modal di bootstrap per il pagamento riuscito
+                        // Mostra la modale per il pagamento riuscito
                         const successModal = new Modal(document.getElementById('paymentSuccessModal'));
                         successModal.show();
                     })
@@ -136,10 +160,9 @@ export default {
                         errorModal.show();
                     });
             });
-        },
-    },
+        }
+    }
 };
 </script>
-  
 
 <style scoped></style>

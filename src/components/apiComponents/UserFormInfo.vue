@@ -31,7 +31,7 @@
                 <!-- Telefono -->
                 <div class="mb-3">
                     <label for="user_phone" class="form-label">Telefono <span class="text-danger">*</span></label>
-                    <input type="tel" id="user_phone" v-model="formData.user_phone" class="form-control"
+                    <input type="text" id="user_phone" v-model="formData.user_phone" class="form-control"
                         :class="{ 'is-invalid': errors.user_phone }" placeholder="Inserisci il tuo numero di telefono">
                     <div v-if="errors.user_phone" class="invalid-feedback">{{ errors.user_phone }}</div>
                 </div>
@@ -58,7 +58,7 @@
         </div>
 
         <!-- Submit -->
-        <button type="submit" class="btn btn-primary">Invia</button>
+        <!-- <button type="submit" class="btn btn-primary">Invia</button> -->
     </form>
 </template>
 
