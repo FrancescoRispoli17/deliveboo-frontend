@@ -58,7 +58,7 @@
         </div>
 
         <!-- Submit -->
-        <button type="submit" class="btn btn-primary">Invia</button>
+        <!-- <button type="submit" class="btn btn-primary">Invia</button> -->
     </form>
 </template>
 
