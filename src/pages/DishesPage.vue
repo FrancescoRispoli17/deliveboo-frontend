@@ -85,6 +85,11 @@ export default {
           this.cart.splice(dish.id,1)
         }
           this.calcoloTotale();
+          if(this.cart){
+            const parsed = JSON.stringify(this.cart);
+            localStorage.setItem('cart',parsed);
+          }else
+            localStorage.clear();
       }     
     },
   mounted() {
@@ -132,7 +137,28 @@ export default {
               </div>
               <div v-if="cart.length">
                 <p class="text-white">Toale: €{{ totale }}</p>
-                <button class="btn btn-primary" @click="deleteCart()">svuota carello</button>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Svuota carrello
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Sei sicuro di voler eliminare il tuo carrello?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-primary"  @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link>
               </div>
               <p v-else class="text-white mx-auto"><font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo carello è vuoto</p>

@@ -30,10 +30,34 @@ export default {
         </button>
         <ul class="dropdown-menu p-3">
             <li v-if="cart.length" v-for="dish in cart">{{ dish.name }} x{{ dish.quantity }}</li>
-            <li v-if="cart.length"><button class="btn btn-primary" @click="deleteCart">svuota carrello</button><router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link></li>
+            <li v-if="cart.length">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#headerModal">
+                  Svuota carrello
+                </button>
+                <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">conferma ordine</router-link>
+            </li>
             <li v-else >Non ci sono articoli nel carrello</li>
         </ul>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="headerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <p>Sei sicuro di voler eliminare il tuo carrello?</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        <button type="button" class="btn btn-primary"  @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+        </div>
+    </div>
+    </div>
+</div>
 </template>
 
 <style lang="scss" scoped>
