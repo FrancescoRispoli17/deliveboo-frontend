@@ -1,10 +1,14 @@
 <script>
+
 // pagina non utilizzata su deliveboo
+
+import UserFormInfo from '../components/apiComponents/UserFormInfo.vue';
 import BraintreePayment from '../components/apiComponents/BraintreePayment.vue';
 
 export default {
     name: 'PayPage',
     components: {
+        UserFormInfo,
         BraintreePayment
     },
     data() {
@@ -20,10 +24,14 @@ export default {
         }
     },
     methods: {
-
+        handleFormSubmit(formData) {
+            this.$refs.braintreePayment.processPayment(formData);
+        }
     },
 }
 </script>
+
+
 
 <template>
     <div class="container bg-white">
@@ -31,12 +39,11 @@ export default {
             <col-12>
                 <p v-for="dish in cart" :key="dish.id">{{ dish.name }} <span class="ms-2">x{{ dish.quantity }}</span></p>
                 <p class="mt-5">Prezzo totale: €{{ parseFloat(totale).toFixed(2) }} </p>
-
             </col-12>
             <div class="container">
                 <div class="row">
-                    <!-- passa il totale come prop a braintree -->
-                    <BraintreePayment :total="totale"></BraintreePayment>
+                    <UserFormInfo></UserFormInfo>
+                    <BraintreePayment ref="braintreePayment" :total="totale"></BraintreePayment>
                 </div>
             </div>
         </div>
