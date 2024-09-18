@@ -206,7 +206,7 @@ export default {
         dishes: this.cart,
       };
 
-      console.log(orderData);
+      //   console.log(orderData);
 
       axios
         .post(store.url + store.orders, orderData)
