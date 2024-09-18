@@ -111,4 +111,18 @@ export default {
   display: none;
 }
 
+
+//mediaquery per nasconder la sidebar
+@media only screen and (max-width: 768px) {
+
+  .sidebar{
+    display: none;
+  }
+
+  .content{
+    width: 100%;
+  }
+}
+
+
 </style>
