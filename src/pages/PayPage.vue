@@ -13,11 +13,12 @@
           <UserFormInfo
             @formSubmitted="handleFormSubmit"
             @formValid="handleFormValid"></UserFormInfo>
-          <!-- Mostra il pulsante "Paga ora" solo se il form è valido -->
+          <!-- Passa il cart e il totale al componente BraintreePayment -->
           <BraintreePayment
             ref="braintreePayment"
             :total="totale"
             :formData="formData"
+            :cart="cart"
             v-if="isFormValid"></BraintreePayment>
         </div>
       </div>
@@ -39,11 +40,12 @@ export default {
     return {
       cart: [],
       totale: null,
-      formData: null, // Memorizza i dati del form
-      isFormValid: false, // Variabile per controllare la visibilità del pulsante
+      formData: null,
+      isFormValid: false,
     };
   },
   mounted() {
+    // Recupera il carrello e il totale dal localStorage (o un'altra fonte)
     if (localStorage.getItem("cart")) {
       this.cart = JSON.parse(localStorage.getItem("cart"));
       this.totale = JSON.parse(localStorage.getItem("tot"));

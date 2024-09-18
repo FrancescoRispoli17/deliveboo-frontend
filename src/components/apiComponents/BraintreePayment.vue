@@ -82,6 +82,7 @@
 import axios from "axios";
 import dropin from "braintree-web-drop-in";
 import { Modal } from "bootstrap";
+import { store } from "../../store";
 
 export default {
   props: {
@@ -91,6 +92,10 @@ export default {
     },
     formData: {
       type: Object,
+      required: true,
+    },
+    cart: {
+      type: Array,
       required: true,
     },
   },
@@ -188,8 +193,23 @@ export default {
       });
     },
     sendFormData() {
+      // Prepara i dati da inviare al backend
+      const orderData = {
+        restaurant_id: localStorage.getItem("lastRestaurant"),
+        user_name: this.formData.user_name,
+        user_email: this.formData.user_email,
+        user_address: this.formData.user_address,
+        user_phone: this.formData.user_phone,
+        delivery_time: this.formData.delivery_time,
+        total_price: parseFloat(this.total).toFixed(2),
+        notes: this.formData.notes || null,
+        dishes: this.cart,
+      };
+
+      console.log(orderData);
+
       axios
-        .post("/api/order", this.formData)
+        .post(store.url + store.orders, orderData)
         .then((response) => {
           console.log("Ordine inviato con successo:", response.data);
         })
