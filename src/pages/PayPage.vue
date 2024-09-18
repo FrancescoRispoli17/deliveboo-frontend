@@ -1,7 +1,4 @@
 <script>
-
-// pagina non utilizzata su deliveboo
-
 import UserFormInfo from '../components/apiComponents/UserFormInfo.vue';
 import BraintreePayment from '../components/apiComponents/BraintreePayment.vue';
 
@@ -15,6 +12,7 @@ export default {
         return {
             cart: [],
             totale: null,
+            formData: null,  // Memorizza i dati del form
         }
     },
     mounted() {
@@ -25,13 +23,28 @@ export default {
     },
     methods: {
         handleFormSubmit(formData) {
-            this.$refs.braintreePayment.processPayment(formData);
+            // Salva i dati del form
+            this.formData = formData;
+
+            // Procedi con il pagamento
+            this.$refs.braintreePayment.processPayment()
+                .then(() => {
+                    // Se il pagamento ha successo, invia i dati del form al backend
+                    axios.post('/api/order', this.formData)
+                        .then(response => {
+                            console.log('Ordine inviato con successo:', response.data);
+                        })
+                        .catch(error => {
+                            console.error('Errore nell\'invio dell\'ordine:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Errore nel pagamento:', error);
+                });
         }
-    },
+    }
 }
 </script>
-
-
 
 <template>
     <div class="container bg-white">
@@ -42,7 +55,8 @@ export default {
             </col-12>
             <div class="container">
                 <div class="row">
-                    <UserFormInfo></UserFormInfo>
+                    <!-- Passa l'evento submit form -->
+                    <UserFormInfo @formSubmitted="handleFormSubmit"></UserFormInfo>
                     <BraintreePayment ref="braintreePayment" :total="totale"></BraintreePayment>
                 </div>
             </div>
