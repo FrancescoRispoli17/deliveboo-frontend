@@ -7,7 +7,7 @@ import HeaderEmptyComponent from '../components/headers/HeaderEmptyComponent.vue
 
 export default {
   name: 'RestaurantDetailPage',
-  components:{
+  components: {
     HeaderEmptyComponent
   },
 
@@ -118,7 +118,7 @@ export default {
 
 <template>
 
-  <HeaderEmptyComponent/>
+  <HeaderEmptyComponent />
 
   <div class="container mt-4">
     <div class="row">
@@ -160,7 +160,8 @@ export default {
             Svuota carrello
           </button>
           <!-- Modal per svuotare il carrello -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -172,12 +173,13 @@ export default {
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                  <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+                  <button type="button" class="btn btn-primary" @click="deleteCart()"
+                    data-bs-dismiss="modal">Svuota</button>
                 </div>
               </div>
             </div>
           </div>
-          <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">Conferma ordine</router-link>
+          <router-link :to="{ name: 'payPage' }" class="btn btn-primary mx-3">Conferma ordine</router-link>
         </div>
         <p v-else class="text-white mx-auto">
           <font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo carrello è vuoto
@@ -190,6 +192,6 @@ export default {
 
 
 <style lang="scss">
-  @use 'src/assets/partials/_variables.scss' as *;
-  @use 'src/assets/partials/_mixin.scss' as *;
+@use 'src/assets/partials/_variables.scss' as *;
+@use 'src/assets/partials/_mixin.scss' as *;
 </style>

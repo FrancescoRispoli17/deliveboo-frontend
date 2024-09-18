@@ -5,9 +5,9 @@ import HeaderCta from '../header-buttons/HeaderCta.vue';
 import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
 
 export default {
-    name:'HeaderEmptyComponent',
+    name: 'HeaderEmptyComponent',
 
-    components:{
+    components: {
         SearchBarComponent,
         //modifiche
         LogoFilledComponent,
@@ -15,8 +15,8 @@ export default {
         HeaderCta
     },
 
-    data(){
-        return{}
+    data() {
+        return {}
     },
     methods: {
 
@@ -27,28 +27,19 @@ export default {
 
 <template>
     <header>
-        <div class="container-fluid py-3 px-5">
+        <div class="container-fluid py-3">
             <div class="d-flex justify-content-between">
 
-                <div class="col-lg-2 side-div py-2">
-                    <!-- qui andrà il nuovo componente del logo -->
-
+                <div class="col-6 d-flex justify-content-start ms-3 py-2">
                     <a href="/">
-                        <LogoFilledComponent/>
+                        <LogoFilledComponent />
                     </a>
                 </div>
-                <!-- <div class="col-lg-8 search-bar-desktop py-1">
-                    
-                </div> -->
-                <div class="col-lg-2 py-2 side-div ">
-                    <HeaderCta/>
+                <div class="col-6 d-flex justify-content-end  py-2">
+                    <HeaderCta />
                 </div>
 
             </div>
-            <!-- search-bar tablet -->
-            <!-- <div class="col-md-12 py-3 d-lg-none d-sm-none">
-                <SearchBarComponent/>
-            </div> -->
         </div>
     </header>
 </template>
@@ -57,8 +48,7 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
-header{
+header {
     border-bottom: solid 0.1px rgba(255, 166, 0, 0.2);
 }
-
 </style>

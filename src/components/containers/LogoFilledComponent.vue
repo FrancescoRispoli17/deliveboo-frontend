@@ -2,14 +2,14 @@
 export default {
     name: 'LogoFilledComponent',
 
-    data(){
-    return{}
+    data() {
+        return {}
     },
     component: {
 
     },
     methods: {
-        
+
     }
 }
 
@@ -28,24 +28,24 @@ export default {
 @use 'src/assets/partials/_variables.scss' as*;
 @use 'src/assets/partials/_mixin.scss' as*;
 
-.logo-container{
-    width: 90%;
+.logo-container {
+    width: 30%;
 
-    img{
+    img {
         width: 65%;
         // box-shadow: 0 6px 6px rgb(0, 0, 0, 0.1);
     }
 }
 
-@media screen and (max-width: 991px) {
-    .logo-container{
-    
-        width: 100%;
-    }
-
-    img{
-        width: 100%;
+@media only screen and (max-width: 768px) {
+    .logo-container {
+        width: 50%;
     }
 }
 
+@media only screen and (max-width: 600px) {
+    .logo-container {
+        width: 100%;
+    }
+}
 </style>
