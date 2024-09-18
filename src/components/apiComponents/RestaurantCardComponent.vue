@@ -73,22 +73,26 @@ export default {
 
 
 <template>
+
+  <div class="container-fluid">
     <div class="row">
 
-      <!-- Sidebar per il filtro -->
-      <div class="col-3 sidebar ">
-        <SidebarComponent
-          :availableTypes="availableTypes"
-          :selectedTypes="selectedTypes"
-          @update-selected-types="updateSelectedTypes"
-        />
-      </div>
+<!-- Sidebar per il filtro -->
+<div class="col-3 sidebar ">
+  <SidebarComponent
+    :availableTypes="availableTypes"
+    :selectedTypes="selectedTypes"
+    @update-selected-types="updateSelectedTypes"
+  />
+</div>
 
-      <!-- Area dei ristoranti -->
-      <div class="col-9 content">
-        <RestaurantListComponent :results="results" />
-      </div>
-    </div>
+<!-- Area dei ristoranti -->
+<div class="col-9 content">
+  <RestaurantListComponent :results="results" />
+</div>
+</div>
+  </div>
+
 </template>
 
 

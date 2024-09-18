@@ -27,8 +27,8 @@ export default {
 
 <template>
     <header>
-        <div class="container py-3">
-            <div class="d-flex">
+        <div class="container-fluid py-3 px-5">
+            <div class="d-flex justify-content-between">
 
                 <div class="col-lg-2 side-div py-2">
                     <!-- qui andrà il nuovo componente del logo -->
@@ -37,10 +37,10 @@ export default {
                         <LogoFilledComponent/>
                     </a>
                 </div>
-                <div class="col-lg-8 search-bar-desktop py-1">
-                    <!-- <SearchBarComponent/> -->
-                </div>
-                <div class="col-lg-2 py-2 side-div">
+                <!-- <div class="col-lg-8 search-bar-desktop py-1">
+                    
+                </div> -->
+                <div class="col-lg-2 py-2 side-div ">
                     <HeaderCta/>
                 </div>
 

@@ -3,6 +3,10 @@ export default {
   name: 'RestaurantListComponent',
   props: {
     results: Array
+  },
+
+  mounted(){
+    console.log(this.results);
   }
 };
 </script>
@@ -19,11 +23,11 @@ export default {
     <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 shape-card">
       <div class="card">
         <div class="card-media" 
-             style="background-image: url(' https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85');">
-          <!-- Offerta di sconto, se presente -->
-          <div  class="discount">20% OFF</div>
-          <!-- Tempi di consegna stimati -->
-          <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
+            :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
+            <!-- Offerta di sconto, se presente -->
+            <div class="discount">20% OFF</div>
+            <!-- Tempi di consegna stimati -->
+            <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
         </div>
         <div class="card-description">
           <div class="about-place">
