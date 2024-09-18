@@ -9,13 +9,19 @@ export default {
 
 
 <template>
+
+      <div class="py-3">
+        <h1 class="title mb-3">Novità su Deliveboo</h1>
+        <p class="sub-title">Scopri tutti i Menu disponibili nella tua città!</p>
+      </div>
+
   <div class="cards-container row">
     <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3">
       <div class="card">
         <div class="card-media" 
              style="background-image: url(' https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85');">
           <!-- Offerta di sconto, se presente -->
-          <div v-if="restaurant.discount" class="discount">{{ restaurant.discount }}% OFF</div>
+          <div  class="discount">20% OFF</div>
           <!-- Tempi di consegna stimati -->
           <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
         </div>
@@ -29,9 +35,9 @@ export default {
             </div>
             <div class="place-review">
               <!-- Rating del ristorante -->
-              <p class="rating">{{ restaurant.rating }} &#x2605;</p>
-              <!-- Costo per persona -->
-              <p class="per-person"> &#x20b9; {{ restaurant.price_per_person }} per one</p>
+              <router-link :to="{ name: 'dishes', params: { slug: restaurant.slug } }" class="button">
+                Menù
+              </router-link>
             </div>
           </div>
         </div>
@@ -44,6 +50,13 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
+.title{
+  @include title
+}
+
+.button{
+  @include button
+}
 .cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -54,8 +67,8 @@ export default {
   background-color: #fff;
   display: inline-block;
   width: 100%;
-  height: 350px;
-  border-radius: 0.5rem;
+  height: 320px;
+  border-radius: 0.2rem;
   margin-bottom: 20px;
   @include shadow
 }
@@ -66,13 +79,13 @@ export default {
   height: 200px;
   width: 100%;
   object-fit: fit;
-  border-radius: 10px 10px 0 0;
+  border-radius: 0.2rem;
   position: relative;
 }
 
 .card .card-media .discount {
   font-size: 12px;
-  background-color: #3582ec;
+  background-color: $tertiary-color;
   position: absolute;
   bottom: 21%;
   padding: 2px 5px 2px 20px;
