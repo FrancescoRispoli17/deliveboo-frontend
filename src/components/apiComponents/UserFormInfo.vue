@@ -89,7 +89,8 @@ export default {
     methods: {
         submitForm() {
             this.errors = {};
-            // client-side validation
+
+            // Validazione lato client
             if (!this.formData.user_name) {
                 this.errors.user_name = "Il nome è obbligatorio";
             }
@@ -105,10 +106,20 @@ export default {
             if (!this.formData.delivery_time) {
                 this.errors.delivery_time = "È richiesta l'ora di consegna";
             }
+
+            // se non ci sono errori
             if (Object.keys(this.errors).length === 0) {
-                // combina la data locale e l' ora inserita dall'utente e la invia al backend
+                // unisci la data locale e l'ora inserita dall'utente
                 this.formData.delivery_datetime = `${this.formData.delivery_date}T${this.formData.delivery_time}`;
-                this.submitToBackend();
+
+                // invia i dati al backend
+                axios.post('/api/order', this.formData)
+                    .then(response => {
+                        console.log('Ordine inviato con successo:', response);
+                    })
+                    .catch(error => {
+                        console.error('Errore nell\'invio dell\'ordine:', error);
+                    });
             }
         },
         validateEmail(email) {
@@ -120,18 +131,6 @@ export default {
         validatePhone(phone) {
             const patternPhone = /^\+?[0-9]{7,15}$/;
             return patternPhone.test(phone);
-        },
-        async submitToBackend() {
-            try {
-                const response = await axios.post('/api/order', this.formData);
-                console.log('Order submitted', response.data);
-
-            } catch (error) {
-                if (error.response && error.response.data.errors) {
-
-                    this.errors = error.response.data.errors;
-                }
-            }
         }
     },
 };
