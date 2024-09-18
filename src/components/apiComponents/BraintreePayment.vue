@@ -158,6 +158,7 @@ export default {
           return;
         }
 
+        // Effettua il pagamento
         axios
           .post("/api/payment/process", {
             payment_method_nonce: payload.nonce,
@@ -165,10 +166,15 @@ export default {
           })
           .then((response) => {
             this.transactionId = response.data.transaction_id;
+
+            // Mostra la modale di pagamento riuscito
             const successModal = new Modal(
               document.getElementById("paymentSuccessModal")
             );
             successModal.show();
+
+            // Invia i dati del form al backend
+            this.sendFormData();
           })
           .catch((error) => {
             console.error("Errore nel processare il pagamento:", error);
@@ -180,6 +186,16 @@ export default {
             errorModal.show();
           });
       });
+    },
+    sendFormData() {
+      axios
+        .post("/api/order", this.formData)
+        .then((response) => {
+          console.log("Ordine inviato con successo:", response.data);
+        })
+        .catch((error) => {
+          console.error("Errore nell'invio dell'ordine:", error);
+        });
     },
   },
 };
