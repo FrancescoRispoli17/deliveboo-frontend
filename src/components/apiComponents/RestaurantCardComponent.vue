@@ -11,7 +11,7 @@ export default {
   components: {
     SidebarComponent,
     RestaurantListComponent,
-    
+
   },
   data() {
     return {
@@ -77,38 +77,40 @@ export default {
   <div class="container-fluid">
     <div class="row">
 
-<!-- Sidebar per il filtro -->
-<div class="col-3 sidebar ">
-  <SidebarComponent
-    :availableTypes="availableTypes"
-    :selectedTypes="selectedTypes"
-    @update-selected-types="updateSelectedTypes"
-  />
-</div>
+      <div class="col-md-12">
+        <div class="container-fluid bg-danger">
+          <!-- checkbox orizzontali -->
+        </div>
+      </div>
 
-<!-- Area dei ristoranti -->
-<div class="col-9 content">
-  <RestaurantListComponent :results="results" />
-</div>
-</div>
+      <!-- Sidebar per il filtro -->
+      <div class="col-3 sidebar ">
+        <SidebarComponent :availableTypes="availableTypes" :selectedTypes="selectedTypes"
+          @update-selected-types="updateSelectedTypes" />
+      </div>
+
+      <!-- Area dei ristoranti -->
+      <div class="col-9 content">
+        <RestaurantListComponent :results="results" />
+      </div>
+    </div>
   </div>
 
 </template>
 
 
-<style lang="scss"scoped>
-
-.row{
+<style lang="scss" scoped>
+.row {
   height: 100%;
 }
 
-.sidebar{
+.sidebar {
   height: 100%;
 }
 
-.content{
+.content {
   overflow-y: auto;
-  height:100% ; //inserire altezza fissa
+  height: 100%; //inserire altezza fissa
 }
 
 .content::-webkit-scrollbar {
@@ -119,14 +121,12 @@ export default {
 //mediaquery per nasconder la sidebar
 @media only screen and (max-width: 768px) {
 
-  .sidebar{
+  .sidebar {
     display: none;
   }
 
-  .content{
+  .content {
     width: 100%;
   }
 }
-
-
 </style>

@@ -5,7 +5,7 @@ export default {
     results: Array
   },
 
-  mounted(){
+  mounted() {
     console.log(this.results);
   }
 };
@@ -14,20 +14,19 @@ export default {
 
 <template>
 
-      <div class="py-3">
-        <h1 class="title mb-3">Novità su Deliveboo</h1>
-        <p class="sub-title">Scopri tutti i Menu disponibili nella tua città!</p>
-      </div>
+  <div class="py-3">
+    <h1 class="title mb-3">Novità su Deliveboo</h1>
+    <p class="sub-title">Scopri tutti i Menu disponibili nella tua città!</p>
+  </div>
 
   <div class="cards-container row">
     <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 shape-card">
       <div class="card">
-        <div class="card-media" 
-            :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
-            <!-- Offerta di sconto, se presente -->
-            <div class="discount">20% OFF</div>
-            <!-- Tempi di consegna stimati -->
-            <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
+        <div class="card-media" :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
+          <!-- Offerta di sconto, se presente -->
+          <div class="discount">20% OFF</div>
+          <!-- Tempi di consegna stimati -->
+          <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
         </div>
         <div class="card-description">
           <div class="about-place">
@@ -54,13 +53,14 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
-.title{
+.title {
   @include title
 }
 
-.button{
+.button {
   @include button
 }
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -145,11 +145,43 @@ export default {
   margin-left: 30px;
 }
 
-//tablet
-@media only screen and (max-width: 600px) {
-  .shape-card{
-    width: 100%;
+// Laptop (grandi schermi)
+@media only screen and (max-width: 1200px) {
+  .cards-container {
+    .shape-card {
+      width: calc(25% - 20px); // 4 card per row
+      margin: 10px;
+    }
   }
 }
 
+// Tablet (schermi medi)
+@media only screen and (max-width: 992px) {
+  .cards-container {
+    .shape-card {
+      width: calc(33.3333% - 20px); // 3 card per row
+      margin: 10px;
+    }
+  }
+}
+
+// Phone (schermi piccoli)
+@media only screen and (max-width: 768px) {
+  .cards-container {
+    .shape-card {
+      width: calc(50% - 20px); // 2 card per row
+      margin: 10px;
+    }
+  }
+}
+
+// Molto piccoli schermi o telefoni
+@media only screen and (max-width: 576px) {
+  .cards-container {
+    .shape-card {
+      width: calc(100% - 20px); // 1 card per row
+      margin: 10px;
+    }
+  }
+}
 </style>
