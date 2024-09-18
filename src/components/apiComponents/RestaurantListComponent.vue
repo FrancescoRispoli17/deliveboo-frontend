@@ -16,7 +16,7 @@ export default {
       </div>
 
   <div class="cards-container row">
-    <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3">
+    <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 shape-card">
       <div class="card">
         <div class="card-media" 
              style="background-image: url(' https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85');">
@@ -140,4 +140,12 @@ export default {
   margin-bottom: 6px;
   margin-left: 30px;
 }
+
+//tablet
+@media only screen and (max-width: 600px) {
+  .shape-card{
+    width: 100%;
+  }
+}
+
 </style>
