@@ -108,7 +108,7 @@
 
     <!-- Submit -->
     <button type="button" class="btn btn-primary" @click="submitForm">
-      Invia
+      Conferma Dati
     </button>
   </form>
 </template>
@@ -168,6 +168,9 @@ export default {
       if (Object.keys(this.errors).length === 0) {
         this.formData.delivery_datetime = `${this.formData.delivery_date}T${this.formData.delivery_time}`;
         this.$emit("formSubmitted", this.formData);
+        this.$emit("formValid", true); // Emesso evento per indicare che il form è valido
+      } else {
+        this.$emit("formValid", false); // Emesso evento per indicare che il form non è valido
       }
     },
     validateEmail(email) {

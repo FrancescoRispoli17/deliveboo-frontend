@@ -10,11 +10,15 @@
       <div class="container">
         <div class="row">
           <!-- Passa l'evento submit form -->
-          <UserFormInfo @formSubmitted="handleFormSubmit"></UserFormInfo>
+          <UserFormInfo
+            @formSubmitted="handleFormSubmit"
+            @formValid="handleFormValid"></UserFormInfo>
+          <!-- Mostra il pulsante "Paga ora" solo se il form è valido -->
           <BraintreePayment
             ref="braintreePayment"
             :total="totale"
-            :formData="formData"></BraintreePayment>
+            :formData="formData"
+            v-if="isFormValid"></BraintreePayment>
         </div>
       </div>
     </div>
@@ -36,6 +40,7 @@ export default {
       cart: [],
       totale: null,
       formData: null, // Memorizza i dati del form
+      isFormValid: false, // Variabile per controllare la visibilità del pulsante
     };
   },
   mounted() {
@@ -48,9 +53,10 @@ export default {
     handleFormSubmit(formData) {
       // Salva i dati del form
       this.formData = formData;
-
-      // Procedi con il pagamento
-      this.$refs.braintreePayment.processPayment();
+    },
+    handleFormValid(isValid) {
+      // Imposta la visibilità del pulsante "Paga ora"
+      this.isFormValid = isValid;
     },
   },
 };
