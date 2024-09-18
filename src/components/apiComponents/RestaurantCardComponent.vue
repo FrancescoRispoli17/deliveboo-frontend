@@ -4,11 +4,14 @@ import { store } from '../../store';
 import SidebarComponent from './SidebarComponent.vue';
 import RestaurantListComponent from './RestaurantListComponent.vue';
 
+
+
 export default {
   name: 'RestaurantCardComponent',
   components: {
     SidebarComponent,
-    RestaurantListComponent
+    RestaurantListComponent,
+    
   },
   data() {
     return {
@@ -70,10 +73,10 @@ export default {
 
 
 <template>
-  <div class="container-fluid">
     <div class="row">
+
       <!-- Sidebar per il filtro -->
-      <div class="col-md-3 col-lg-3">
+      <div class="col-3 sidebar ">
         <SidebarComponent
           :availableTypes="availableTypes"
           :selectedTypes="selectedTypes"
@@ -82,14 +85,30 @@ export default {
       </div>
 
       <!-- Area dei ristoranti -->
-      <div class="col-md-8 col-lg-8 py-4">
+      <div class="col-9 content">
         <RestaurantListComponent :results="results" />
       </div>
     </div>
-  </div>
 </template>
 
 
 <style lang="scss"scoped>
+
+.row{
+  height: 100%;
+}
+
+.sidebar{
+  height: 100%;
+}
+
+.content{
+  overflow-y: auto;
+  height:100% ; //inserire altezza fissa
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
 
 </style>

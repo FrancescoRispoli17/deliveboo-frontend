@@ -19,7 +19,7 @@ export default {
 <template>
 
     <div class="logo-container">
-        <img src="/logo_bg-filled.png" alt="">
+        <img src="/deliveboo-filled-logo.png" alt="">
     </div>
 
 </template>

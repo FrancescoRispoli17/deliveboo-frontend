@@ -24,11 +24,8 @@ export default {
 <template>
     <div class="container">
         <div class="row">
-             
-            <FavouritesCtaComponent />
-
+            <!-- <FavouritesCtaComponent /> -->
             <LoginCtaComponent/>
-
             <CartCtaComponent/>
         </div>
     </div>

@@ -36,7 +36,7 @@ export default {
 
 
 .user {
-    width: 50%;
+    width: 30%;
     @include border-solid;
 }
 

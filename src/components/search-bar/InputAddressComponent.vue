@@ -19,9 +19,9 @@ export default {
     <form class="d-flex p-2 w-100 align-items-center" role="search">
             <a href=""><font-awesome-icon :icon="['fas', 'map-marker-alt']" class="mx-2 icon" style="height: 20px;" /></a>
             <input class="search-bar me-2" type="search" placeholder="Inserisci il tuo indirizzo completo" aria-label="Search">
-            <button class="search">
+            <a href="/restaurant" class="search">
                 <span class="fw-bold">Cerca</span>
-            </button>
+            </a>
     </form>
 
 </template>
@@ -34,6 +34,10 @@ export default {
 form {
     @include border-radius-solid;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  // Ombreggiatura leggera
+}
+
+.a{
+    text-decoration: none;
 }
 
 .search-bar {

@@ -40,8 +40,12 @@ export default {
             <li v-else >Non ci sono articoli nel carrello</li>
         </ul>
     </div>
+
+
+
+    
     <!-- Modal -->
-    <div class="modal fade" id="headerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade w-100" id="headerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -69,8 +73,16 @@ export default {
     color:$primary-color;
 }
 
+.dropdown{
+    width: 40%;
+}
+
+.dropdown-menu{
+    width: 100%;
+}
+
 .cart{
-    width: 30% ;
+    width: 100% ;
     @include border-solid;
 }
 

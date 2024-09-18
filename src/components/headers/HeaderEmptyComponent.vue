@@ -1,19 +1,16 @@
 <script>
-
-//navbar sia per il backend per il frontend
-
-
-import LogoComponent from '../containers/logoComponent.vue';
+//metti questo in restaurant
+import LogoFilledComponent from '../containers/LogoFilledComponent.vue';
 import HeaderCta from '../header-buttons/HeaderCta.vue';
 import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
 
 export default {
-    name:'HeaderComponent',
+    name:'HeaderEmptyComponent',
 
     components:{
         SearchBarComponent,
         //modifiche
-        LogoComponent,
+        LogoFilledComponent,
         //modifiche
         HeaderCta
     },
@@ -26,7 +23,6 @@ export default {
     }
 }
 
-
 </script>
 
 <template>
@@ -35,7 +31,11 @@ export default {
             <div class="d-flex">
 
                 <div class="col-lg-2 side-div py-2">
-                     <LogoComponent/>
+                    <!-- qui andrà il nuovo componente del logo -->
+
+                    <a href="/">
+                        <LogoFilledComponent/>
+                    </a>
                 </div>
                 <div class="col-lg-8 search-bar-desktop py-1">
                     <!-- <SearchBarComponent/> -->
@@ -54,51 +54,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@use 'src/assets/partials/_variables.scss' as *;
+@use 'src/assets/partials/_mixin.scss' as *;
 
-@media screen and (max-width: 1024px) {
-    .side-div {
-        width: 20%;
-    }
-
-    .search-bar-desktop {
-        width: 60%;
-    }
+header{
+    border-bottom: solid 0.1px rgba(255, 166, 0, 0.2);
 }
-
-@media screen and (max-width: 768px) {
-    .side-div {
-        width: 20%;
-    }
-
-    .search-bar-desktop {
-        width: 60%;
-        display: block; 
-    }
-
-    .col-md-12 {
-        display: block; 
-    }
-}
-
-@media screen and (max-width: 576px) {
-    .side-div {
-        width: 50%; 
-    }
-
-    .search-bar-desktop {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    .side-div {
-        width: 50%;
-    }
-
-    .search-bar-desktop {
-        display: none;
-    }
-}
-
 
 </style>
