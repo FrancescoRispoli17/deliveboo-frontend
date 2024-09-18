@@ -65,9 +65,7 @@ export default {
 }
 
 .title {
-  color: $secondary-color;
-  font-size: 2rem;
-  font-weight: 700;
+  @include title
 }
 
 .text{
@@ -76,12 +74,7 @@ export default {
 }
 
 .button {
-  background-color: $primary-color;
-  padding: 0.5rem 1rem;
-  color: $quaternary-color;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 0.2rem;
+@include button
 }
 
 .card-custom {

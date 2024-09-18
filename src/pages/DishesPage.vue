@@ -2,8 +2,15 @@
 import axios from "axios";
 import { store } from "../store";
 
+//componenti
+import HeaderEmptyComponent from '../components/headers/HeaderEmptyComponent.vue';
+
 export default {
-  name: "RestaurantDetailPage",
+  name: 'RestaurantDetailPage',
+  components:{
+    HeaderEmptyComponent
+  },
+
   data() {
     return {
       restaurant: {},
@@ -110,131 +117,79 @@ export default {
 </script>
 
 <template>
+
+  <HeaderEmptyComponent/>
+
   <div class="container mt-4">
-    <!-- Card principale del ristorante -->
-    <div class="card bg-dark text-white">
-      <div class="card-header">
+    <div class="row">
+      <!-- Sezione dei piatti -->
+      <div class="col-md-7" v-if="restaurant.dishes && restaurant.dishes.length">
         <h1 class="card-title">{{ restaurant.name }}</h1>
-      </div>
-      <div class="card-body">
         <p class="card-text">{{ restaurant.description }}</p>
-
-        <!-- Sezione dei piatti -->
-        <div v-if="restaurant.dishes && restaurant.dishes.length">
-          <h4 class="mt-4 text-light">Piatti:</h4>
-          <div class="row">
-            <!-- Card per ciascun piatto -->
-            <div
-              class="col-md-7 mb-3"
-              v-for="dish in restaurant.dishes"
-              :key="dish.id">
-              <img
-                :src="dish.image_path_url"
-                alt=""
-                style="max-width: 100px; max-height: 100px" />
-              <div class="card bg-secondary text-white">
-                <div class="card-body">
-                  <h5 class="card-title fs-6">{{ dish.name }}</h5>
-                  <p class="card-text text-light">
-                    Descrizione{{ dish.description }}
-                  </p>
-                  <p class="card-text text-light">Prezzo: €{{ dish.price }}</p>
-                  <!-- Button trigger modal -->
-                  <button @click="confirim(dish)" class="btn btn-primary">
-                    +
-                  </button>
-                </div>
-              </div>
+        <h4 class="mt-4">Piatti:</h4>
+        <div v-for="dish in restaurant.dishes" :key="dish.id" class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img :src="dish.image_path_url" class="img-fluid" alt="">
             </div>
-
-            <!-- Carrello -->
-            <div class="col-md-5">
-              <div v-for="dish in cart" class="mt-4">
-                <p class="text-white m-0">
-                  <span class="me-3">{{ dish.quantity }}x</span>{{ dish.name }}
-                </p>
-                <button
-                  class="btn text-white me-3"
-                  @click="deleteSingleDish(dish)">
-                  -
-                </button>
-                <span>edit</span>
-                <button class="btn text-white ms-3" @click="addToCart(dish)">
-                  +
-                </button>
+            <div class="col-md-8">
+              <div class="card-body bg-secondary text-white">
+                <h5 class="card-title">{{ dish.name }}</h5>
+                <p class="card-text">Descrizione: {{ dish.description }}</p>
+                <p class="card-text">Prezzo: €{{ dish.price }}</p>
+                <button @click="confirim(dish)" class="btn btn-primary">+</button>
               </div>
-              <div v-if="cart.length">
-                <p class="text-white">Toale: €{{ totale }}</p>
-                <!-- Button trigger modal -->
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal">
-                  Svuota carrello
-                </button>
-                <!-- Modal -->
-                <div
-                  class="modal fade"
-                  id="exampleModal"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                          Svuota carrello
-                        </h1>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p>Sei sicuro di voler eliminare il tuo carrello?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal">
-                          Chiudi
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          @click="deleteCart()"
-                          data-bs-dismiss="modal">
-                          Svuota
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <router-link
-                  :to="{ name: 'payPage' }"
-                  class="btn btn-primary mx-3"
-                  >conferma ordine</router-link
-                >
-              </div>
-              <p v-else class="text-white mx-auto">
-                <font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo
-                carello è vuoto
-              </p>
             </div>
           </div>
         </div>
-        <div v-else>
-          <p>Non ci sono piatti disponibili per questo ristorante.</p>
+      </div>
+
+      <!-- Carrello -->
+      <div class="col-md-5 bg-danger">
+        <div v-for="dish in cart" class="mt-4">
+          <p class="text-white m-0">
+            <span class="me-3">{{ dish.quantity }}x</span>{{ dish.name }}
+          </p>
+          <button class="btn text-white me-3" @click="deleteSingleDish(dish)">-</button>
+          <span>edit</span>
+          <button class="btn text-white ms-3" @click="addToCart(dish)">+</button>
         </div>
+        <div v-if="cart.length">
+          <p class="text-white">Totale: €{{ totale }}</p>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Svuota carrello
+          </button>
+          <!-- Modal per svuotare il carrello -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Sei sicuro di voler eliminare il carrello?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                  <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">Conferma ordine</router-link>
+        </div>
+        <p v-else class="text-white mx-auto">
+          <font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo carrello è vuoto
+        </p>
       </div>
     </div>
   </div>
+
 </template>
 
+
 <style lang="scss">
-@use "src/assets/partials/_variables.scss" as *;
-@use "src/assets/partials/_mixin.scss" as *;
+  @use 'src/assets/partials/_variables.scss' as *;
+  @use 'src/assets/partials/_mixin.scss' as *;
 </style>
