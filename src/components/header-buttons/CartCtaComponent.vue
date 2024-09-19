@@ -1,11 +1,13 @@
 <script>
+import { store } from "../../store";
 export default {
     name: 'CartCtaComponent',
 
     data() {
         return {
             cart: [], // il carrello
-            showSidebar: false, // stato per mostrare/nascondere la sidebar
+            showSidebar: false, 
+            store// stato per mostrare/nascondere la sidebar
         };
     },
 
@@ -24,13 +26,15 @@ export default {
     methods: {
         loadCart() {
             // Ricarica il carrello dal localStorage
-            const storedCart = localStorage.getItem('cart');
-            this.cart = storedCart ? JSON.parse(storedCart) : [];
+            if(localStorage.getItem('cart')){
+                this.store.lastCart =JSON.parse(localStorage.getItem('cart'));
+            }
         },
 
         deleteCart() {
-            this.cart = [];
-            localStorage.removeItem('cart');
+            this.store.cart = [];
+            this.store.lastCart = [];
+            localStorage.clear();
         },
 
         toggleSidebar() {
@@ -44,7 +48,54 @@ export default {
 
         closeSidebar() {
             this.showSidebar = false;
-        }
+        },
+        addToCart(dish) {
+            this.totale = 0; // Reset totale
+            const obj = {
+                id: dish.id,
+                name: dish.name,
+                price: dish.price,
+                quantity: 1, // Aggiungi una porzione
+            };
+            
+            // Verifica se il piatto è già presente nel carrello
+            if (this.store.lastCart.length) {
+                let ciclo = false;
+                this.store.lastCart.forEach((cartDish) => {
+                if (cartDish.name == obj.name) {
+                    cartDish.quantity += obj.quantity; // Aumenta quantità se esiste già
+                    ciclo = true;
+                    return ciclo;
+                }
+                });
+                if (!ciclo) this.store.lastCart.push(obj); // Aggiungi nuovo piatto
+            } else {
+                this.store.lastCart.push(obj); // Aggiunge il primo piatto
+            }
+
+            // Aggiorna il localStorage con i dati del carrello
+            localStorage.setItem("cart", JSON.stringify(this.store.lastCart));
+            this.calcoloTotale();
+            this.store.cart=this.store.lastCart;
+        },
+        deleteSingleDish(dish,index) {
+            if (dish.quantity > 1) {
+                dish.quantity--; // Diminuisci la quantità solo se è maggiore di 1
+            } else {
+                this.store.cart.splice(index, 1); // Rimuove il piatto se la quantità è 1
+            }
+            this.calcoloTotale(); // Aggiorna il totale
+            if(this.store.cart) localStorage.setItem("cart", JSON.stringify(this.cart));
+            else localStorage.clear();
+            this.store.lastCart=this.store.cart;
+        },
+        calcoloTotale() {
+            this.totale = 0; // Reset del totale
+            this.store.lastCart.forEach((cartDish) => {
+                this.totale += parseFloat(cartDish.price) * cartDish.quantity; // Somma dei prezzi
+            });
+            localStorage.setItem("tot", JSON.stringify(this.totale)); // Salva il totale
+            },
     }
 };
 
@@ -66,9 +117,11 @@ export default {
 
             <div class="cart-sidebar-content">
                 <h4 class="title">Riepilogo dell' ordine</h4>
-                <ul v-if="cart.length">
-                    <li v-for="dish in cart" :key="dish.name">
+                <ul v-if="store.lastCart.length">
+                    <li v-for="(dish,index) in store.lastCart" :key="dish.name">
                         {{ dish.name }} x{{ dish.quantity }}
+                        <button class="btn btn-primary" @click="deleteSingleDish(dish,index)">-</button>
+                        <button class="btn btn-primary ms-3" @click="addToCart(dish)">+</button>
                     </li>
                 </ul>
                 <div v-else>Non ci sono articoli nel carrello</div>
@@ -77,9 +130,9 @@ export default {
             <hr>
 
             <div class="cart-sidebar-footer">
-                <button v-if="cart.length" class=" btn button" @click="deleteCart">Svuota carrello</button>
+                <button v-if="store.cart.length" class=" btn button" @click="deleteCart">Svuota carrello</button>
 
-                <router-link v-if="cart.length" :to="{ name: 'payPage' }" class="btn button mx-3">Conferma
+                <router-link v-if="store.cart.length" :to="{ name: 'payPage' }" class="btn button mx-3">Conferma
                     ordine</router-link>
             </div>
         </div>

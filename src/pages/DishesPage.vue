@@ -16,8 +16,9 @@ export default {
   data() {
     return {
       restaurant: {}, // Dettagli del ristorante
-      cart: [], // Carrello degli ordini
-      totale: null, // Totale prezzo carrello
+      // cart: [], // Carrello degli ordini
+      totale: null,
+      store // Totale prezzo carrello
     };
   },
   methods: {
@@ -34,10 +35,10 @@ export default {
           // Verifica se esiste già un carrello e se appartiene allo stesso ristorante
           if (localStorage.getItem("cart")) {
             if (localStorage.getItem("lastRestaurant") == this.restaurant.id) {
-              this.cart = JSON.parse(localStorage.getItem("cart")); // Recupera carrello
+              this.store.cart = JSON.parse(localStorage.getItem("cart")); // Recupera carrello
               this.totale = JSON.parse(localStorage.getItem("tot")); // Recupera totale
             } else {
-              this.cart = []; // Nuovo carrello se si tratta di un altro ristorante
+              this.store.cart = []; // Nuovo carrello se si tratta di un altro ristorante
             }
           }
         })
@@ -72,28 +73,31 @@ export default {
       };
       
       // Verifica se il piatto è già presente nel carrello
-      if (this.cart.length) {
+      if (this.store.cart.length) {
         let ciclo = false;
-        this.cart.forEach((cartDish) => {
+        this.store.cart.forEach((cartDish) => {
           if (cartDish.name == obj.name) {
             cartDish.quantity += obj.quantity; // Aumenta quantità se esiste già
             ciclo = true;
+            return ciclo;
           }
         });
-        if (!ciclo) this.cart.push(obj); // Aggiungi nuovo piatto
+        if (!ciclo) this.store.cart.push(obj); // Aggiungi nuovo piatto
       } else {
-        this.cart.push(obj); // Aggiunge il primo piatto
+        this.store.cart.push(obj); // Aggiunge il primo piatto
       }
 
       // Aggiorna il localStorage con i dati del carrello
-      localStorage.setItem("cart", JSON.stringify(this.cart));
+      localStorage.setItem("cart", JSON.stringify(this.store.cart));
       localStorage.setItem("lastRestaurant", JSON.stringify(this.restaurant.id));
-      this.calcoloTotale(); // Calcola il totale
+      this.calcoloTotale();
+      this.store.lastCart=this.store.cart;
     },
 
     // Svuota completamente il carrello
     deleteCart() {
-      this.cart = [];
+      this.store.cart = [];
+      this.store.lastCart = [];
       this.totale = null;
       localStorage.clear(); // Cancella tutto dal localStorage
     },
@@ -101,21 +105,23 @@ export default {
     // Calcola il totale dei piatti nel carrello
     calcoloTotale() {
       this.totale = 0; // Reset del totale
-      this.cart.forEach((cartDish) => {
+      this.store.cart.forEach((cartDish) => {
         this.totale += parseFloat(cartDish.price) * cartDish.quantity; // Somma dei prezzi
       });
       localStorage.setItem("tot", JSON.stringify(this.totale)); // Salva il totale
     },
 
     // Rimuove una porzione o un piatto intero dal carrello
-    deleteSingleDish(dish) {
+    deleteSingleDish(dish,index) {
       if (dish.quantity > 1) {
         dish.quantity--; // Diminuisci la quantità solo se è maggiore di 1
       } else {
-        this.cart.splice(this.cart.indexOf(dish), 1); // Rimuove il piatto se la quantità è 1
+        this.store.cart.splice(index, 1); // Rimuove il piatto se la quantità è 1
       }
       this.calcoloTotale(); // Aggiorna il totale
-      localStorage.setItem("cart", JSON.stringify(this.cart)); // Aggiorna il carrello nel localStorage
+      if(this.store.cart) localStorage.setItem("cart", JSON.stringify(this.cart));
+      else localStorage.clear();
+      this.store.lastCart=this.store.cart;
     },
   },
 
@@ -187,7 +193,7 @@ export default {
         
       <div class="col-lg-6 col-md-12 justify-content-center align-items-center kart kart-side py-3" style=" background-image: url('/offers.png');">
         <!-- Recap per schermi più piccoli di 768px -->
-        <div v-if="cart.length" class="recap mt-3">
+        <div v-if="store.cart.length" class="recap mt-3">
           <p class="text-white" style="font-weight: 800;">
             Costo totale: €{{ totale }}
           </p>
@@ -196,12 +202,12 @@ export default {
         <!-- Dettagli del carrello per schermi sopra 768px -->
         <div class=" py-2 dish-scroll info-kart">
 
-          <div v-for="dish in cart" class="p-2 d-flex justify-content-around ">
+          <div v-for="(dish,index) in store.cart" class="p-2 d-flex justify-content-around ">
             <p class="text-white m-0" style="font-weight: 500;">
               {{ dish.quantity }} x {{ dish.name }}
             </p>
             <div>
-              <button class="btn text-white me-3" style="font-weight: 500;" @click="deleteSingleDish(dish)">-</button>
+              <button class="btn text-white me-3" style="font-weight: 500;" @click="deleteSingleDish(dish,index)">-</button>
 
               <button class="btn text-white ms-3" style="font-weight: 500;" @click="addToCart(dish)">+</button>
             </div>
@@ -210,7 +216,7 @@ export default {
         </div>
 
         <!-- Pulsanti e totale carrello -->
-        <div v-if="cart.length" class="text-center info-kart">
+        <div v-if="store.cart.length" class="text-center info-kart">
           <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn button-white" data-bs-toggle="modal" data-bs-target="#exampleModal">

@@ -3,6 +3,8 @@ import axios from "axios";
 import { reactive } from "vue";
 
 export const store = reactive({
+  cart:[],
+  lastCart:[],
   //currentPage: 1;
 
   results: [],
