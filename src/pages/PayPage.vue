@@ -1,32 +1,6 @@
-<template>
-  <div class="container bg-white">
-    <div class="row">
-      <div class="col-12">
-        <p v-for="dish in cart" :key="dish.id">
-          {{ dish.name }} <span class="ms-2">x{{ dish.quantity }}</span>
-        </p>
-        <p class="mt-5">Prezzo totale: €{{ parseFloat(totale).toFixed(2) }}</p>
-      </div>
-      <div class="container">
-        <div class="row">
-          <!-- Passa l'evento submit form -->
-          <UserFormInfo
-            @formSubmitted="handleFormSubmit"
-            @formValid="handleFormValid"></UserFormInfo>
-          <!-- Passa il cart e il totale al componente BraintreePayment -->
-          <BraintreePayment
-            ref="braintreePayment"
-            :total="totale"
-            :formData="formData"
-            :cart="cart"
-            v-if="isFormValid"></BraintreePayment>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
+import HeaderEmptyComponent from '../components/headers/HeaderEmptyComponent.vue';
+import FooterComponent from '../components/footers/FooterComponent.vue';
 import UserFormInfo from "../components/apiComponents/UserFormInfo.vue";
 import BraintreePayment from "../components/apiComponents/BraintreePayment.vue";
 
@@ -35,6 +9,8 @@ export default {
   components: {
     UserFormInfo,
     BraintreePayment,
+    HeaderEmptyComponent,
+    FooterComponent
   },
   data() {
     return {
@@ -64,4 +40,83 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<template>
+  <HeaderEmptyComponent />
+  <div class="container bg-white py-5">
+    <div class="row">
+      <!-- Tabella per visualizzare il carrello -->
+      <div class="col-12">
+        <!-- Tabella responsiva -->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="text">Piatto</th>
+                <th scope="col" class="text">Qtà</th>
+                <th scope="col" class="text">Unità</th>
+                <th scope="col" class="text">Totale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="dish in cart" :key="dish.id">
+                <td class="text">{{ dish.name }}</td>
+                <td class="text">{{ dish.quantity }}</td>
+                <td class="text">€{{ parseFloat(dish.price).toFixed(2) }}</td>
+                <td class="text">€{{ (dish.price * dish.quantity).toFixed(2) }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="3" class="text-end">Totale</th>
+                <th>€{{ parseFloat(totale).toFixed(2) }}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Form e BraintreePayment -->
+      <div class="col-12">
+        <!-- Passa l'evento submit form -->
+        <UserFormInfo
+          @formSubmitted="handleFormSubmit"
+          @formValid="handleFormValid"
+        ></UserFormInfo>
+        <!-- Passa il cart e il totale al componente BraintreePayment -->
+        <BraintreePayment
+          ref="braintreePayment"
+          :total="totale"
+          :formData="formData"
+          :cart="cart"
+          v-if="isFormValid"
+        ></BraintreePayment>
+      </div>
+    </div>
+  </div>
+  <FooterComponent/>
+</template>
+
+<style lang="scss" scoped>
+@use 'src/assets/partials/_variables.scss' as *;
+@use 'src/assets/partials/_mixin.scss' as *;
+
+.recap-order {
+  background-color: $secondary-color;
+}
+
+/* Stile per la tabella */
+.table {
+  margin-top: 20px;
+}
+
+.text-end {
+  text-align: right;
+}
+
+@media(max-width: 768px){
+  .text{
+    font-size: 14px;
+  }
+}
+
+</style>

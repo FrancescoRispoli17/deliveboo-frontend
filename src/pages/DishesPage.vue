@@ -191,7 +191,7 @@ export default {
 
       <!-- Carrello side -->
         
-      <div class="col-lg-6 col-md-12 justify-content-center align-items-center kart kart-side py-3" style=" background-image: url('/offers.png');">
+      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/offers.png');">
         <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap mt-3">
           <p class="text-white" style="font-weight: 800;">
@@ -200,16 +200,27 @@ export default {
         </div>
 
         <!-- Dettagli del carrello per schermi sopra 768px -->
-        <div class=" py-2 dish-scroll info-kart">
+        <div class=" p-4 dish-scroll info-kart">
 
-          <div v-for="(dish,index) in store.cart" class="p-2 d-flex justify-content-around ">
-            <p class="text-white m-0" style="font-weight: 500;">
-              {{ dish.quantity }} x {{ dish.name }}
-            </p>
-            <div>
-              <button class="btn text-white me-3" style="font-weight: 500;" @click="deleteSingleDish(dish,index)">-</button>
+          <div v-for="(dish,index) in store.cart" class=" d-flex">
+            <div class="col-6 py-1">
 
-              <button class="btn text-white ms-3" style="font-weight: 500;" @click="addToCart(dish)">+</button>
+              <div v-if="dish.quantity > 1">
+              <p class="text-white m-0" style="font-weight: 500; font-size:16px ;">
+              {{ dish.quantity }} piatti di {{ dish.name }}
+              </p>
+            </div>
+            <div v-else>
+              <p class="text-white m-0" style="font-weight: 500; font-size:16px ;">
+              {{ dish.quantity }} piatto di {{ dish.name }}
+              </p>
+            </div>
+
+            </div>
+            <div class="col-6 d-flex justify-content-end py-1">
+              <button class="btn rounded text-secondary me-3" style="font-weight: 500;" @click="deleteSingleDish(dish,index)">-</button>
+
+              <button class="btn rounded text-secondary ms-3" style="font-weight: 500;" @click="addToCart(dish)">+</button>
             </div>
           </div>
 
@@ -263,6 +274,11 @@ export default {
 <style lang="scss" scoped>
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
+
+.rounded{
+  border-radius: 100%;
+  background-color: $quaternary-color;
+}
 
 .card{
   border: 0.5px solid rgba(0, 0, 0, 0.099);
