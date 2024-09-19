@@ -120,32 +120,53 @@ export default {
 
   <HeaderEmptyComponent />
 
+  <div class="container">
+    <div class="row">
+      <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
+      <div class="col d-flex" v-if="restaurant">
+
+        <div class="col-md-3">
+          <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img-fluid"
+            v-if="restaurant.image_path_url">
+        </div>
+
+        <div class="col-md-9 p-1">
+          <h1 class="title">{{ restaurant.name }}</h1>
+          <p class="card-text">{{ restaurant.description }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Il resto del template rimane invariato -->
   <div class="container mt-4">
     <div class="row">
       <!-- Sezione dei piatti -->
-      <div class="col-md-7" v-if="restaurant.dishes && restaurant.dishes.length">
-        <h1 class="card-title">{{ restaurant.name }}</h1>
-        <p class="card-text">{{ restaurant.description }}</p>
-        <h4 class="mt-4">Piatti:</h4>
+      <div class="col-md-7 scroll" v-if="restaurant.dishes && restaurant.dishes.length">
         <div v-for="dish in restaurant.dishes" :key="dish.id" class="card mb-3">
+
           <div class="row g-0">
-            <div class="col-md-4">
-              <img :src="dish.image_path_url" class="img-fluid" alt="">
+            <div class="col-md-3">
+              <img :src="dish.image_path_url" style="width: 100%; " alt="">
             </div>
-            <div class="col-md-8">
-              <div class="card-body bg-secondary text-white">
+            <div class="col-md-9">
+              <div class="card-body">
                 <h5 class="card-title">{{ dish.name }}</h5>
                 <p class="card-text">Descrizione: {{ dish.description }}</p>
                 <p class="card-text">Prezzo: €{{ dish.price }}</p>
-                <button @click="confirim(dish)" class="btn btn-primary">+</button>
+                <button @click="confirim(dish)" class="btn button">+</button>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
       <!-- Carrello -->
-      <div class="col-md-5 bg-danger">
+      <div class="col-md-5 d-flex justify-content-center align-items-center kart">
         <div v-for="dish in cart" class="mt-4">
           <p class="text-white m-0">
             <span class="me-3">{{ dish.quantity }}x</span>{{ dish.name }}
@@ -181,9 +202,9 @@ export default {
           </div>
           <router-link :to="{ name: 'payPage' }" class="btn btn-primary mx-3">Conferma ordine</router-link>
         </div>
-        <p v-else class="text-white mx-auto">
-          <font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo carrello è vuoto
-        </p>
+        <div v-else class="d-flex justify-content-center align-items-center bg-success">
+          <h1>ciao</h1>
+        </div>
       </div>
     </div>
   </div>
@@ -191,7 +212,36 @@ export default {
 </template>
 
 
+
 <style lang="scss">
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
+
+.scroll {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.button {
+  background-color: $primary-color;
+  @include button
+}
+
+.title {
+  @include title
+}
+
+.hr {
+  border-bottom: 1px solid grey;
+}
+
+
+.kart {
+  background-color: $primary-color;
+  border-radius: 1.2rem;
+}
 </style>

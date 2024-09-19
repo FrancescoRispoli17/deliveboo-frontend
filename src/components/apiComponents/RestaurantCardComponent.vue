@@ -137,14 +137,14 @@ export default {
 }
 
 // Nascondi SelectType su schermi più grandi di 768px (laptop e desktop)
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
   .selectType {
     display: none;
   }
 }
 
 // Mostra SelectType su schermi più piccoli o uguali a 768px (smartphone e tablet)
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
   .selectType {
     display: block;
   }
