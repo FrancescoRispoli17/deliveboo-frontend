@@ -37,6 +37,16 @@
 
 }
 
+@mixin button-radius {
+
+    background-color: $primary-color;
+    color: $quaternary-color;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 1.5rem;
+
+}
+
 
 @mixin title {
     color: $secondary-color;

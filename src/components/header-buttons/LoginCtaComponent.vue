@@ -1,16 +1,16 @@
 <script>
 export default {
-    name: 'LoginCtaComponent' ,
+    name: 'LoginCtaComponent',
 
-    data(){
+    data() {
 
-        return{}
+        return {}
     },
     component: {
 
     },
     methods: {
-        
+
     }
 }
 
@@ -20,8 +20,7 @@ export default {
 <template>
 
     <button class="btn bg-light user">
-        <font-awesome-icon :icon="['fas', 'user']" class="icon"/>
-        <span class="icon"> </span>
+        <span class="icon">Area riservata</span>
     </button>
 
 </template>
@@ -32,18 +31,24 @@ export default {
 
 .icon {
     color: $primary-color;
+    font-weight: 300;
+    font-size: 14px;
 }
 
 
 .user {
-    width: 30%;
+    width: auto;
     @include border-solid;
 }
 
 button {
- @include shadow
+    @include shadow
 }
 
 
-
+@media only screen and (max-width: 768px) {
+    body {
+        background-color: lightblue;
+    }
+}
 </style>

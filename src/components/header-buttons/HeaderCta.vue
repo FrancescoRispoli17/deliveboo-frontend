@@ -7,13 +7,13 @@ export default {
     name: 'HeaderCta',
 
     components: {
-        FavouritesCtaComponent, 
+        FavouritesCtaComponent,
         LoginCtaComponent,
         CartCtaComponent
     },
 
-    data(){
-        return{}
+    data() {
+        return {}
     },
     methods: {
 
@@ -22,11 +22,10 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        <div class="row justify-content-end">
-            <!-- <FavouritesCtaComponent /> -->
-            <LoginCtaComponent/>
-            <CartCtaComponent/>
+    <div class="headerCta">
+        <div class="d-flex justify-content-around">
+            <LoginCtaComponent />
+            <CartCtaComponent />
         </div>
     </div>
 </template>
@@ -35,4 +34,19 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
+.headerCta {
+    width: 30%;
+}
+
+@media only screen and (max-width: 768px) {
+    .headerCta {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .headerCta {
+        width: 100%;
+    }
+}
 </style>

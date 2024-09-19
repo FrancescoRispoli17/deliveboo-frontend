@@ -2,194 +2,359 @@
 import axios from "axios";
 import { store } from "../store";
 
-//componenti
+// Importa i componenti header e footer
 import HeaderEmptyComponent from '../components/headers/HeaderEmptyComponent.vue';
+import FooterComponent from '../components/footers/FooterComponent.vue';
 
 export default {
   name: 'RestaurantDetailPage',
-  components:{
-    HeaderEmptyComponent
+  components: {
+    HeaderEmptyComponent,
+    FooterComponent
   },
 
   data() {
     return {
-      restaurant: {},
-      cart: [],
-      totale: null,
+      restaurant: {}, // Dettagli del ristorante
+      cart: [], // Carrello degli ordini
+      totale: null, // Totale prezzo carrello
     };
   },
   methods: {
+    // Recupera i dettagli del ristorante dal backend
     getRestaurantDetails() {
-      const slug = this.$route.params.slug; // Ottieni lo slug dalla rotta
-      const apiUrl = `${store.url}${store.restaurants}${slug}`;
+      const slug = this.$route.params.slug; // Prende lo "slug" dalla route
+      const apiUrl = `${store.url}${store.restaurants}${slug}`; // Costruisce l'URL dell'API
 
       axios
         .get(apiUrl)
         .then((response) => {
-          this.restaurant = response.data;
+          this.restaurant = response.data; // Assegna i dati del ristorante
+          
+          // Verifica se esiste già un carrello e se appartiene allo stesso ristorante
           if (localStorage.getItem("cart")) {
             if (localStorage.getItem("lastRestaurant") == this.restaurant.id) {
-              this.cart = JSON.parse(localStorage.getItem("cart"));
-              this.totale = JSON.parse(localStorage.getItem("tot"));
-            } else this.cart = [];
+              this.cart = JSON.parse(localStorage.getItem("cart")); // Recupera carrello
+              this.totale = JSON.parse(localStorage.getItem("tot")); // Recupera totale
+            } else {
+              this.cart = []; // Nuovo carrello se si tratta di un altro ristorante
+            }
           }
         })
         .catch((error) => {
-          console.error(
-            "Errore nel recupero dei piatti del ristorante:",
-            error
-          );
+          console.error("Errore nel recupero dei piatti del ristorante:", error);
         });
     },
+
+    // Conferma l'aggiunta del piatto al carrello o richiede conferma se il carrello è di un altro ristorante
     confirim(dish) {
       if (
         localStorage.getItem("lastRestaurant") &&
         localStorage.getItem("lastRestaurant") != this.restaurant.id
       ) {
-        // console.log(localStorage.getItem("lastRestaurant"));
-        // console.log(this.restaurant.id);
-        if (
-          confirm(
-            "Se crei un nuovo carrello eliminerai quello vecchio\n Vuoi proseguire?"
-          ) == true
-        ) {
+        // Conferma di svuotare il carrello precedente
+        if (confirm("Se crei un nuovo carrello eliminerai quello vecchio. Vuoi proseguire?")) {
           this.addToCart(dish);
         }
-      } else this.addToCart(dish);
+      } else {
+        this.addToCart(dish); // Aggiunge il piatto se è lo stesso ristorante
+      }
     },
+
+    // Aggiunge un piatto al carrello
     addToCart(dish) {
-      this.totale = 0;
+      this.totale = 0; // Reset totale
       const obj = {
         id: dish.id,
         name: dish.name,
         price: dish.price,
-        quantity: 1,
+        quantity: 1, // Aggiungi una porzione
       };
+      
+      // Verifica se il piatto è già presente nel carrello
       if (this.cart.length) {
         let ciclo = false;
         this.cart.forEach((cartDish) => {
           if (cartDish.name == obj.name) {
-            cartDish.quantity += obj.quantity;
+            cartDish.quantity += obj.quantity; // Aumenta quantità se esiste già
             ciclo = true;
-            return ciclo;
           }
         });
-        if (!ciclo) this.cart.push(obj);
-      } else this.cart.push(obj);
+        if (!ciclo) this.cart.push(obj); // Aggiungi nuovo piatto
+      } else {
+        this.cart.push(obj); // Aggiunge il primo piatto
+      }
 
-      const parsed = JSON.stringify(this.cart);
-      localStorage.setItem("cart", parsed);
-      const id = JSON.stringify(this.restaurant.id);
-      localStorage.setItem("lastRestaurant", id);
-      this.calcoloTotale();
+      // Aggiorna il localStorage con i dati del carrello
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+      localStorage.setItem("lastRestaurant", JSON.stringify(this.restaurant.id));
+      this.calcoloTotale(); // Calcola il totale
     },
+
+    // Svuota completamente il carrello
     deleteCart() {
       this.cart = [];
       this.totale = null;
-      localStorage.clear();
+      localStorage.clear(); // Cancella tutto dal localStorage
     },
+
+    // Calcola il totale dei piatti nel carrello
     calcoloTotale() {
+      this.totale = 0; // Reset del totale
       this.cart.forEach((cartDish) => {
-        for (let i = 0; i < cartDish.quantity; i++) {
-          this.totale += parseFloat(cartDish.price);
-        }
+        this.totale += parseFloat(cartDish.price) * cartDish.quantity; // Somma dei prezzi
       });
-      const parsed = JSON.stringify(this.totale);
-      localStorage.setItem("tot", parsed);
+      localStorage.setItem("tot", JSON.stringify(this.totale)); // Salva il totale
     },
+
+    // Rimuove una porzione o un piatto intero dal carrello
     deleteSingleDish(dish) {
-      dish.quantity--;
-      this.totale = null;
-      if (dish.quantity < 1) {
-        this.cart.splice(dish.id, 1);
+      if (dish.quantity > 1) {
+        dish.quantity--; // Diminuisci la quantità solo se è maggiore di 1
+      } else {
+        this.cart.splice(this.cart.indexOf(dish), 1); // Rimuove il piatto se la quantità è 1
       }
-      this.calcoloTotale();
-      if (this.cart) {
-        const parsed = JSON.stringify(this.cart);
-        localStorage.setItem("cart", parsed);
-      } else localStorage.clear();
+      this.calcoloTotale(); // Aggiorna il totale
+      localStorage.setItem("cart", JSON.stringify(this.cart)); // Aggiorna il carrello nel localStorage
     },
   },
+
+  // Chiama la funzione per ottenere i dettagli del ristorante appena il componente è montato
   mounted() {
     this.getRestaurantDetails();
   },
 };
 </script>
 
+
 <template>
 
-  <HeaderEmptyComponent/>
+  <HeaderEmptyComponent />
 
-  <div class="container mt-4">
-    <div class="row">
-      <!-- Sezione dei piatti -->
-      <div class="col-md-7" v-if="restaurant.dishes && restaurant.dishes.length">
-        <h1 class="card-title">{{ restaurant.name }}</h1>
+<div class="margin" style=" background-image: url('/offers.png');">
+
+    <div class="container py-5" >
+
+    <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
+    <div class="row" v-if="restaurant">
+
+      <div class="col-md-3">
+        <!-- foto del ristorante -->
+        <div class="img-container">
+          <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img"
+          v-if="restaurant.image_path_url">
+        </div>
+      </div>
+
+      <div class="col-md-9 p-1">
+        <h1 class="title text-white">{{ restaurant.name }}</h1>
         <p class="card-text">{{ restaurant.description }}</p>
-        <h4 class="mt-4">Piatti:</h4>
+      </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+ 
+  <div class="container py-5">
+    <div class="row">
+      
+      <!-- Sezione dei piatti -->
+      <div class=" col-lg-6 col-md-12 scroll py-3" v-if="restaurant.dishes && restaurant.dishes.length">
         <div v-for="dish in restaurant.dishes" :key="dish.id" class="card mb-3">
+
           <div class="row g-0">
-            <div class="col-md-4">
-              <img :src="dish.image_path_url" class="img-fluid" alt="">
+            <div class="col-md-3">
+              <img :src="dish.image_path_url" style="width: 100%; " alt="">
             </div>
-            <div class="col-md-8">
-              <div class="card-body bg-secondary text-white">
+            <div class="col-md-9">
+              <div class="card-body">
                 <h5 class="card-title">{{ dish.name }}</h5>
                 <p class="card-text">Descrizione: {{ dish.description }}</p>
                 <p class="card-text">Prezzo: €{{ dish.price }}</p>
-                <button @click="confirim(dish)" class="btn btn-primary">+</button>
+                <button @click="confirim(dish)" class="btn button"> aggiungi al carrello</button>
               </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Carrello side -->
+        
+      <div class="col-lg-6 col-md-12 justify-content-center align-items-center kart kart-side py-3" style=" background-image: url('/offers.png');">
+        <!-- Recap per schermi più piccoli di 768px -->
+        <div v-if="cart.length" class="recap mt-3">
+          <p class="text-white" style="font-weight: 800;">
+            Costo totale: €{{ totale }}
+          </p>
+        </div>
+
+        <!-- Dettagli del carrello per schermi sopra 768px -->
+        <div class=" py-2 dish-scroll info-kart">
+
+          <div v-for="dish in cart" class="p-2 d-flex justify-content-around ">
+            <p class="text-white m-0" style="font-weight: 500;">
+              {{ dish.quantity }} x {{ dish.name }}
+            </p>
+            <div>
+              <button class="btn text-white me-3" style="font-weight: 500;" @click="deleteSingleDish(dish)">-</button>
+
+              <button class="btn text-white ms-3" style="font-weight: 500;" @click="addToCart(dish)">+</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Pulsanti e totale carrello -->
+        <div v-if="cart.length" class="text-center info-kart">
+          <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn button-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Svuota carrello
+            </button>
+            <router-link :to="{ name: 'payPage' }" class="btn button-white mx-3">Conferma ordine</router-link>
+            </div>
+        </div>
+
+        <div v-else class="d-flex justify-content-center align-items-center">
+           <span class="text-white" style="font-weight: 800;">Inizia a riempire il carrello</span>
+        </div>
+      </div>
+      </div>
+
+
+      
+      <!-- modale -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Sei sicuro di voler eliminare il carrello?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+              <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Carrello -->
-      <div class="col-md-5 bg-danger">
-        <div v-for="dish in cart" class="mt-4">
-          <p class="text-white m-0">
-            <span class="me-3">{{ dish.quantity }}x</span>{{ dish.name }}
-          </p>
-          <button class="btn text-white me-3" @click="deleteSingleDish(dish)">-</button>
-          <span>edit</span>
-          <button class="btn text-white ms-3" @click="addToCart(dish)">+</button>
-        </div>
-        <div v-if="cart.length">
-          <p class="text-white">Totale: €{{ totale }}</p>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Svuota carrello
-          </button>
-          <!-- Modal per svuotare il carrello -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Sei sicuro di voler eliminare il carrello?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                  <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <router-link :to="{name:'payPage'}" class="btn btn-primary mx-3">Conferma ordine</router-link>
-        </div>
-        <p v-else class="text-white mx-auto">
-          <font-awesome-icon :icon="['fas', 'cart-shopping']" /> Il tuo carrello è vuoto
-        </p>
-      </div>
-    </div>
-  </div>
+</div>
+    <FooterComponent/>
 
 </template>
 
 
-<style lang="scss">
-  @use 'src/assets/partials/_variables.scss' as *;
-  @use 'src/assets/partials/_mixin.scss' as *;
+
+<style lang="scss" scoped>
+@use 'src/assets/partials/_variables.scss' as *;
+@use 'src/assets/partials/_mixin.scss' as *;
+
+.card{
+  border: 0.5px solid rgba(0, 0, 0, 0.099);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.button-white{
+  padding: 0.5rem;
+  background-color: $tertiary-color;
+  color: $quaternary-color;
+  font-weight: 600;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.dish-scroll{
+  min-height: 0px;
+  height: 350px;
+  overflow-y: auto;
+}
+
+.dish-scroll::-webkit-scrollbar{
+  display: none;
+}
+
+.margin {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1); 
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+}
+
+
+.img-container {
+  border-radius: 1.5rem;
+  .img {
+    border-radius: 1.5rem; // Aggiungi il border-radius alla foto del ristorante
+    width: 100%; // Assicurati che l'immagine occupi la larghezza completa
+    object-fit: cover; // Mantieni le proporzioni corrette
+  }
+}
+.icon{
+  color: $quaternary-color;
+}
+
+.scroll {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.button {
+  background-color: $primary-color;
+  @include button
+}
+
+.title {
+  @include title
+}
+
+.hr {
+  border-bottom: 1px solid grey;
+}
+
+
+.kart {
+  background-color: $primary-color;
+  border-radius: 1.2rem;
+  background-image: url('/logo-transparent.png');
+}
+
+.recap {
+  display: none; // Nascondi il recap per default su schermi grandi
+}
+
+.info-kart {
+  display: block; // Mostra i dettagli del carrello su schermi grandi
+}
+
+@media(max-width: 768px) {
+  .scroll {
+    height: 600px;
+  }
+
+  .kart-side {
+    height: auto;
+  }
+
+  .recap {
+    display: block; // Mostra il recap su schermi piccoli
+  }
+
+  .info-kart {
+    display: none; // Nascondi i dettagli del carrello su schermi piccoli
+  }
+}
+
+
 </style>

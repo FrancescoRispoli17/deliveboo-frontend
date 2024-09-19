@@ -3,6 +3,7 @@ import axios from 'axios';
 import { store } from '../../store';
 import SidebarComponent from './SidebarComponent.vue';
 import RestaurantListComponent from './RestaurantListComponent.vue';
+import SelectTypeComponent from './SelectTypeComponent.vue'
 
 
 
@@ -11,6 +12,7 @@ export default {
   components: {
     SidebarComponent,
     RestaurantListComponent,
+    SelectTypeComponent
 
   },
   data() {
@@ -74,14 +76,24 @@ export default {
 
 <template>
 
+  <div class="col-md-12 selectType">
+
+    <div class="container-fluid">
+      <div class="py-2">
+        <h1 class="title mb-3 ms-2">Novità su Deliveboo</h1>
+        <p class="sub-title ms-2"> Scrolla sulle tipologie e trova quello che ti piace!</p>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <SelectTypeComponent :availableTypes="availableTypes" :selectedTypes="selectedTypes"
+        @update-selected-types="updateSelectedTypes" />
+    </div>
+
+  </div>
+
   <div class="container-fluid">
     <div class="row">
-
-      <div class="col-md-12">
-        <div class="container-fluid bg-danger">
-          <!-- checkbox orizzontali -->
-        </div>
-      </div>
 
       <!-- Sidebar per il filtro -->
       <div class="col-3 sidebar ">
@@ -100,6 +112,9 @@ export default {
 
 
 <style lang="scss" scoped>
+@use 'src/assets/partials/_variables.scss' as *;
+@use 'src/assets/partials/_mixin.scss' as *;
+
 .row {
   height: 100%;
 }
@@ -110,17 +125,33 @@ export default {
 
 .content {
   overflow-y: auto;
-  height: 100%; //inserire altezza fissa
+  height: 100%;
 }
 
 .content::-webkit-scrollbar {
   display: none;
 }
 
+.title {
+  @include title
+}
 
-//mediaquery per nasconder la sidebar
+// Nascondi SelectType su schermi più grandi di 768px (laptop e desktop)
+@media only screen and (min-width: 769px) {
+  .selectType {
+    display: none;
+  }
+}
+
+// Mostra SelectType su schermi più piccoli o uguali a 768px (smartphone e tablet)
 @media only screen and (max-width: 768px) {
+  .selectType {
+    display: block;
+  }
+}
 
+// Nascondi Sidebar su schermi più piccoli di 768px (tablet e smartphone)
+@media only screen and (max-width: 768px) {
   .sidebar {
     display: none;
   }

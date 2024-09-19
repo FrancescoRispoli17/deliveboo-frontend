@@ -14,7 +14,7 @@ export default {
 
 <template>
 
-  <div class="py-3">
+  <div class="py-3 boh">
     <h1 class="title mb-3">Novità su Deliveboo</h1>
     <p class="sub-title">Scopri tutti i Menu disponibili nella tua città!</p>
   </div>
@@ -172,6 +172,10 @@ export default {
       width: calc(50% - 20px); // 2 card per row
       margin: 10px;
     }
+  }
+
+  .boh {
+    display: none;
   }
 }
 
