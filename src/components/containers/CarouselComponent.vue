@@ -13,6 +13,8 @@ export default {
       sliderWidth: 0,
       slidesVisible: 0,
       speed: 0,
+      intervalId: null, // Aggiunto per gestire l'intervallo
+      scrollSpeed: 0.5, // Nuova variabile per regolare la velocità di scorrimento
     };
   },
   mounted() {
@@ -54,46 +56,52 @@ export default {
       // Velocità di animazione (più immagini ci sono, più tempo serve)
       this.speed = this.images.length * 4;
 
-      // Avviare l'animazione con CSS
+      // Avviare l'animazione
       this.startAnimation();
     },
     startAnimation() {
-      const animationName = 'smoothscroll';
-      const animationDuration = `${this.speed}s`;
-      const animationCSS = `
-        @keyframes ${animationName} {
-          0% { margin-left: 0px; }
-          100% { margin-left: -${this.animationWidth}px; }
-        }
-        .animation {
-          animation: ${animationName} ${animationDuration} linear infinite;
-        }
-      `;
+      const container = this.$refs.animationContainer;
+      let currentPosition = 0;
 
-      // Aggiungere lo stile dinamicamente
-      const styleTag = document.createElement('style');
-      styleTag.type = 'text/css';
-      styleTag.innerHTML = animationCSS;
-      document.head.appendChild(styleTag);
+      // Funzione per gestire lo scorrimento continuo
+      const animate = () => {
+        // Aumentare gradualmente la posizione corrente con la velocità impostata
+        currentPosition -= this.scrollSpeed; // Scorrimento più lento con scrollSpeed
+
+        // Quando l'animazione arriva alla fine, ricomincia
+        if (Math.abs(currentPosition) >= this.animationWidth) {
+          currentPosition = 0;
+        }
+
+        // Aggiornare la posizione di scorrimento
+        container.style.transform = `translateX(${currentPosition}px)`;
+      };
+
+      // Avviare lo scorrimento continuo con un intervallo di tempo più lungo (ad esempio, 30ms)
+      this.intervalId = setInterval(animate, 25); //  aumenta il tempo per rallentare
+    },
+    beforeDestroy() {
+      // Pulire l'intervallo quando il componente viene distrutto
+      clearInterval(this.intervalId);
     },
   },
 };
 </script>
 
+
 <template>
-    <div class="block py-3 bg-color">
-      <div class="animation mb-3" ref="animationContainer">
-        <div v-for="(image, index) in images" :key="index" class="slide">
-          <img :src="image" />
-        </div>
+  <div class="block py-3 bg-color">
+    <div class="animation mb-3" ref="animationContainer">
+      <div v-for="(image, index) in images" :key="index" class="slide">
+        <img :src="image" />
       </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-
-.bg-color{
-    background-color: #F1F0F0;
+.bg-color {
+  background-color: #F1F0F0;
 }
 
 .block {
@@ -103,13 +111,12 @@ export default {
 }
 
 .animation {
-  width: auto;
+  display: flex;
   height: 100px;
-  white-space: nowrap; 
 }
 
 .slide {
-  display: inline-block;
+  flex-shrink: 0;
   padding: 0 10px;
 }
 
