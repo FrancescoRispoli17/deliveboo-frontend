@@ -134,139 +134,109 @@ export default {
 
 
 <template>
-
   <HeaderEmptyComponent />
-
-<div class="margin" style=" background-image: url('/offers.png');">
-
-    <div class="container py-5" >
-
-    <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
-    <div class="row" v-if="restaurant">
-
-      <div class="col-md-3">
-        <!-- foto del ristorante -->
-        <div class="img-container">
-          <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img"
-          v-if="restaurant.image_path_url">
-        </div>
-      </div>
-
-      <div class="col-md-9 p-1">
-        <h1 class="title text-white">{{ restaurant.name }}</h1>
-        <p class="card-text">{{ restaurant.description }}</p>
-      </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
- 
-  <div class="container py-5">
-    <div class="row">
-      
-      <!-- Sezione dei piatti -->
-      <div class=" col-lg-6 col-md-12 scroll py-3" v-if="restaurant.dishes && restaurant.dishes.length">
-        <div v-for="dish in restaurant.dishes" :key="dish.id" class="card mb-3">
-
-          <div class="row g-0">
-            <div class="col-md-3">
-              <img :src="dish.image_path_url" style="width: 100%; " alt="">
-            </div>
-            <div class="col-md-9">
-              <div class="card-body">
-                <h5 class="card-title">{{ dish.name }}</h5>
-                <p class="card-text">Descrizione: {{ dish.description }}</p>
-                <p class="card-text">Prezzo: €{{ dish.price }}</p>
-                <button @click="confirim(dish)" class="btn button"> aggiungi al carrello</button>
+  <div class="margin" style=" background-image: url('/offers.png');">
+     <div class="container py-5" >
+        <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
+        <div class="row" v-if="restaurant">
+           <div class="col-md-3">
+              <!-- foto del ristorante -->
+              <div class="img-container">
+                 <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img"
+                    v-if="restaurant.image_path_url">
               </div>
-            </div>
-          </div>
-
+           </div>
+           <div class="col-md-9 p-1">
+              <h1 class="title text-white">{{ restaurant.name }}</h1>
+              <p class="card-text">{{ restaurant.description }}</p>
+           </div>
         </div>
-      </div>
-
-      <!-- Carrello side -->
-        
-      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/offers.png');">
-        <!-- Recap per schermi più piccoli di 768px -->
-        <div v-if="store.cart.length" class="recap mt-3">
-          <p class="text-white" style="font-weight: 800;">
-            Costo totale: €{{ totale }}
-          </p>
+     </div>
+  </div>
+  <div class="container py-5">
+     <div class="row">
+        <!-- Sezione dei piatti -->
+        <div class=" col-lg-6 col-md-12 scroll py-3" v-if="restaurant.dishes && restaurant.dishes.length">
+           <div v-for="dish in restaurant.dishes.filter(dish => dish.visible)" :key="dish.id" class="card mb-3">
+              <div class="row g-0">
+                 <div class="col-md-3">
+                    <img :src="dish.image_path_url" style="width: 100%;" alt="">
+                 </div>
+                 <div class="col-md-9">
+                    <div class="card-body">
+                       <h5 class="card-title">{{ dish.name }}</h5>
+                       <p class="card-text">Descrizione: {{ dish.description }}</p>
+                       <p class="card-text">Prezzo: €{{ dish.price }}</p>
+                       <button @click="confirim(dish)" class="btn button">aggiungi al carrello</button>
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
-
-        <!-- Dettagli del carrello per schermi sopra 768px -->
-        <div class=" p-4 dish-scroll info-kart">
-
-          <div v-for="(dish,index) in store.cart" class=" d-flex">
-            <div class="col-6 py-1">
-
-              <div v-if="dish.quantity > 1">
-              <p class="text-white m-0" style="font-weight: 500; font-size:16px ;">
-              {{ dish.quantity }} piatti di {{ dish.name }}
+        <!-- Carrello side -->
+        <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/offers.png');">
+           <!-- Recap per schermi più piccoli di 768px -->
+           <div v-if="store.cart.length" class="recap mt-3">
+              <p class="text-white" style="font-weight: 800;">
+                 Costo totale: €{{ totale }}
               </p>
-            </div>
-            <div v-else>
-              <p class="text-white m-0" style="font-weight: 500; font-size:16px ;">
-              {{ dish.quantity }} piatto di {{ dish.name }}
-              </p>
-            </div>
-
-            </div>
-            <div class="col-6 d-flex justify-content-end py-1">
-              <button class="btn rounded text-secondary me-3" style="font-weight: 500;" @click="deleteSingleDish(dish,index)">-</button>
-
-              <button class="btn rounded text-secondary ms-3" style="font-weight: 500;" @click="addToCart(dish)">+</button>
-            </div>
-          </div>
-
+           </div>
+           <!-- Dettagli del carrello per schermi sopra 768px -->
+           <div class=" p-4 dish-scroll info-kart">
+              <div v-for="(dish,index) in store.cart" class=" d-flex">
+                 <div class="col-6 py-1">
+                    <div v-if="dish.quantity > 1">
+                       <p class="text-white m-0" style="font-weight: 500; font-size:16px ;">
+                          {{ dish.quantity }} piatti di {{ dish.name }}
+                       </p>
+                    </div>
+                    <div v-else>
+                       <p class="text-white m-0" style="font-weight: 500; font-size:16px ;">
+                          {{ dish.quantity }} piatto di {{ dish.name }}
+                       </p>
+                    </div>
+                 </div>
+                 <div class="col-6 d-flex justify-content-end py-1">
+                    <button class="btn rounded text-secondary me-3" style="font-weight: 500;" @click="deleteSingleDish(dish,index)">-</button>
+                    <button class="btn rounded text-secondary ms-3" style="font-weight: 500;" @click="addToCart(dish)">+</button>
+                 </div>
+              </div>
+           </div>
+           <!-- Pulsanti e totale carrello -->
+           <div v-if="store.cart.length" class="text-center info-kart">
+              <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
+              <div class="d-flex justify-content-center">
+                 <button type="button" class="btn button-kart" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                 Svuota carrello
+                 </button>
+                 <router-link :to="{ name: 'payPage' }" class="btn button-kart mx-3">Conferma ordine</router-link>
+              </div>
+           </div>
+           <div v-else class="d-flex justify-content-center align-items-center">
+              <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
+           </div>
         </div>
-
-        <!-- Pulsanti e totale carrello -->
-        <div v-if="store.cart.length" class="text-center info-kart">
-          <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
-          <div class="d-flex justify-content-center">
-            <button type="button" class="btn button-kart" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Svuota carrello
-            </button>
-            <router-link :to="{ name: 'payPage' }" class="btn button-kart mx-3">Conferma ordine</router-link>
-            </div>
-        </div>
-
-        <div v-else class="d-flex justify-content-center align-items-center">
-           <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
-        </div>
-      </div>
-      </div>
-
-
-      
-      <!-- modale -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     </div>
+     <!-- modale -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>Sei sicuro di voler eliminare il carrello?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-              <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
-            </div>
-          </div>
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                 <p>Sei sicuro di voler eliminare il carrello?</p>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                 <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+              </div>
+           </div>
         </div>
-      </div>
-
-</div>
-    <FooterComponent/>
-
+     </div>
+  </div>
+  <FooterComponent/>
 </template>
 
 
