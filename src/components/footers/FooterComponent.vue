@@ -20,25 +20,25 @@ export default {
     <section class="bg-footer py-2">
         <div class="container">
             <div class="row justify-content-center">
-                <FooterCardComponent/>
+                <FooterCardComponent />
             </div>
 
-                <div class="col-md-12 d-flex">
-                    <div class="col-md-6 py-2">
-                        <!-- icone instagram, facebook e twitter -->
-                        <FontAwesomeIcon :icon="['fab', 'facebook']" class="me-3 icon" style="height: 1.3rem;" />
-                        <FontAwesomeIcon :icon="['fab', 'twitter']" class="me-3 icon" style="height: 1.3rem;" />
-                        <FontAwesomeIcon :icon="['fab', 'instagram']" class="me-3 icon" style="height: 1.3rem;" />
-                    </div>
+            <div class="col-md-12 d-flex">
+                <div class="col-md-6 py-2">
+                    <!-- icone instagram, facebook e twitter -->
+                    <FontAwesomeIcon :icon="['fab', 'facebook']" class="me-3 icon" style="height: 1.3rem;" />
+                    <FontAwesomeIcon :icon="['fab', 'twitter']" class="me-3 icon" style="height: 1.3rem;" />
+                    <FontAwesomeIcon :icon="['fab', 'instagram']" class="me-3 icon" style="height: 1.3rem;" />
+                </div>
 
-                    <div class="col-md-6 py-2 text-end">
-                        <!-- copyright -->
-                        <p class="copyright">
-                            &copy; 2024 Deliveroo
-                        </p>
-                    </div>
+                <div class="col-md-6 py-2 text-end">
+                    <!-- copyright -->
+                    <p class="copyright">
+                        &copy; 2024 Deliveroo
+                    </p>
                 </div>
             </div>
+        </div>
     </section>
 </template>
 
@@ -51,7 +51,7 @@ export default {
 }
 
 .copyright {
-    color: $tertiary-color;
+    color: $border-light;
     font-size: 0.8rem;
 }
 
