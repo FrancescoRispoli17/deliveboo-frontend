@@ -29,7 +29,7 @@ export default {
 @use 'src/assets/partials/_mixin.scss' as*;
 
 .logo-container{
-    width: 90%;
+    width: 30%;
 
     img{
         width: 65%;
@@ -37,15 +37,15 @@ export default {
 
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 768px) {
     .logo-container{
-    
-        width: 100%;
-    }
-
-    img{
-        width: 100%;
+        width: 50%;
     }
 }
 
+@media only screen and (max-width: 600px) {
+    .logo-container {
+        width: 100%;
+    }
+}
 </style>
