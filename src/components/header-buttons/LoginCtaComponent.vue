@@ -19,9 +19,9 @@ export default {
 
 <template>
 
-    <button class="btn bg-light user">
+    <a href="http://127.0.0.1:8000/login" class="btn bg-light user">
         <span class="icon">Partner Hub</span>
-    </button>
+    </a>
 
 </template>
 

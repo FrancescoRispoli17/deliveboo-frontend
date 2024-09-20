@@ -7,7 +7,7 @@ export default {
   },
   data() {
     return {
-      isAccordionOpen: false // Stato dell'accordion (aperto/chiuso)
+      isAccordionOpen: true // Stato dell'accordion (aperto/chiuso)
     };
   },
   methods: {
