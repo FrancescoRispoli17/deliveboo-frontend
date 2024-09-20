@@ -44,8 +44,8 @@ export default {
       style="cursor: pointer;">
       <h5 class="mb-2 fw-bold">Cucine</h5>
       <div>
-        <font-awesome-icon v-if="isAccordionOpen" icon="chevron-up" class=" icon" />
-        <font-awesome-icon v-else icon="chevron-down" class=" icon" />
+        <font-awesome-icon v-if="isAccordionOpen" icon="chevron-down" class=" icon" />
+        <font-awesome-icon v-else icon="chevron-up" class=" icon" />
       </div>
     </div>
 

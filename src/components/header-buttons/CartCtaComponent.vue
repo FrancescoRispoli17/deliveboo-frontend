@@ -159,7 +159,7 @@ export default {
       </div>
     </div>
 
-    <!-- Modal (opzionale) -->
+    <!-- Modal -->
     <div
       class="modal fade w-100"
       id="headerModal"
@@ -239,6 +239,7 @@ hr {
   background-color: #f8f9fa;
   transition: right 0.3s ease-in-out;
   z-index: 1000;
+  border-left: 0.5px solid #ff800034;
 }
 
 .cart-sidebar-active {
