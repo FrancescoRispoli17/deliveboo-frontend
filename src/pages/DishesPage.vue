@@ -230,15 +230,15 @@ export default {
         <div v-if="store.cart.length" class="text-center info-kart">
           <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn button-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn button-kart" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Svuota carrello
             </button>
-            <router-link :to="{ name: 'payPage' }" class="btn button-white mx-3">Conferma ordine</router-link>
+            <router-link :to="{ name: 'payPage' }" class="btn button-kart mx-3">Conferma ordine</router-link>
             </div>
         </div>
 
         <div v-else class="d-flex justify-content-center align-items-center">
-           <span class="text-white" style="font-weight: 800;">Inizia a riempire il carrello</span>
+           <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
         </div>
       </div>
       </div>
@@ -285,13 +285,17 @@ export default {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1); 
 }
 
-.button-white{
+.button-kart{
   padding: 0.5rem;
   background-color: $tertiary-color;
   color: $quaternary-color;
   font-weight: 600;
   border-radius: 0.3rem;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1); 
+
+}
+
+.button-kart:hover {
+  background-color:$quaternary-color;
 }
 
 .dish-scroll{
@@ -334,7 +338,8 @@ export default {
 
 .button {
   background-color: $primary-color;
-  @include button
+  @include button;
+  @include shadow
 }
 
 .title {

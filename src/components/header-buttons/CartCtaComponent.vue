@@ -116,12 +116,22 @@ export default {
             </div>
 
             <div class="cart-sidebar-content">
-                <h4 class="title">Riepilogo dell' ordine</h4>
+
+                <h4 class="title mb-3">Riepilogo dell' ordine</h4>
+
                 <ul v-if="store.lastCart.length">
                     <li v-for="(dish,index) in store.lastCart" :key="dish.name">
-                        {{ dish.name }} x{{ dish.quantity }}
-                        <button class="btn btn-primary" @click="deleteSingleDish(dish,index)">-</button>
-                        <button class="btn btn-primary ms-3" @click="addToCart(dish)">+</button>
+
+                        <div class="row py-1">
+                            <div class="col-6">
+                                {{ dish.name }} x{{ dish.quantity }}
+                            </div>
+                            <div class="col-6">
+                                <button class="btn kart-button" @click="deleteSingleDish(dish,index)">-</button>
+                                <button class="btn kart-button ms-3" @click="addToCart(dish)">+</button>
+                            </div>
+                        </div>
+
                     </li>
                 </ul>
                 <div v-else>Non ci sono articoli nel carrello</div>
@@ -164,6 +174,11 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
+.button{
+    @include button;
+    @include shadow
+}
+
 .title-kart {
     font-size: 1.2rem;
     font-weight: 700;
@@ -177,10 +192,9 @@ hr {
     color: $primary-color;
 }
 
-.button {
-    @include button;
-    border-radius: 1.2rem;
-
+.kart-button {
+    background-color: $primary-color;
+    color:$quaternary-color;
 }
 
 .cart-sidebar {

@@ -20,7 +20,7 @@ export default {
   </div>
 
   <div class="cards-container row">
-    <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 shape-card">
+    <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 mb-3 shape-card">
       <div class="card">
         <div class="card-media" :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
           <!-- Offerta di sconto, se presente -->
@@ -71,7 +71,7 @@ export default {
   background-color: #fff;
   display: inline-block;
   width: 100%;
-  height: 320px;
+  height: 100%;
   border-radius: 0.2rem;
   margin-bottom: 20px;
   @include shadow

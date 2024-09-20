@@ -34,21 +34,14 @@ export default {
         <div class="container py-3">
             <div class="d-flex">
 
-                <div class="col-lg-2 side-div py-2">
+                <div class="col-md-6 bg-danger side-div py-2">
                      <LogoComponent/>
                 </div>
-                <div class="col-lg-8 search-bar-desktop py-1">
-                    <!-- <SearchBarComponent/> -->
-                </div>
-                <div class="col-lg-2 py-2 side-div">
+                <div class="col-md-6 py-2 side-div">
                     <HeaderCta/>
                 </div>
 
             </div>
-            <!-- search-bar tablet -->
-            <!-- <div class="col-md-12 py-3 d-lg-none d-sm-none">
-                <SearchBarComponent/>
-            </div> -->
         </div>
     </header>
 </template>

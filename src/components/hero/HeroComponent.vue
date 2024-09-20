@@ -1,6 +1,6 @@
 <script>
 import CardHeroComponent from './CardHeroComponent.vue';
-import HeaderEmptyComponent from './HeaderEmptyComponent.vue';
+import HeaderHeroComponent from './HeaderHeroComponent.vue'
 
 
 export default {
@@ -11,7 +11,7 @@ export default {
     },
 
     components: {
-        HeaderEmptyComponent,
+        HeaderHeroComponent,
         CardHeroComponent
     },
     methods: {
@@ -26,7 +26,7 @@ export default {
 
     <section class="bg-image ">
 
-        <HeaderEmptyComponent />
+        <HeaderHeroComponent />
 
         <div class="container-lg">
             <div class="row justify-content-center">

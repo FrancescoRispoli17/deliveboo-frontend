@@ -1,5 +1,5 @@
 <script>
-//metti questo in restaurant
+//pages
 import LogoFilledComponent from '../containers/LogoFilledComponent.vue';
 import HeaderCta from '../header-buttons/HeaderCta.vue';
 import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
@@ -28,7 +28,7 @@ export default {
 <template>
     <header>
         <div class="container-fluid py-3">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex">
 
                 <div class="col-6 d-flex justify-content-start ms-3 py-2">
                     <a href="/">
