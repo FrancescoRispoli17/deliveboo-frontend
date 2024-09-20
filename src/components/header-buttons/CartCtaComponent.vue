@@ -1,253 +1,285 @@
 <script>
 import { store } from "../../store";
 export default {
-    name: 'CartCtaComponent',
+  name: "CartCtaComponent",
 
-    data() {
-        return {
-            cart: [], // il carrello
-            showSidebar: false, 
-            store// stato per mostrare/nascondere la sidebar
-        };
+  data() {
+    return {
+      cart: [], // il carrello
+      showSidebar: false,
+      store, // stato per mostrare/nascondere la sidebar
+    };
+  },
+
+  mounted() {
+    this.loadCart(); // Carica il carrello dal localStorage all'avvio
+
+    // Ascolta eventuali modifiche al localStorage
+    window.addEventListener("storage", this.loadCart);
+  },
+
+  beforeDestroy() {
+    // Rimuovi l'evento di ascolto quando il componente viene distrutto
+    window.removeEventListener("storage", this.loadCart);
+  },
+
+  methods: {
+    loadCart() {
+      // Ricarica il carrello dal localStorage
+      const cart = localStorage.getItem("cart");
+
+      // Controlla che il valore di `cart` non sia `null` o `"undefined"`
+      if (cart && cart !== "undefined") {
+        this.store.lastCart = JSON.parse(cart);
+      } else {
+        this.store.lastCart = [];
+      }
     },
 
-    mounted() {
-        this.loadCart(); // Carica il carrello dal localStorage all'avvio
-
-        // Ascolta eventuali modifiche al localStorage
-        window.addEventListener('storage', this.loadCart);
+    deleteCart() {
+      this.store.cart = [];
+      this.store.lastCart = [];
+      localStorage.clear();
     },
 
-    beforeDestroy() {
-        // Rimuovi l'evento di ascolto quando il componente viene distrutto
-        window.removeEventListener('storage', this.loadCart);
+    toggleSidebar() {
+      this.showSidebar = !this.showSidebar;
+
+      // Quando la sidebar viene aperta, ricarica il carrello
+      if (this.showSidebar) {
+        this.loadCart();
+      }
     },
 
-    methods: {
-        loadCart() {
-            // Ricarica il carrello dal localStorage
-            if(localStorage.getItem('cart')){
-                this.store.lastCart =JSON.parse(localStorage.getItem('cart'));
-            }
-        },
+    closeSidebar() {
+      this.showSidebar = false;
+    },
+    addToCart(dish) {
+      this.totale = 0; // Reset totale
+      const obj = {
+        id: dish.id,
+        name: dish.name,
+        price: dish.price,
+        quantity: 1, // Aggiungi una porzione
+      };
 
-        deleteCart() {
-            this.store.cart = [];
-            this.store.lastCart = [];
-            localStorage.clear();
-        },
+      // Verifica se il piatto è già presente nel carrello
+      if (this.store.lastCart.length) {
+        let ciclo = false;
+        this.store.lastCart.forEach((cartDish) => {
+          if (cartDish.name == obj.name) {
+            cartDish.quantity += obj.quantity; // Aumenta quantità se esiste già
+            ciclo = true;
+            return ciclo;
+          }
+        });
+        if (!ciclo) this.store.lastCart.push(obj); // Aggiungi nuovo piatto
+      } else {
+        this.store.lastCart.push(obj); // Aggiunge il primo piatto
+      }
 
-        toggleSidebar() {
-            this.showSidebar = !this.showSidebar;
-
-            // Quando la sidebar viene aperta, ricarica il carrello
-            if (this.showSidebar) {
-                this.loadCart();
-            }
-        },
-
-        closeSidebar() {
-            this.showSidebar = false;
-        },
-        addToCart(dish) {
-            this.totale = 0; // Reset totale
-            const obj = {
-                id: dish.id,
-                name: dish.name,
-                price: dish.price,
-                quantity: 1, // Aggiungi una porzione
-            };
-            
-            // Verifica se il piatto è già presente nel carrello
-            if (this.store.lastCart.length) {
-                let ciclo = false;
-                this.store.lastCart.forEach((cartDish) => {
-                if (cartDish.name == obj.name) {
-                    cartDish.quantity += obj.quantity; // Aumenta quantità se esiste già
-                    ciclo = true;
-                    return ciclo;
-                }
-                });
-                if (!ciclo) this.store.lastCart.push(obj); // Aggiungi nuovo piatto
-            } else {
-                this.store.lastCart.push(obj); // Aggiunge il primo piatto
-            }
-
-            // Aggiorna il localStorage con i dati del carrello
-            localStorage.setItem("cart", JSON.stringify(this.store.lastCart));
-            this.calcoloTotale();
-            this.store.cart=this.store.lastCart;
-        },
-        deleteSingleDish(dish,index) {
-            if (dish.quantity > 1) {
-                dish.quantity--; // Diminuisci la quantità solo se è maggiore di 1
-            } else {
-                this.store.cart.splice(index, 1); // Rimuove il piatto se la quantità è 1
-            }
-            this.calcoloTotale(); // Aggiorna il totale
-            if(this.store.cart) localStorage.setItem("cart", JSON.stringify(this.cart));
-            else localStorage.clear();
-            this.store.lastCart=this.store.cart;
-        },
-        calcoloTotale() {
-            this.totale = 0; // Reset del totale
-            this.store.lastCart.forEach((cartDish) => {
-                this.totale += parseFloat(cartDish.price) * cartDish.quantity; // Somma dei prezzi
-            });
-            localStorage.setItem("tot", JSON.stringify(this.totale)); // Salva il totale
-            },
-    }
+      // Aggiorna il localStorage con i dati del carrello
+      localStorage.setItem("cart", JSON.stringify(this.store.lastCart));
+      this.calcoloTotale();
+      this.store.cart = this.store.lastCart;
+    },
+    deleteSingleDish(dish, index) {
+      if (dish.quantity > 1) {
+        dish.quantity--; // Diminuisci la quantità solo se è maggiore di 1
+      } else {
+        this.store.cart.splice(index, 1); // Rimuove il piatto se la quantità è 1
+      }
+      this.calcoloTotale(); // Aggiorna il totale
+      if (this.store.cart)
+        localStorage.setItem("cart", JSON.stringify(this.cart));
+      else localStorage.clear();
+      this.store.lastCart = this.store.cart;
+    },
+    calcoloTotale() {
+      this.totale = 0; // Reset del totale
+      this.store.lastCart.forEach((cartDish) => {
+        this.totale += parseFloat(cartDish.price) * cartDish.quantity; // Somma dei prezzi
+      });
+      localStorage.setItem("tot", JSON.stringify(this.totale)); // Salva il totale
+    },
+  },
 };
-
 </script>
 
 <template>
-    <div>
-        <!-- Pulsante per aprire la sidebar -->
-        <button class="btn bg-light cart" type="button" @click="toggleSidebar">
-            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon" />
+  <div>
+    <!-- Pulsante per aprire la sidebar -->
+    <button class="btn bg-light cart" type="button" @click="toggleSidebar">
+      <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon" />
+    </button>
+
+    <!-- Sidebar -->
+    <div class="cart-sidebar" :class="{ 'cart-sidebar-active': showSidebar }">
+      <div class="cart-sidebar-header py-1">
+        <h4 class="text-light title-kart">Il tuo carrello</h4>
+        <button type="button" class="close-btn" @click="closeSidebar">X</button>
+      </div>
+
+      <div class="cart-sidebar-content">
+        <h4 class="title mb-3">Riepilogo dell' ordine</h4>
+
+        <ul v-if="store.lastCart.length">
+          <li v-for="(dish, index) in store.lastCart" :key="dish.name">
+            <div class="row py-1">
+              <div class="col-6">{{ dish.name }} x{{ dish.quantity }}</div>
+              <div class="col-6">
+                <button
+                  class="btn kart-button"
+                  @click="deleteSingleDish(dish, index)">
+                  -
+                </button>
+                <button class="btn kart-button ms-3" @click="addToCart(dish)">
+                  +
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div v-else>Non ci sono articoli nel carrello</div>
+      </div>
+
+      <hr />
+
+      <div class="cart-sidebar-footer">
+        <button v-if="store.cart.length" class="btn button" @click="deleteCart">
+          Svuota carrello
         </button>
 
-        <!-- Sidebar -->
-        <div class="cart-sidebar" :class="{ 'cart-sidebar-active': showSidebar }">
-            <div class="cart-sidebar-header py-1">
-                <h4 class="text-light title-kart">Il tuo carrello</h4>
-                <button type="button" class="close-btn" @click="closeSidebar">X</button>
-            </div>
-
-            <div class="cart-sidebar-content">
-
-                <h4 class="title mb-3">Riepilogo dell' ordine</h4>
-
-                <ul v-if="store.lastCart.length">
-                    <li v-for="(dish,index) in store.lastCart" :key="dish.name">
-
-                        <div class="row py-1">
-                            <div class="col-6">
-                                {{ dish.name }} x{{ dish.quantity }}
-                            </div>
-                            <div class="col-6">
-                                <button class="btn kart-button" @click="deleteSingleDish(dish,index)">-</button>
-                                <button class="btn kart-button ms-3" @click="addToCart(dish)">+</button>
-                            </div>
-                        </div>
-
-                    </li>
-                </ul>
-                <div v-else>Non ci sono articoli nel carrello</div>
-            </div>
-
-            <hr>
-
-            <div class="cart-sidebar-footer">
-                <button v-if="store.cart.length" class=" btn button" @click="deleteCart">Svuota carrello</button>
-
-                <router-link v-if="store.cart.length" :to="{ name: 'payPage' }" class="btn button mx-3">Conferma
-                    ordine</router-link>
-            </div>
-        </div>
-
-        <!-- Modal (opzionale) -->
-        <div class="modal fade w-100" id="headerModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <p class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Sei sicuro di voler eliminare il tuo carrello?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary" @click="deleteCart()"
-                            data-bs-dismiss="modal">Svuota</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <router-link
+          v-if="store.cart.length"
+          :to="{ name: 'payPage' }"
+          class="btn button mx-3"
+          >Conferma ordine</router-link
+        >
+      </div>
     </div>
+
+    <!-- Modal (opzionale) -->
+    <div
+      class="modal fade w-100"
+      id="headerModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <p class="modal-title fs-5" id="exampleModalLabel">
+              Svuota carrello
+            </p>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Sei sicuro di voler eliminare il tuo carrello?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal">
+              Chiudi
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="deleteCart()"
+              data-bs-dismiss="modal">
+              Svuota
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-@use 'src/assets/partials/_variables.scss' as *;
-@use 'src/assets/partials/_mixin.scss' as *;
+@use "src/assets/partials/_variables.scss" as *;
+@use "src/assets/partials/_mixin.scss" as *;
 
-.button{
-    @include button;
-    @include shadow
+.button {
+  @include button;
+  @include shadow;
 }
 
 .title-kart {
-    font-size: 1.2rem;
-    font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .title {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 hr {
-    color: $primary-color;
+  color: $primary-color;
 }
 
 .kart-button {
-    background-color: $primary-color;
-    color:$quaternary-color;
+  background-color: $primary-color;
+  color: $quaternary-color;
 }
 
 .cart-sidebar {
-    position: fixed;
-    top: 0;
-    right: -400px;
-    /* Nasconde la sidebar fuori dallo schermo */
-    width: 400px;
-    height: 100%;
-    background-color: #f8f9fa;
-    transition: right 0.3s ease-in-out;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: -400px;
+  /* Nasconde la sidebar fuori dallo schermo */
+  width: 400px;
+  height: 100%;
+  background-color: #f8f9fa;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
 }
 
 .cart-sidebar-active {
-    right: 0;
-    /* Mostra la sidebar */
+  right: 0;
+  /* Mostra la sidebar */
 }
 
 .cart-sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: $primary-color;
-    color: $quaternary-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: $primary-color;
+  color: $quaternary-color;
 }
 
 .cart-sidebar-content {
-    padding: 20px;
+  padding: 20px;
 }
 
 .cart-sidebar-footer {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .close-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
 }
 
 .cart {
-    /* Stile per il pulsante carrello */
-    width: 100%;
-    cursor: pointer;
+  /* Stile per il pulsante carrello */
+  width: 100%;
+  cursor: pointer;
 }
 
 .icon {
-    color: $primary-color;
+  color: $primary-color;
 }
 </style>
