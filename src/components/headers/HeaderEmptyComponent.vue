@@ -31,9 +31,7 @@ export default {
             <div class="d-flex">
 
                 <div class="col-6 d-flex justify-content-start ms-3 py-2">
-                    <a href="/">
-                        <LogoFilledComponent />
-                    </a>
+                    <LogoFilledComponent />
                 </div>
                 <div class="col-6 d-flex justify-content-end  py-2">
                     <HeaderCta />
