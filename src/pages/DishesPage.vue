@@ -141,7 +141,7 @@ export default {
   <HeaderEmptyComponent />
   <div class="margin" style=" background-image: url('/offers.png');">
     <div class="container py-5">
-      <h5>
+      <h5 class="mb-3">
         <a class="text-white text-decoration-none fw-bold" href="/restaurant">
           <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-3 icon" style="height: 1.3rem;" />
           Pagina ristoranti
