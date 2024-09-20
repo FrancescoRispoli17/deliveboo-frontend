@@ -1,6 +1,8 @@
 <template>
   <div>
     <div id="dropin-container"></div>
+    <!-- bottone di debug modale -->
+    <!-- <button @click="modalTrigger">modale</button> -->
     <button @click="processPayment" class="btn btn-primary py-2 mb-2">
       Paga ora
     </button>
@@ -12,26 +14,32 @@
       tabindex="-1"
       aria-labelledby="paymentSuccessModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="paymentSuccessModalLabel">
-              Pagamento Completato
-            </h5>
-            <button
+            <h4 class="modal-title" id="paymentSuccessModalLabel">
+              Grazie il tuo ordine é stato ricevuto.
+            </h4>
+            <!-- <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close"></button>
+              aria-label="Close"></button> -->
           </div>
           <div class="modal-body">
-            Il pagamento è stato completato con successo! <br />
-            ID transazione: {{ transactionId }}
+            <p class="fw-semibold">
+              Controlla la tua e-mail per la conferma dell'ordine e le
+              informazioni dettagliate sulla consegna.
+            </p>
+            <div class="d-flex align-items-center">
+              <h6 class="me-2 mb-0">ID Pagamento:</h6>
+              <span>{{ transactionId }}</span>
+            </div>
           </div>
           <div class="modal-footer">
             <a
               href="/restaurant"
-              class="btn btn-primary"
+              class="px-3 bg-custom-primary fs-6 custom-btn me-2 mt-2 text-white"
               @click="handleRedirect"
               >OK</a
             >
@@ -47,12 +55,12 @@
       tabindex="-1"
       aria-labelledby="paymentErrorModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="paymentErrorModalLabel">
-              Errore di Pagamento
-            </h5>
+            <h4 class="modal-title" id="paymentErrorModalLabel">
+              Errore di pagamento
+            </h4>
             <button
               type="button"
               class="btn-close"
@@ -60,17 +68,14 @@
               aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            Si è verificato un errore durante il pagamento. Per favore, riprova.
-            <br />
-            Errore: {{ errorMessage }}
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal">
-              Chiudi
-            </button>
+            <h6 class="mb-3">
+              Si é verificato un errore con l'elaborazione del pagamento. Per
+              favore, riprova.
+            </h6>
+            <div class="d-flex align-items-center">
+              <h6 class="me-2 mb-0">ID Errore:</h6>
+              <span>{{ errorMessage }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -111,6 +116,12 @@ export default {
     this.getClientToken();
   },
   methods: {
+    modalTrigger() {
+      const successModal = new Modal(
+        document.getElementById("paymentSuccessModal")
+      );
+      successModal.show();
+    },
     async getClientToken() {
       try {
         const response = await axios.get("/api/payment/token");
@@ -221,4 +232,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@use "src/assets/partials/_variables.scss" as *;
+@use "src/assets/partials/_mixin.scss" as *;
+
+.bg-custom-primary {
+  background-color: $primary-color;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+</style>
