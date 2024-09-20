@@ -137,6 +137,9 @@ export default {
   <HeaderEmptyComponent />
   <div class="margin" style=" background-image: url('/offers.png');">
      <div class="container py-5" >
+      <a href="/restaurant">
+        pagina ristoranti
+      </a>
         <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
         <div class="row" v-if="restaurant">
            <div class="col-md-3">
