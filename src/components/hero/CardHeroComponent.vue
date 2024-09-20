@@ -1,6 +1,8 @@
 
 <script>
-import InputAddressComponent from '../search-bar/InputAddressComponent.vue';
+import axios from 'axios';
+import { store } from '../../store';
+import SelectTypeComponent from '../apiComponents/SelectTypeComponent.vue';
 
 export default {
     name: 'CardHeroComponent' ,
@@ -9,10 +11,19 @@ export default {
     return{}
     },
     components: {
-        InputAddressComponent
+        SelectTypeComponent
     },
     methods: {
-        
+        getTypes() {
+      const typesUrl = `${store.url}types`;
+      axios.get(typesUrl)
+        .then(response => {
+          this.availableTypes = response.data;
+        })
+        .catch(error => {
+          console.error('Errore nel recupero dei tipi:', error);
+        });
+    }
     }
 }
 
@@ -38,8 +49,8 @@ export default {
                     <p class="label mb-3">
                         Cerca tra i migliori ristoranti della tua zona
                     </p>
-                    <!-- input address -->
-                     <InputAddressComponent/>
+                    <!-- select type -->
+                     <SelectTypeComponent/>
 
                 </div>
             </div>
