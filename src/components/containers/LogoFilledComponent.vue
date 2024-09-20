@@ -33,7 +33,6 @@ export default {
 
     img {
         width: 65%;
-        // box-shadow: 0 6px 6px rgb(0, 0, 0, 0.1);
     }
 }
 
