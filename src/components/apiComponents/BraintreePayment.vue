@@ -196,7 +196,7 @@ export default {
         },
         clearCart() {
             // svuota il carrello
-            this.$emit("clear-cart"); // Emetti un evento verso il genitore per svuotare il carrello
+            this.$emit("clear-cart"); // emette un evento verso il paypage per svuotare il carrello
 
             // se il carrello è memorizzato nello store o nel localStorage, aggiorna anche quello
             localStorage.removeItem("cart");
