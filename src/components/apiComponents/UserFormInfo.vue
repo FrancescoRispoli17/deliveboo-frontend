@@ -190,12 +190,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@use 'src/assets/partials/_variables.scss' as *;
-@use 'src/assets/partials/_mixin.scss' as *;
+@use "src/assets/partials/_variables.scss" as *;
+@use "src/assets/partials/_mixin.scss" as *;
 
-.button{
+.button {
   @include button;
-  @include shadow
+  @include shadow;
 }
 
 .invalid-feedback {
@@ -208,7 +208,9 @@ export default {
     font-size: 0.9rem;
   }
 
-  input, textarea, button {
+  input,
+  textarea,
+  button {
     font-size: 0.9rem;
   }
 
@@ -218,11 +220,11 @@ export default {
 }
 
 /* Stile per gli input attivi */
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border-color: orange; /* Colore del bordo quando attivo */
   box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); /* Effetto ombra */
 }
-
 
 /* Personalizzazione per tablet */
 @media (min-width: 577px) and (max-width: 768px) {
@@ -230,7 +232,9 @@ input:focus, textarea:focus {
     font-size: 1rem;
   }
 
-  input, textarea, button {
+  input,
+  textarea,
+  button {
     font-size: 1rem;
   }
 }
