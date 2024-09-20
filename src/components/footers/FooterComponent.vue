@@ -36,7 +36,7 @@ export default {
                 <div class="col-md-6 py-2 text-end">
                     <!-- copyright -->
                     <p class="copyright">
-                        &copy; 2024 Deliveroo
+                        &copy; 2024 Deliveboo
                     </p>
                 </div>
             </div>

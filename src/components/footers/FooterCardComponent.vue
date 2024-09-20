@@ -7,9 +7,9 @@ export default {
         return {
             cards: [
                 {
-                    title: 'Scopri Booliveroo',
+                    title: 'Scopri Deliveboo',
                     links: [
-                        'investitori',
+                        'Investitori',
                         'Chi Siamo',
                         'Ristoranti',
                         'Altro',
@@ -41,7 +41,7 @@ export default {
                     ]
                 },
                 {
-                    title: 'Porta Boolivero con te',
+                    title: 'Porta Deliveboo con te',
                     links: [],
                     image: 'https://seeklogo.com/images/A/app-store-google-play-logo-4A2747BF5E-seeklogo.com.png',
                 }
