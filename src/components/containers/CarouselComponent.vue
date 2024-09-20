@@ -81,19 +81,18 @@ export default {
 </script>
 
 <template>
-    <div class="block py-3 bg-color">
-      <div class="animation mb-3" ref="animationContainer">
-        <div v-for="(image, index) in images" :key="index" class="slide">
-          <img :src="image" />
-        </div>
+  <div class="block py-3 bg-color">
+    <div class="animation mb-3" ref="animationContainer">
+      <div v-for="(image, index) in images" :key="index" class="slide">
+        <img :src="image" />
       </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-
-.bg-color{
-    background-color: #F1F0F0;
+.bg-color {
+  background-color: #F1F0F0;
 }
 
 .block {
@@ -105,7 +104,7 @@ export default {
 .animation {
   width: auto;
   height: 100px;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .slide {

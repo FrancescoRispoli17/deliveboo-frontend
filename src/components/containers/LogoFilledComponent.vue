@@ -17,11 +17,12 @@ export default {
 </script>
 
 <template>
-
     <div class="logo-container">
-        <img src="/deliveboo-filled-logo.png" alt="">
-    </div>
-
+            <a href="/">
+                <img src="/deliveboo-filled-logo.png" alt="">
+            </a>
+        </div>
+ 
 </template>
 
 <style lang="scss" scoped>
