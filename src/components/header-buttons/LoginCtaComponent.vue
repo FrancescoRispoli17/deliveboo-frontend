@@ -20,7 +20,7 @@ export default {
 <template>
 
     <button class="btn bg-light user">
-        <span class="icon">Area riservata</span>
+        <span class="icon">Partner Hub</span>
     </button>
 
 </template>
@@ -33,6 +33,7 @@ export default {
     color: $primary-color;
     font-weight: 300;
     font-size: 14px;
+    font-family: 'Poppins', sans-serif;
 }
 
 
