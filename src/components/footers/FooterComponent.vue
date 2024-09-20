@@ -27,8 +27,10 @@ export default {
                 <div class="col-md-6 py-2">
                     <!-- icone instagram, facebook e twitter -->
                     <FontAwesomeIcon :icon="['fab', 'facebook']" class="me-3 icon" style="height: 1.3rem;" />
-                    <FontAwesomeIcon :icon="['fab', 'twitter']" class="me-3 icon" style="height: 1.3rem;" />
+                    <FontAwesomeIcon :icon="['fab', 'x-twitter']" class="me-3 icon" style="height: 1.3rem;" />
                     <FontAwesomeIcon :icon="['fab', 'instagram']" class="me-3 icon" style="height: 1.3rem;" />
+                    <FontAwesomeIcon :icon="['fab', 'youtube']" class="me-3 icon" style="height: 1.3rem;" />
+
                 </div>
 
                 <div class="col-md-6 py-2 text-end">
