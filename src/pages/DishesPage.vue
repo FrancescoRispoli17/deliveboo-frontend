@@ -183,7 +183,7 @@ export default {
                   </div>
                   <div class="px-5 d-flex gap-4">
                     <span v-if="dish.gluten_free === 1"> <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl" style="color: #dbac00;" /> </span>
-                    <span v-if="dish.lactose_free === 1"> </span>
+                    <span v-if="dish.lactose_free === 1"> <FontAwesomeIcon :icon="['fas', 'cow']" size="xl" style="color: #481e1e" /> </span>
                     <span v-if="dish.spicy === 1"> <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xl" style="color: #ff0000;" /> </span>
                     <span v-if="dish.vegan === 1"> <FontAwesomeIcon :icon="['fas', 'leaf']" size="xl" style="color: #02c031;" /> </span>
                   </div>
