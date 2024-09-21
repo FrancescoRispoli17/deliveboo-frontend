@@ -181,7 +181,7 @@ export default {
                   <div>
                     <button @click="confirim(dish)" class="btn button">aggiungi al carrello</button>
                   </div>
-                  <div>
+                  <div class="px-5 d-flex gap-4">
                     <span v-if="dish.gluten_free === 1"> <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl" style="color: #dbac00;" /> </span>
                     <span v-if="dish.lactose_free === 1"> </span>
                     <span v-if="dish.spicy === 1"> <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xl" style="color: #ff0000;" /> </span>
