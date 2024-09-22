@@ -38,7 +38,7 @@
           </div>
           <div class="modal-footer">
             <a
-              href="/restaurant"
+              href="/"
               class="px-3 bg-custom-primary fs-6 custom-btn me-2 mt-2 text-white"
               @click="handleRedirect"
               >OK</a

@@ -7,7 +7,7 @@ import HeaderEmptyComponent from '../components/headers/HeaderEmptyComponent.vue
 import FooterComponent from '../components/footers/FooterComponent.vue';
 
 export default {
-    name: 'RestaurantPage' ,
+    name: 'restaurant' ,
 
     data(){
     return{
@@ -19,17 +19,22 @@ export default {
         FooterComponent
     },
     methods: {
-        
     },
+    computed:{
+            type() {
+            // Accedi al parametro 'dato' dalla rotta
+            return this.$route.params.type ? this.$route.params.type.split(',') : []; // Divide la stringa in un array
+            //return this.$route.params.type
+            }
+        }
 }
 
 </script>
 
 <template>
     <div class="body">
-        <!-- da sostituire -->
         <HeaderEmptyComponent/>
-        <RestaurantCardComponent/>
+        <RestaurantCardComponent :types="type" />
         <FooterComponent/> 
     </div>
 </template>

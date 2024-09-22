@@ -1,41 +1,40 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
-
 import HomePage from './pages/HomePage.vue';
-
-import DesignSystem from './pages/DesignSystem.vue'
-
-//importazione pagina per ristoranti e piatti
+import DesignSystem from './pages/DesignSystem.vue';
 import RestaurantPage from './pages/RestaurantPage.vue';
 import DishesPage from './pages/DishesPage.vue';
 import PayPage from './pages/PayPage.vue';
-import FilterTest from './pages/FIlterTest.vue';
+import SendData from './pages/SendData.vue';
+import ReciveData from './pages/ReciveData.vue';
 
-
-//2 definiamo la rotta con Name, Path e Component.
 const routes = [
-
     {
         name: 'homePage',
         path: '/',
         component: HomePage
     },
-    //ristoranti
+    // Ristoranti
     {
         name: 'restaurant',
-        path: '/restaurant',
+        path: '/restaurant/:type?',// Path con il tipo come parametro
         component: RestaurantPage
     },
-    //piatti ristoranti
+    // Piatti ristoranti
     {
         name: 'dishes',
         path: '/restaurant/:slug',  // Path con lo slug come parametro
-        component: DishesPage,  // Componente che visualizzerà i dettagli
+        component: DishesPage,
+    },
+    // Pagine di test
+    {
+        name: 'SendData',
+        path: '/SendData',
+        component: SendData,
     },
     {
-        name: 'filterTest',
-        path: '/filterTest',
-        component: FilterTest,
+        name: 'ReciveData',
+        path: '/ReciveData',
+        component: ReciveData,
     },
     {
         name: 'designSystem',
@@ -47,12 +46,20 @@ const routes = [
         path: '/pay',
         component: PayPage
     },
-
-]
+];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
+});
+
+//svuota il local storage dalle ultime tipologie di risoranti scelte quando torna in home
+router.beforeEach((to, from, next) => {
+    if (to.name === 'homePage') {
+        localStorage.removeItem('selectedTypes');
+        console.log('Local storage cancellato entrando nella home');
+    }
+    next();
 });
 
 export default router;

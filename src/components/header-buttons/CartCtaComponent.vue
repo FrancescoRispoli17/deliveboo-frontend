@@ -233,7 +233,6 @@ hr {
   position: fixed;
   top: 0;
   right: -400px;
-  /* Nasconde la sidebar fuori dallo schermo */
   width: 400px;
   height: 100%;
   background-color: #f8f9fa;
@@ -244,7 +243,7 @@ hr {
 
 .cart-sidebar-active {
   right: 0;
-  /* Mostra la sidebar */
+
 }
 
 .cart-sidebar-header {
@@ -275,9 +274,9 @@ hr {
 }
 
 .cart {
-  /* Stile per il pulsante carrello */
   width: 100%;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.057);
 }
 
 .icon {

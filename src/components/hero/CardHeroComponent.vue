@@ -2,6 +2,8 @@
 <script>
 import axios from 'axios';
 import { store } from '../../store';
+import SearchBarComponent from '../search-bar/SearchBarComponent.vue';
+
 
 
 export default {
@@ -11,6 +13,7 @@ export default {
     return{}
     },
     components: {
+        SearchBarComponent
     },
     methods: {
         getTypes() {
@@ -46,9 +49,9 @@ export default {
                     </h1>
 
                     <p class="label mb-3">
-                        Cerca tra i migliori ristoranti della tua zona
+                        Scegli la tipologia di ristorante
                     </p>
-                    <a href="/filterTest">pagina di test</a>
+                    <SearchBarComponent/>
                 </div>
             </div>
         </div>

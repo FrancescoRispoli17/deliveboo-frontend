@@ -1,22 +1,20 @@
-//libreria per compiere chiamate http
-import axios from "axios";
 import { reactive } from "vue";
 
 export const store = reactive({
   cart: [],
   lastCart: [],
-  //currentPage: 1;
-
   results: [],
   url: "http://localhost:8000/api/",
 
-  //endpoint per ristoranti
+  // endpoint per ristoranti
   restaurants: "restaurants/",
 
-  //endpoint per ordini
+  // endpoint per ordini
   orders: "orders/",
 
-
-  //endpoint per tipi
+  // endpoint per tipi
   types: "types",
+
+  // Memorizziamo l'ultimo stato dei tipi selezionati
+  lastTypes: [],
 });
