@@ -177,7 +177,20 @@ export default {
                 <h5 class="card-title">{{ dish.name }}</h5>
                 <p class="card-text">Descrizione: {{ dish.description }}</p>
                 <p class="card-text">Prezzo: €{{ dish.price }}</p>
-                <button @click="confirim(dish)" class="btn button">aggiungi al carrello</button>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <button @click="confirim(dish)" class="btn button">aggiungi al carrello</button>
+                  </div>
+                  <div class="px-5 d-flex gap-4">
+                    <span v-if="dish.gluten_free === 1"> <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl" style="color: #dbac00;" /> </span>
+                    <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
+                      <FontAwesomeIcon :icon="['fas', 'cow']" size="xl" style="color: #69d5ff;" />
+                    <span style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #69d5ff; transform: rotate(-45deg); transform-origin: center; border-radius: 2px"></span>
+                    </span>
+                    <span v-if="dish.spicy === 1"> <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xl" style="color: #ff0000;" /> </span>
+                    <span v-if="dish.vegan === 1"> <FontAwesomeIcon :icon="['fas', 'leaf']" size="xl" style="color: #02c031;" /> </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -192,7 +205,7 @@ export default {
           </p>
         </div>
         <!-- Dettagli del carrello per schermi sopra 768px -->
-        <div class=" p-4 dish-scroll info-kart">
+        <div class=" p-4 dish-scroll info-cart">
           <div v-for="(dish, index) in store.cart" class=" d-flex">
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
@@ -302,9 +315,9 @@ export default {
   border-radius: 1.5rem;
 
   .img {
-    border-radius: 1.5rem; // Aggiungi il border-radius alla foto del ristorante
-    width: 100%; // Assicurati che l'immagine occupi la larghezza completa
-    object-fit: cover; // Mantieni le proporzioni corrette
+    border-radius: 1.5rem; 
+    width: 100%; 
+    object-fit: cover; 
   }
 }
 
@@ -346,7 +359,7 @@ export default {
   display: none; // Nascondi il recap per default su schermi grandi
 }
 
-.info-kart {
+.info-cart {
   display: block; // Mostra i dettagli del carrello su schermi grandi
 }
 
@@ -363,7 +376,7 @@ export default {
     display: block; // Mostra il recap su schermi piccoli
   }
 
-  .info-kart {
+  .info-cart {
     display: none; // Nascondi i dettagli del carrello su schermi piccoli
   }
 

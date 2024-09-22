@@ -3,8 +3,8 @@ import axios from "axios";
 import { reactive } from "vue";
 
 export const store = reactive({
-  cart:[],
-  lastCart:[],
+  cart: [],
+  lastCart: [],
   //currentPage: 1;
 
   results: [],
@@ -15,4 +15,8 @@ export const store = reactive({
 
   //endpoint per ordini
   orders: "orders/",
+
+
+  //endpoint per tipi
+  types: "types",
 });

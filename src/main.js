@@ -31,12 +31,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 
-import {
+import { // Aggiungi le icone per l'accordion
     faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode,
     faMobileAlt, faCloud, faDatabase, faSearch, faHeart,
     faUser, faMapMarkerAlt, faChevronDown, faChevronUp,
-    faCartShopping, // Aggiungi le icone per l'accordion
-    faArrowLeft
+    faCartShopping, faArrowLeft, faPepperHot, faWheatAwnCircleExclamation, faLeaf, faCow
 } from '@fortawesome/free-solid-svg-icons';
 
 // FontAwesome brand
@@ -46,7 +45,7 @@ import { faInstagram, faFacebook, faTwitter, faYoutube, faXTwitter } from '@fort
 library.add(faCode, faPaintBrush, faRocket, faHandshake, faLaptopCode, faMobileAlt,
     faCloud, faDatabase, faSearch, faHeart, faUser, faMapMarkerAlt,
     faChevronDown, faChevronUp, // Aggiungi queste due icone
-    faInstagram, faFacebook, faYoutube, faCartShopping, faXTwitter, faArrowLeft);
+    faInstagram, faFacebook, faYoutube, faCartShopping, faXTwitter, faArrowLeft, faPepperHot, faWheatAwnCircleExclamation, faLeaf, faCow);
 
 const app = createApp(App);
 app.use(router);

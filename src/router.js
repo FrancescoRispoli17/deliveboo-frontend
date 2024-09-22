@@ -8,8 +8,8 @@ import DesignSystem from './pages/DesignSystem.vue'
 //importazione pagina per ristoranti e piatti
 import RestaurantPage from './pages/RestaurantPage.vue';
 import DishesPage from './pages/DishesPage.vue';
-
 import PayPage from './pages/PayPage.vue';
+import FilterTest from './pages/FIlterTest.vue';
 
 
 //2 definiamo la rotta con Name, Path e Component.
@@ -31,6 +31,11 @@ const routes = [
         name: 'dishes',
         path: '/restaurant/:slug',  // Path con lo slug come parametro
         component: DishesPage,  // Componente che visualizzerà i dettagli
+    },
+    {
+        name: 'filterTest',
+        path: '/filterTest',
+        component: FilterTest,
     },
     {
         name: 'designSystem',
