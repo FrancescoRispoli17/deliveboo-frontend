@@ -1,47 +1,174 @@
 <script>
+import axios from 'axios';
+import { store } from '../../store';
+
 export default {
     name: 'SearchBarComponent',
     data() {
-        return {};
+        return {
+            availableTypes: [], // Dati ricevuti dall'API
+            selectedTypes: [],  // Dati delle checkbox selezionate
+            isDown: false, // Stato per il drag scrolling
+            startX: 0,
+            scrollLeft: 0,
+        };
     },
-    methods: {}
-}
+    methods: {
+        getTypes() {
+            const typesUrl = `${store.url}${store.types}`;
+            axios
+                .get(typesUrl)
+                .then((response) => {
+                    console.log('Tipi raccolti correttamente');
+                    this.availableTypes = response.data;
+                })
+                .catch((error) => {
+                    console.error('Errore nel recupero dei tipi:', error);
+                });
+        },
+
+        toggleType(event, typeName) {
+            const isSelected = this.selectedTypes.includes(typeName);
+            if (isSelected) {
+                this.selectedTypes = this.selectedTypes.filter(type => type !== typeName);
+            } else {
+                this.selectedTypes.push(typeName);
+            }
+        },
+
+        getPageReciveData() {
+            if (this.selectedTypes.length === 0) {
+                alert('Seleziona almeno un tipo prima di procedere.');
+                return;
+            }
+            const type = this.selectedTypes.join(',');
+            this.$router.push({
+                name: 'restaurant',
+                params: { type },
+            });
+        },
+
+        isActive(typeName) {
+            return this.selectedTypes.includes(typeName);
+        },
+
+        // Aggiungere il comportamento di "drag scrolling"
+        onMouseDown(e) {
+            this.isDown = true;
+            this.startX = e.pageX - this.$refs.scrollContainer.offsetLeft;
+            this.scrollLeft = this.$refs.scrollContainer.scrollLeft;
+        },
+        onMouseLeave() {
+            this.isDown = false;
+        },
+        onMouseUp() {
+            this.isDown = false;
+        },
+        onMouseMove(e) {
+            if (!this.isDown) return;
+            e.preventDefault();
+            const x = e.pageX - this.$refs.scrollContainer.offsetLeft;
+            const walk = (x - this.startX) * 2; // Velocità dello scrolling
+            this.$refs.scrollContainer.scrollLeft = this.scrollLeft - walk;
+        }
+    },
+    mounted() {
+        this.getTypes();
+    }
+};
 </script>
 
 <template>
-    <form class="d-flex p-2 w-100 align-items-center" role="search">
-        <a href=""><font-awesome-icon :icon="['fas', 'search']" class="me-2 icon" style="height: 15px;" /></a>
-        <input class="search-bar me-2" type="search" placeholder="Ristoranti, spesa, piatti" aria-label="Search">
-    </form>
+    <div
+        class="scroll-container"
+        ref="scrollContainer"
+        @mousedown="onMouseDown"
+        @mouseleave="onMouseLeave"
+        @mouseup="onMouseUp"
+        @mousemove="onMouseMove"
+    >
+        <div class="button-container">
+            <div
+                v-for="type in availableTypes"
+                :key="type.id"
+                :class="['button-item', { active: isActive(type.name) }]"
+                @click="toggleType($event, type.name)"
+            >
+                {{ type.name }}
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center">
+                <button @click="getPageReciveData" class="btn button">
+                    <span>clicca qui</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang="scss" scoped>
-
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
-form {
-    @include border-solid;
+.button{
+    @include button;
+    border-radius:1.5rem;
 }
 
-.search-bar {
-    width: 100%;
-    border: none; 
-    background-color: $quaternary-color;
-    color: #b9b9b9; 
-
-    &:focus {
-        outline: none; 
-        border: none; 
-    }
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    border-radius: 2rem;
+    cursor: grab;
+    user-select: none; /* Previene la selezione del testo durante il drag */
 }
 
-.search-bar::placeholder {
-    color: #b9b9b9; 
+.scroll-container::-webkit-scrollbar{
+    display: none;
 }
 
-.icon {
-    color: $primary-color;
+.scroll-container:active {
+    cursor: grabbing;
 }
 
+.button-container {
+    display: inline-flex;
+    gap: 10px;
+}
+
+.button-item {
+    padding: 10px 20px;
+    background-color: $tertiary-color;
+    color: $quaternary-color;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+    white-space: normal;
+}
+
+.button-item.active {
+    @include button-radius;
+}
+
+.button-item:hover {
+    background-color: $primary-color;
+}
+
+.scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+}
 </style>

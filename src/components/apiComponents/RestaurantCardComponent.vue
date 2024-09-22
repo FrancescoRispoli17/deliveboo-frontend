@@ -3,9 +3,7 @@ import axios from 'axios';
 import { store } from '../../store';
 import SidebarComponent from './SidebarComponent.vue';
 import RestaurantListComponent from './RestaurantListComponent.vue';
-import SelectTypeComponent from './SelectTypeComponent.vue'
-
-
+import SelectTypeComponent from './SelectTypeComponent.vue';
 
 export default {
   name: 'RestaurantCardComponent',
@@ -13,7 +11,12 @@ export default {
     SidebarComponent,
     RestaurantListComponent,
     SelectTypeComponent
-
+  },
+  props: {
+    types: {
+      type: Array,
+      required: true
+    }
   },
   data() {
     return {
@@ -62,22 +65,43 @@ export default {
         this.selectedTypes = this.selectedTypes.filter(name => name !== typeName);
       }
 
+      // Salva i tipi selezionati nel local storage
+      localStorage.setItem('selectedTypes', JSON.stringify(this.selectedTypes));
+
       this.getRestaurants();
     }
   },
 
   mounted() {
     this.getTypes();
+
+    // Recupera i tipi selezionati dal local storage se presenti
+    const savedTypes = localStorage.getItem('selectedTypes');
+    if (savedTypes) {
+
+      this.selectedTypes = JSON.parse(savedTypes);
+      console.log('Tipi recuperati dal local storage:', this.selectedTypes);
+
+    } else if (this.selectedTypes.length === 0) {
+      
+      this.selectedTypes = [...this.types]; // Copia i valori di 'types'
+      console.log('Tipi impostati dalla prop types:', this.selectedTypes);
+    }
+
     this.getRestaurants();
+  },
+
+  watch: {
+    types(newTypes) {
+      this.selectedTypes = [...newTypes];
+    }
   }
 };
 </script>
 
 
 <template>
-
   <div class="col-md-12 selectType">
-
     <div class="container-fluid">
       <div class="py-2">
         <h1 class="title mb-3 ms-2">Novità su Deliveboo</h1>
@@ -89,14 +113,12 @@ export default {
       <SelectTypeComponent :availableTypes="availableTypes" :selectedTypes="selectedTypes"
         @update-selected-types="updateSelectedTypes" />
     </div>
-
   </div>
 
   <div class="container-fluid">
     <div class="row">
-
       <!-- Sidebar per il filtro -->
-      <div class="col-3 sidebar ">
+      <div class="col-3 sidebar">
         <SidebarComponent :availableTypes="availableTypes" :selectedTypes="selectedTypes"
           @update-selected-types="updateSelectedTypes" />
       </div>
@@ -107,9 +129,7 @@ export default {
       </div>
     </div>
   </div>
-
 </template>
-
 
 <style lang="scss" scoped>
 @use 'src/assets/partials/_variables.scss' as *;
