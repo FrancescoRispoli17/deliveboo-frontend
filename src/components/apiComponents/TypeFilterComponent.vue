@@ -15,7 +15,7 @@ export default {
   methods: {
     // Esegui la chiamata per ottenere i tipi dall'API
     getTypes() {
-      const typesUrl = `${store.url}types`;
+      const typesUrl = `${store.url}${store.types}`;
       axios.get(typesUrl)
         .then( response => {
         console.log('selezione avvenuta con successo')

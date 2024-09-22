@@ -14,7 +14,7 @@ export default {
 
 <template>
 
-  <div class="py-3 boh">
+  <div class="py-3 head-title mt-4">
     <h1 class="title mb-3">Novità su Deliveboo</h1>
     <p class="sub-title">Scopri tutti i Menu disponibili nella tua città!</p>
   </div>
@@ -174,7 +174,7 @@ export default {
     }
   }
 
-  .boh {
+  .head-title {
     display: none;
   }
 }

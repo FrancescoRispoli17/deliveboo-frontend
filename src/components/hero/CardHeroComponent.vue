@@ -2,7 +2,7 @@
 <script>
 import axios from 'axios';
 import { store } from '../../store';
-import SelectTypeComponent from '../apiComponents/SelectTypeComponent.vue';
+
 
 export default {
     name: 'CardHeroComponent' ,
@@ -11,7 +11,6 @@ export default {
     return{}
     },
     components: {
-        SelectTypeComponent
     },
     methods: {
         getTypes() {
@@ -49,9 +48,7 @@ export default {
                     <p class="label mb-3">
                         Cerca tra i migliori ristoranti della tua zona
                     </p>
-                    <!-- select type -->
-                     <SelectTypeComponent/>
-
+                    <a href="/filterTest">pagina di test</a>
                 </div>
             </div>
         </div>
