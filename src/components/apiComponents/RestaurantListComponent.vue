@@ -4,16 +4,46 @@ export default {
   props: {
     results: Array
   },
-
+  
   mounted() {
-    console.log(this.results);
+    this.adjustCardLayout(); // Regola il layout all'avvio
+    window.addEventListener('resize', this.adjustCardLayout); // Regola il layout al ridimensionamento della finestra
+  },
+  
+  beforeDestroy() {
+    window.removeEventListener('resize', this.adjustCardLayout); // Pulisci l'evento quando il componente viene distrutto
+  },
+  
+  methods: {
+    adjustCardLayout() {
+      const viewportWidth = window.innerWidth;
+
+      const container = document.querySelector('.cards-container');
+      const cards = container.querySelectorAll('.shape-card');
+
+      let cardWidth = 'calc(25% - 5px)'; // Predefinito per schermi grandi (4 colonne)
+
+      if (viewportWidth <= 1200) {
+        cardWidth = 'calc(33.33% - 5px)'; // 3 colonne
+      }
+      if (viewportWidth <= 992) {
+        cardWidth = 'calc(50% - 5px)'; // 2 colonne
+      }
+      if (viewportWidth <= 768) {
+        cardWidth = 'calc(50% - 0px)'; // 1 colonna
+      }
+
+      // Applica la larghezza dinamica a ciascuna card
+      cards.forEach(card => {
+        card.style.width = cardWidth;
+      });
+    }
   }
 };
 </script>
 
 
 <template>
-
   <div class="py-3 head-title mt-4">
     <h1 class="title mb-3">Novità su Deliveboo</h1>
     <p class="sub-title">Scopri tutti i Menu disponibili nella tua città!</p>
@@ -23,21 +53,16 @@ export default {
     <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 mb-3 shape-card">
       <div class="card">
         <div class="card-media" :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
-          <!-- Offerta di sconto, se presente -->
           <div class="discount">20% OFF</div>
-          <!-- Tempi di consegna stimati -->
           <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
         </div>
         <div class="card-description">
           <div class="about-place">
             <div class="place">
-              <!-- Nome del ristorante -->
               <p class="place-name">{{ restaurant.name }}</p>
-              <!-- Tipi di cucina -->
               <p class="place-speciality">{{ restaurant.types.map(type => type.name).join(', ') }}</p>
             </div>
             <div class="place-review">
-              <!-- Rating del ristorante -->
               <router-link :to="{ name: 'dishes', params: { slug: restaurant.slug } }" class="button">
                 Menù
               </router-link>
@@ -61,6 +86,7 @@ export default {
   @include button;
   @include shadow
 }
+
 .button:hover {
   @include button-hover;
   @include shadow
@@ -81,7 +107,6 @@ export default {
   margin-bottom: 20px;
   border: 1px solid #b5b5b570;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-
 }
 
 .card .card-media {
@@ -153,49 +178,5 @@ export default {
   padding: 2px 0;
   margin-bottom: 6px;
   margin-left: 30px;
-}
-
-// Laptop (grandi schermi)
-@media only screen and (max-width: 1200px) {
-  .cards-container {
-    .shape-card {
-      width: calc(25% - 20px); // 4 card per row
-      margin: 10px;
-    }
-  }
-}
-
-// Tablet (schermi medi)
-@media only screen and (max-width: 992px) {
-  .cards-container {
-    .shape-card {
-      width: calc(33.3333% - 20px); // 3 card per row
-      margin: 10px;
-    }
-  }
-}
-
-// Phone (schermi piccoli)
-@media only screen and (max-width: 768px) {
-  .cards-container {
-    .shape-card {
-      width: calc(50% - 20px); // 2 card per row
-      margin: 10px;
-    }
-  }
-
-  .head-title {
-    display: none;
-  }
-}
-
-// Molto piccoli schermi o telefoni
-@media only screen and (max-width: 576px) {
-  .cards-container {
-    .shape-card {
-      width: calc(100% - 20px); // 1 card per row
-      margin: 10px;
-    }
-  }
 }
 </style>
