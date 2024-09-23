@@ -74,8 +74,9 @@ export default {
   height: 100%;
   border-radius: 0.4rem;
   margin-bottom: 20px;
-  border: none;
+  border: 1px solid #b5b5b570;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+
 }
 
 .card .card-media {

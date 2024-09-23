@@ -25,22 +25,6 @@ const routes = [
         path: '/restaurant/:slug',  // Path con lo slug come parametro
         component: DishesPage,
     },
-    // Pagine di test
-    {
-        name: 'SendData',
-        path: '/SendData',
-        component: SendData,
-    },
-    {
-        name: 'ReciveData',
-        path: '/ReciveData',
-        component: ReciveData,
-    },
-    {
-        name: 'designSystem',
-        path: '/designSystem',
-        component: DesignSystem
-    },
     {
         name: 'payPage',
         path: '/pay',
