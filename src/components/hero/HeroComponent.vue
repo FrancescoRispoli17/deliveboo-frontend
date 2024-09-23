@@ -87,11 +87,11 @@ export default {
     }
 
     .card-container{
-        width: 50%;
+        width: 60%;
     }
 
     .empty-container{
-        width: 50%;
+        width: 40%;
         display: block;
     }
 

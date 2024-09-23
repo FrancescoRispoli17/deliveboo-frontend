@@ -235,7 +235,7 @@ export default {
             <div class="col-6 d-flex justify-content-end py-1">
               <button class="btn rounded text-white me-3" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="deleteSingleDish(dish, index)">-</button>
-              <button class="btn rounded text-white ms-3 button-kart" style="font-weight: 500; height: 40px; width: 40px;"
+              <button class="btn rounded text-white ms-3 button-cart" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="addToCart(dish)">+</button>
             </div>
 
@@ -247,10 +247,10 @@ export default {
             <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
           </h4>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn button-kart" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn button-cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Svuota carrello
             </button>
-            <router-link :to="{ name: 'payPage' }" class="btn button-kart mx-3">Conferma ordine</router-link>
+            <router-link :to="{ name: 'payPage' }" class="btn button-cart mx-3">Conferma ordine</router-link>
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
@@ -309,7 +309,7 @@ export default {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button-kart {
+.button-cart {
   padding: 0.5rem;
   background-color: $tertiary-color;
   color: $quaternary-color;
@@ -318,7 +318,7 @@ export default {
 
 }
 
-.button-kart:hover {
+.button-cart:hover {
   background-color: $quaternary-color;
 }
 
@@ -363,8 +363,11 @@ export default {
 }
 
 .button {
-  background-color: $primary-color;
   @include button;
+  @include shadow
+}
+.button:hover {
+  @include button-hover;
   @include shadow
 }
 

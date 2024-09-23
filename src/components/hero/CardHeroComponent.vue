@@ -49,7 +49,7 @@ export default {
                     </h1>
 
                     <p class="label mb-3">
-                        Scegli la tipologia di ristorante
+                        Scegli prima la tipologia di ristorante
                     </p>
                     <SearchBarComponent/>
                 </div>
@@ -99,9 +99,22 @@ export default {
 
 }
 
+@media screen and  (max-width: 426px) {
+
+    .title{
+        display: none;
+    }
+
+    .title-sm{
+        font-size: 1.2rem;
+        text-align: start;
+        display:block;
+        font-weight: 700;
+    }
+}
 
 //smartphone
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 376px) {
 
     .title{
         display: none;
