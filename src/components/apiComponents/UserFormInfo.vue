@@ -10,12 +10,13 @@ export default {
         user_phone: "",
         delivery_time: "",
         notes: "",
+        delivery_date: "", // Assicurati di inizializzarlo
       },
       errors: {},
     };
   },
   mounted() {
-    // imposta la data corrente
+    // Imposta la data corrente
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -34,7 +35,7 @@ export default {
         !this.formData.user_email ||
         !this.validateEmail(this.formData.user_email)
       ) {
-        this.errors.user_email = "È richiesta un'e-mail valida";
+        this.errors.user_email = "È richiesta un'e-mail valida (es: esempio@dominio.com)";
       }
       if (!this.formData.user_address) {
         this.errors.user_address = "L'indirizzo è obbligatorio";
@@ -59,11 +60,12 @@ export default {
       }
     },
     validateEmail(email) {
-      const patternEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const patternEmail = /^[^\s@]+@[^\s@]+\.(com|it|fr|uk|de|org|net|gov)$/; //  domini
       return patternEmail.test(email);
     },
     validatePhone(phone) {
-      const patternPhone = /^\+?[0-9]{7,15}$/;
+      // richiedi almeno 10 cifre
+      const patternPhone = /^\+?[0-9]{10,15}$/;
       return patternPhone.test(phone);
     },
   },
@@ -80,13 +82,8 @@ export default {
           <label for="user_name" class="form-label">
             Nome e Cognome <span class="text-danger">*</span>
           </label>
-          <input
-            type="text"
-            id="user_name"
-            v-model="formData.user_name"
-            class="form-control"
-            :class="{ 'is-invalid': errors.user_name }"
-            placeholder="Inserisci nome e cognome" />
+          <input type="text" id="user_name" v-model="formData.user_name" class="form-control"
+            :class="{ 'is-invalid': errors.user_name }" placeholder="Inserisci nome e cognome" />
           <div v-if="errors.user_name" class="invalid-feedback">
             {{ errors.user_name }}
           </div>
@@ -97,13 +94,8 @@ export default {
           <label for="user_email" class="form-label">
             Email <span class="text-danger">*</span>
           </label>
-          <input
-            type="email"
-            id="user_email"
-            v-model="formData.user_email"
-            class="form-control"
-            :class="{ 'is-invalid': errors.user_email }"
-            placeholder="Inserisci la tua e-mail" />
+          <input type="email" id="user_email" v-model="formData.user_email" class="form-control"
+            :class="{ 'is-invalid': errors.user_email }" placeholder="Inserisci la tua e-mail" />
           <div v-if="errors.user_email" class="invalid-feedback">
             {{ errors.user_email }}
           </div>
@@ -114,13 +106,8 @@ export default {
           <label for="user_address" class="form-label">
             Indirizzo <span class="text-danger">*</span>
           </label>
-          <input
-            type="text"
-            id="user_address"
-            v-model="formData.user_address"
-            class="form-control"
-            :class="{ 'is-invalid': errors.user_address }"
-            placeholder="Inserisci il tuo indirizzo" />
+          <input type="text" id="user_address" v-model="formData.user_address" class="form-control"
+            :class="{ 'is-invalid': errors.user_address }" placeholder="Inserisci il tuo indirizzo" />
           <div v-if="errors.user_address" class="invalid-feedback">
             {{ errors.user_address }}
           </div>
@@ -134,13 +121,8 @@ export default {
           <label for="user_phone" class="form-label">
             Telefono <span class="text-danger">*</span>
           </label>
-          <input
-            type="text"
-            id="user_phone"
-            v-model="formData.user_phone"
-            class="form-control"
-            :class="{ 'is-invalid': errors.user_phone }"
-            placeholder="Inserisci il tuo numero di telefono" />
+          <input type="text" id="user_phone" v-model="formData.user_phone" class="form-control"
+            :class="{ 'is-invalid': errors.user_phone }" placeholder="Inserisci il tuo numero di telefono" />
           <div v-if="errors.user_phone" class="invalid-feedback">
             {{ errors.user_phone }}
           </div>
@@ -151,11 +133,7 @@ export default {
           <label for="delivery_time" class="form-label">
             Ora della consegna <span class="text-danger">*</span>
           </label>
-          <input
-            type="time"
-            id="delivery_time"
-            v-model="formData.delivery_time"
-            class="form-control"
+          <input type="time" id="delivery_time" v-model="formData.delivery_time" class="form-control"
             :class="{ 'is-invalid': errors.delivery_time }" />
           <div v-if="errors.delivery_time" class="invalid-feedback">
             {{ errors.delivery_time }}
@@ -165,13 +143,8 @@ export default {
         <!-- Note -->
         <div class="mb-3">
           <label for="notes" class="form-label">Note</label>
-          <textarea
-            id="notes"
-            v-model="formData.notes"
-            class="form-control"
-            :class="{ 'is-invalid': errors.notes }"
-            maxlength="255"
-            placeholder="Aggiungi note sul tuo ordine oppure specifica richieste particolari qui"
+          <textarea id="notes" v-model="formData.notes" class="form-control" :class="{ 'is-invalid': errors.notes }"
+            maxlength="255" placeholder="Aggiungi note sul tuo ordine oppure specifica richieste particolari qui"
             style="height: 130px"></textarea>
           <div v-if="errors.notes" class="invalid-feedback">
             {{ errors.notes }}
@@ -222,8 +195,10 @@ export default {
 /* Stile per gli input attivi */
 input:focus,
 textarea:focus {
-  border-color: orange; /* Colore del bordo quando attivo */
-  box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); /* Effetto ombra */
+  border-color: orange;
+  /* Colore del bordo quando attivo */
+  box-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+  /* Effetto ombra */
 }
 
 /* Personalizzazione per tablet */
