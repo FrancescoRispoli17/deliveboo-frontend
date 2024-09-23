@@ -221,6 +221,10 @@ export default {
   @include button;
   @include shadow;
 }
+.button:hover {
+  @include button-hover;
+  @include shadow;
+}
 
 .title-kart {
   font-size: 1.2rem;
@@ -237,6 +241,10 @@ hr {
 
 .kart-button {
   background-color: $primary-color;
+  color: $quaternary-color;
+}
+.kart-button:hover {
+  background-color: $secondary-color;
   color: $quaternary-color;
 }
 
