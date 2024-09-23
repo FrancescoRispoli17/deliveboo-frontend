@@ -205,8 +205,7 @@ export default {
         </div>
       </div>
       <!-- Carrello side -->
-      <div class="col-lg-6 col-md-12 kart kart-side py-3"
-        style=" background-image: url('https://hexcolorpedia.com/wp-content/themes/bootscore-5-child/solid.php?c=f17902');">
+      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/cart2.png');">
         <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap mt-3">
           <p class="text-white" style="font-weight: 800;">
