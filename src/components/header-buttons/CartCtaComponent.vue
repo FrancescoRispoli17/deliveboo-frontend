@@ -222,6 +222,11 @@ export default {
   @include shadow;
 }
 
+.button:hover{
+  @include button-hover;
+  @include shadow
+}
+
 .title-kart {
   font-size: 1.2rem;
   font-weight: 700;
@@ -236,8 +241,11 @@ hr {
 }
 
 .kart-button {
-  background-color: $primary-color;
-  color: $quaternary-color;
+  @include button
+}
+
+.kart-button:hover{
+  @include button-hover
 }
 
 .cart-sidebar {

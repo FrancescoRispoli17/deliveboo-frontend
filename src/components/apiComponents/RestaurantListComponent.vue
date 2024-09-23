@@ -58,7 +58,12 @@ export default {
 }
 
 .button {
-  @include button
+  @include button;
+  @include shadow
+}
+.button:hover {
+  @include button-hover;
+  @include shadow
 }
 
 .cards-container {

@@ -18,6 +18,25 @@ export default {
         // Metodo per verificare se il tipo è attivo
         isActive(typeName) {
             return this.selectedTypes.includes(typeName);
+        },
+        //comportamento di drag scrolling
+        onMouseDown(e) {
+            this.isDown = true;
+            this.startX = e.pageX - this.$refs.scrollContainer.offsetLeft;
+            this.scrollLeft = this.$refs.scrollContainer.scrollLeft;
+        },
+        onMouseLeave() {
+            this.isDown = false;
+        },
+        onMouseUp() {
+            this.isDown = false;
+        },
+        onMouseMove(e) {
+            if (!this.isDown) return;
+            e.preventDefault();
+            const x = e.pageX - this.$refs.scrollContainer.offsetLeft;
+            const walk = (x - this.startX) * 2; // Velocità dello scrolling
+            this.$refs.scrollContainer.scrollLeft = this.scrollLeft - walk;
         }
     }
 };
@@ -25,7 +44,13 @@ export default {
 
 <template>
 
-    <div class="scroll-container">
+    <div class="scroll-container"
+    ref="scrollContainer"
+        @mousedown="onMouseDown"
+        @mouseleave="onMouseLeave"
+        @mouseup="onMouseUp"
+        @mousemove="onMouseMove"
+    >
         <div class="button-container">
             <div v-for="type in availableTypes" :key="type.id" :class="['button-item', { active: isActive(type.name) }]"
                 @click="toggleType($event, type.name)">
@@ -43,11 +68,17 @@ export default {
     overflow-x: auto;
     white-space: nowrap;
     padding: 10px 0;
-
+    border-radius: 2rem;
+    cursor: grab;
+    user-select: none; /* Previene la selezione del testo durante il drag */
 }
 
-.scroll-container::-webkit-scrollbar {
+.scroll-container::-webkit-scrollbar{
     display: none;
+}
+
+.scroll-container:active {
+    cursor: grabbing;
 }
 
 .button-container {
