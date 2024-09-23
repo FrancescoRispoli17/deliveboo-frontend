@@ -4,6 +4,7 @@ export const store = reactive({
   cart: [],
   lastCart: [],
   results: [],
+  types:'',
   url: "http://localhost:8000/api/",
 
   // endpoint per ristoranti
@@ -13,7 +14,7 @@ export const store = reactive({
   orders: "orders/",
 
   // endpoint per tipi
-  types: "types",
+  type: "types",
 
   // Memorizziamo l'ultimo stato dei tipi selezionati
   lastTypes: [],
