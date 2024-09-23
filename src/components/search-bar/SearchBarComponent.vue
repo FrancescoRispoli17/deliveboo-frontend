@@ -11,11 +11,12 @@ export default {
             isDown: false, // Stato per il drag scrolling
             startX: 0,
             scrollLeft: 0,
+            store
         };
     },
     methods: {
         getTypes() {
-            const typesUrl = `${store.url}${store.types}`;
+            const typesUrl = `${store.url}${store.type}`;
             axios
                 .get(typesUrl)
                 .then((response) => {
@@ -41,11 +42,11 @@ export default {
                 alert('Seleziona almeno un tipo prima di procedere.');
                 return;
             }
-            const type = this.selectedTypes.join(',');
-            this.$router.push({
-                name: 'restaurant',
-                params: { type },
-            });
+            this.store.types = this.selectedTypes;
+            console.log(this.store.types);
+             this.$router.push({
+                 name: 'restaurant',
+             });
         },
 
         isActive(typeName) {
@@ -101,7 +102,7 @@ export default {
         <div class="row">
             <div class="col-md-12 d-flex justify-content-center">
                 <button @click="getPageReciveData" class="btn button">
-                    <span>clicca qui</span>
+                    <span>Inizia a Ordinare!</span>
                 </button>
             </div>
         </div>
@@ -129,7 +130,7 @@ export default {
     padding: 10px 0;
     border-radius: 2rem;
     cursor: grab;
-    user-select: none; /* Previene la selezione del testo durante il drag */
+    user-select: none; 
 }
 
 .scroll-container::-webkit-scrollbar{
@@ -170,12 +171,29 @@ export default {
     height: 8px;
 }
 
-.scroll-container::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 10px;
+
+@media (max-width: 768px ){
+    .button-item {
+    padding: 6px 12px;
+    background-color: $tertiary-color;
+    color: $quaternary-color;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+    white-space: normal;
+    }
+
+    .button-item.active {
+        @include button-radius;
+    }
+
+    .button-item:hover {
+        background-color: $primary-color;
+        @include shadow;
+        color: $quaternary-color;
+    }
+
 }
 
-.scroll-container::-webkit-scrollbar-thumb:hover {
-    background-color: #999;
-}
 </style>

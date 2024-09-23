@@ -23,7 +23,8 @@ export default {
       results: [], // Risultati dei ristoranti
       apiRestaurant: `${store.url}${store.restaurants}`, // URL API dei ristoranti
       selectedTypes: [], // Tipi selezionati per i filtri
-      availableTypes: [] // Tipi di cucina disponibili per le checkbox
+      availableTypes: [],
+      store // Tipi di cucina disponibili per le checkbox
     };
   },
 
@@ -42,10 +43,19 @@ export default {
     getRestaurants() {
       let filterUrl = this.apiRestaurant;
 
-      if (this.selectedTypes.length > 0) {
+      if (this.selectedTypes.length > 0 && this.store.types.length) {
+        const typesQuery = this.selectedTypes.join(',');
+        const typesStore = this.store.types.join(',');
+        filterUrl += `?types=${typesQuery}`+','+ typesStore;
+      }else if(this.selectedTypes.length > 0) {
         const typesQuery = this.selectedTypes.join(',');
         filterUrl += `?types=${typesQuery}`;
+      }else if(this.store.types.length){
+        const typesQuery = this.store.types.join(',');
+        filterUrl += `?types=${typesQuery}`
       }
+
+      console.log(filterUrl);
 
       axios.get(filterUrl)
         .then(response => {
@@ -63,6 +73,8 @@ export default {
         this.selectedTypes.push(typeName);
       } else {
         this.selectedTypes = this.selectedTypes.filter(name => name !== typeName);
+        if(this.store.types.length)
+          this.store.types = this.store.types.filter(name => name !== typeName);
       }
 
       // Salva i tipi selezionati nel local storage
