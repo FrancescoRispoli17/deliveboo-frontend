@@ -107,7 +107,7 @@ export default {
 
 <template>
   <div>
-    <!-- Pulsante per aprire la sidebar, aggiungi un puntno rosso nell angolo in alto a destra se il carrello ha qualcosa all'interno -->
+    <!-- apre la sidebar -->
     <button class="btn bg-light cart" type="button" @click="toggleSidebar">
       <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon" />
 
@@ -281,7 +281,7 @@ hr {
   width: 100%;
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.057);
-  position: relative; /* Necessario per il posizionamento assoluto del puntino */
+  position: relative; 
 }
 
 .icon {
@@ -291,8 +291,8 @@ hr {
 /* Stile per il puntino rosso */
 .cart-notification-dot {
   position: absolute;
-  top: -5px;  /* Posiziona in alto rispetto al bottone */
-  right: -3px; /* Posiziona a destra rispetto al bottone */
+  top: -5px; 
+  right: -3px; 
   width: 8px;
   height: 8px;
   background-color: red;
