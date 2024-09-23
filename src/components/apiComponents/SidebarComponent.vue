@@ -7,7 +7,7 @@ export default {
   },
   data() {
     return {
-      isAccordionOpen: true // Stato dell'accordion (aperto/chiuso)
+      isAccordionOpen: true
     };
   },
   methods: {
@@ -22,8 +22,7 @@ export default {
 </script>
 
 <template>
-  <div class=" sidebar p-5">
-
+  <div class="sidebar p-5">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-auto">
@@ -31,7 +30,6 @@ export default {
         </div>
         <div class="col-auto">
           <p>Adesso</p>
-
           <label class="fs-5 fw-bold">Milano</label>
         </div>
       </div>
@@ -39,27 +37,36 @@ export default {
 
     <hr>
 
-    <!-- Sezione cliccabile per il toggle dell'accordion -->
+    <!-- toggle dell'accordion -->
     <div class="accordion-header d-flex align-items-center justify-content-between" @click="toggleAccordion"
       style="cursor: pointer;">
       <h5 class="mb-2 fw-bold">Cucine</h5>
       <div>
-        <font-awesome-icon v-if="isAccordionOpen" icon="chevron-down" class=" icon" />
-        <font-awesome-icon v-else icon="chevron-up" class=" icon" />
+        <font-awesome-icon v-if="isAccordionOpen" icon="chevron-down" class="icon" />
+        <font-awesome-icon v-else icon="chevron-up" class="icon" />
       </div>
     </div>
-
 
     <!-- Sezione delle checkbox, visibile solo se isAccordionOpen è true -->
     <div v-if="isAccordionOpen" class="mt-4">
       <div v-for="type in availableTypes" :key="type.id" class="form-check py-2">
         <div class="row">
           <div class="col-auto">
-            <input type="checkbox" class="form-check-input custom-checkbox" :value="type.name"
-              :checked="selectedTypes.includes(type.name)" @change="updateSelectedTypes($event, type.name)" />
+           
+            <input 
+              type="checkbox" 
+              class="form-check-input custom-checkbox" 
+              :id="'checkbox-' + type.id" 
+              :value="type.name"
+              :checked="selectedTypes.includes(type.name)" 
+              @change="updateSelectedTypes($event, type.name)" />
           </div>
+
+          
           <div class="col-auto d-flex justify-content-start">
-            <label class="form-check-label fw-light">{{ type.name }}</label>
+            <label :for="'checkbox-' + type.id" class="form-check-label fw-light">
+              {{ type.name }}
+            </label>
           </div>
         </div>
       </div>
@@ -75,8 +82,6 @@ export default {
 
 .sidebar {
   height: 100%;
-  /* Imposta l'altezza della sidebar */
-  // background-image: url('/offers.png');
   background-color: $quaternary-color;
 }
 
@@ -89,7 +94,7 @@ label {
   vertical-align: middle;
 }
 
-/* Personalizza le checkbox */
+
 .custom-checkbox {
   width: 1.2rem;
   height: 1.2rem;
@@ -104,7 +109,6 @@ label {
     background-color: $primary-color;
     border-color: $primary-color;
   }
-
 }
 
 hr {
