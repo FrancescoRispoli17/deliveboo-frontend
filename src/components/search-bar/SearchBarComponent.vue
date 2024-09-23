@@ -52,7 +52,7 @@ export default {
             return this.selectedTypes.includes(typeName);
         },
 
-        // Aggiungere il comportamento di "drag scrolling"
+        // Aggiunge il comportamento di "drag scrolling"
         onMouseDown(e) {
             this.isDown = true;
             this.startX = e.pageX - this.$refs.scrollContainer.offsetLeft;
@@ -80,8 +80,7 @@ export default {
 
 <template>
     <div
-        class="scroll-container"
-        ref="scrollContainer"
+        class="scroll-container"ref="scrollContainer"
         @mousedown="onMouseDown"
         @mouseleave="onMouseLeave"
         @mouseup="onMouseUp"
@@ -117,6 +116,12 @@ export default {
     @include button;
     border-radius:1.5rem;
 }
+.button:hover{
+    @include button-hover;
+    border-radius:1.5rem;
+   
+}
+
 
 .scroll-container {
     overflow-x: auto;
@@ -157,6 +162,8 @@ export default {
 
 .button-item:hover {
     background-color: $primary-color;
+    @include shadow;
+    color: $quaternary-color;
 }
 
 .scroll-container::-webkit-scrollbar {

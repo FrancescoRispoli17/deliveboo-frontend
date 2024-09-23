@@ -142,10 +142,14 @@ export default {
   <div class="margin" style=" background-image: url('/offers.png');">
     <div class="container py-5">
       <h5 class="mb-3">
-        <a class="text-white text-decoration-none fw-bold d-flex align-items-center" href="/restaurant">
-          <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
-          Pagina ristoranti
-        </a>
+        <router-link 
+          class="text-white text-decoration-none fw-bold d-flex align-items-center" 
+          :to="{ name: 'restaurant' }"
+        >
+  <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
+  Pagina ristoranti
+</router-link>
+
       </h5>
       <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
       <div class="row" v-if="restaurant">
