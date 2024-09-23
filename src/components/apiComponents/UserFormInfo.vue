@@ -182,7 +182,7 @@ export default {
 
     <!-- Submit -->
     <div class="text-center mt-4">
-      <button type="button" class="btn button" @click="submitForm">
+      <button type="button" class="btn button mb-3" @click="submitForm">
         Conferma Dati
       </button>
     </div>

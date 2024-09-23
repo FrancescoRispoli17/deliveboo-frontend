@@ -3,9 +3,9 @@
     <div id="dropin-container"></div>
     <!-- bottone di debug modale -->
     <!-- <button @click="modalTrigger">modale</button> -->
-    <button @click="processPayment" class="btn btn-primary py-2 mb-2">
-      Paga ora
-    </button>
+    <div class="text-center">
+      <button @click="processPayment" class="btn button mb-3">Paga ora</button>
+    </div>
 
     <!-- Modale per pagamento riuscito -->
     <div
@@ -250,5 +250,21 @@ export default {
   text-decoration: none;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.button {
+  @include button;
+  @include shadow;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+/* Stile per gli input attivi */
+input:focus,
+textarea:focus {
+  border-color: orange; /* Colore del bordo quando attivo */
+  box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); /* Effetto ombra */
 }
 </style>
