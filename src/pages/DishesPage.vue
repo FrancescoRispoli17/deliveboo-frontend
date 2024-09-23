@@ -182,13 +182,21 @@ export default {
                     <button @click="confirim(dish)" class="btn button">aggiungi al carrello</button>
                   </div>
                   <div class="px-5 d-flex gap-4">
-                    <span v-if="dish.gluten_free === 1"> <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl" style="color: #dbac00;" /> </span>
+                    <span v-if="dish.gluten_free === 1">
+                      <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl"
+                        style="color: #dbac00;" />
+                    </span>
                     <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
                       <FontAwesomeIcon :icon="['fas', 'cow']" size="xl" style="color: #69d5ff;" />
-                    <span style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #69d5ff; transform: rotate(-45deg); transform-origin: center; border-radius: 2px"></span>
+                      <span
+                        style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #69d5ff; transform: rotate(-45deg); transform-origin: center; border-radius: 2px"></span>
                     </span>
-                    <span v-if="dish.spicy === 1"> <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xl" style="color: #ff0000;" /> </span>
-                    <span v-if="dish.vegan === 1"> <FontAwesomeIcon :icon="['fas', 'leaf']" size="xl" style="color: #02c031;" /> </span>
+                    <span v-if="dish.spicy === 1">
+                      <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xl" style="color: #ff0000;" />
+                    </span>
+                    <span v-if="dish.vegan === 1">
+                      <FontAwesomeIcon :icon="['fas', 'leaf']" size="xl" style="color: #02c031;" />
+                    </span>
                   </div>
                 </div>
               </div>
@@ -197,7 +205,7 @@ export default {
         </div>
       </div>
       <!-- Carrello side -->
-      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/cart.png');">
+      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/cart2.png');">
         <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap mt-3">
           <p class="text-white" style="font-weight: 800;">
@@ -209,28 +217,31 @@ export default {
           <div v-for="(dish, index) in store.cart" class=" d-flex">
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
-                <p class=" m-0 dishes" style="font-weight: 800; font-size:16px ;">
+                <p class=" m-0 dishes text-white" style="font-weight: 800; font-size:16px ;">
                   {{ dish.quantity }} piatti di {{ dish.name }}
                 </p>
               </div>
               <div v-else>
-                <p class=" m-0 dishes" style="font-weight: 800; font-size:16px ;">
+                <p class=" m-0 dishes text-white" style="font-weight: 800; font-size:16px ;">
                   {{ dish.quantity }} piatto di {{ dish.name }}
                 </p>
               </div>
               <hr>
             </div>
             <div class="col-6 d-flex justify-content-end py-1">
-              <button class="btn rounded text-white me-3" style="font-weight: 500; height: 40px"
+              <button class="btn rounded text-white me-3" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="deleteSingleDish(dish, index)">-</button>
-              <button class="btn rounded text-white ms-3" style="font-weight: 500; height: 40px"
+              <button class="btn rounded text-white ms-3 button-kart" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="addToCart(dish)">+</button>
             </div>
+
           </div>
         </div>
         <!-- Pulsanti e totale carrello -->
         <div v-if="store.cart.length" class="text-center info-kart">
-          <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
+          <h4>
+            <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
+          </h4>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn button-kart" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Svuota carrello
@@ -239,7 +250,9 @@ export default {
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
-          <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
+          <h4>
+            <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
+          </h4>
         </div>
       </div>
     </div>
@@ -272,14 +285,19 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
-.dishes{
+.dishes {
   color: $secondary-color;
 }
 
 .rounded {
   border-radius: 100%;
   background-color: $tertiary-color;
-  color:$primary-color;
+  color: $quaternary-color;
+}
+
+.rounded:hover {
+  background-color: $quaternary-color;
+  color: black !important;
 }
 
 .card {
@@ -321,9 +339,9 @@ export default {
   border-radius: 1.5rem;
 
   .img {
-    border-radius: 1.5rem; 
-    width: 100%; 
-    object-fit: cover; 
+    border-radius: 1.5rem;
+    width: 100%;
+    object-fit: cover;
   }
 }
 
