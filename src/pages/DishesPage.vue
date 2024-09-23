@@ -136,53 +136,48 @@ export default {
 
 <template>
   <HeaderEmptyComponent />
-  <div class="margin" style=" background-image: url('/offers.png');">
+  <div class="margin" style=" background-image: url('');">
     <div class="container py-5">
-      <h5 class="mb-3">
+      <!-- <p class="mb-3">
         <router-link 
-          class="text-white text-decoration-none fw-bold d-flex align-items-center" 
+          class=" text-decoration-none fw-bold d-flex align-items-center" 
           :to="{ name: 'restaurant' }"
         >
-  <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
-  Pagina ristoranti
-</router-link>
+        <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
+          Pagina ristoranti
+        </router-link>
 
-      </h5>
+      </p> -->
       <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
       <div class="row" v-if="restaurant">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!-- foto del ristorante -->
           <div class="img-container">
-            <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img"
-              v-if="restaurant.image_path_url">
+            <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img">
           </div>
         </div>
-        <div class="col-md-9 p-1">
-          <h1 class="title text-white">{{ restaurant.name }}</h1>
-          <p class="card-text">{{ restaurant.description }}</p>
+        <div class="col-md-8 p-1">
+          <h1 class="title">{{ restaurant.name }}</h1>
+          <p class="card-text">{{ restaurant.address }}</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="container py-5">
+  <div class="container py-3 mb-5">
     <div class="row">
       <!-- Sezione dei piatti -->
-      <div class=" col-lg-6 col-md-12 scroll py-3" v-if="restaurant.dishes && restaurant.dishes.length">
-        <div v-for="dish in restaurant.dishes.filter(dish => dish.visible)" :key="dish.id" class="card mb-3">
-          <div class="row g-0">
-            <div class="col-md-3">
-              <img :src="dish.image_path_url" style="width: 100%;" alt="">
+      <div class=" col-lg-9  col-md-12 scroll  row  py-3" v-if="restaurant.dishes && restaurant.dishes.length">
+        <div v-for="dish in restaurant.dishes.filter(dish => dish.visible)" :key="dish.id" class="card-custom mb-2 me-2  ">
+          <div class="row">
+            <div class="col-md-2" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTevEY84uoDmQr9dgXTHGxuiFC2FUOBragieQ&s'); background-size: cover; background-position: center;">
             </div>
-            <div class="col-md-9">
-              <div class="card-body">
+            <div class="col-md-8">
+              <div class="card-body p">
                 <h5 class="card-title">{{ dish.name }}</h5>
-                <p class="card-text">Descrizione: {{ dish.description }}</p>
-                <p class="card-text">Prezzo: €{{ dish.price }}</p>
+                <p class="card-text">{{ dish.description }}</p>
+                <p class="card-text">{{ dish.price }}€</p>
                 <div class="d-flex align-items-center">
-                  <div>
-                    <button @click="confirim(dish)" class="btn button">aggiungi al carrello</button>
-                  </div>
-                  <div class="px-5 d-flex gap-4">
+                  <div class="px-5 d-flex gap-4 d-none">
                     <span v-if="dish.gluten_free === 1">
                       <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl"
                         style="color: #dbac00;" />
@@ -202,11 +197,14 @@ export default {
                 </div>
               </div>
             </div>
+            <div class="col-md-2 d-flex justify-content-center align-items-center btn button" @click="confirim(dish)">
+              <font-awesome-icon :icon="['fas', 'cart-shopping']" class="text-white" />
+            </div>
           </div>
         </div>
       </div>
       <!-- Carrello side -->
-      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/cart.png');">
+      <div class="col-lg-3 col-md-12 cart cart-side py-3" style=" background-image: url('');">
         <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap mt-3">
           <p class="text-white" style="font-weight: 800;">
@@ -214,16 +212,16 @@ export default {
           </p>
         </div>
         <!-- Dettagli del carrello per schermi sopra 768px -->
-        <div class=" p-4 dish-scroll info-cart">
+        <div class=" p-4 info-cart">
           <div v-for="(dish, index) in store.cart" class=" d-flex">
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
-                <p class=" m-0 dishes text-white" style="font-weight: 800; font-size:16px ;">
+                <p class=" m-0 dishes" style="font-weight: 800; font-size:16px ;">
                   {{ dish.quantity }} piatti di {{ dish.name }}
                 </p>
               </div>
               <div v-else>
-                <p class=" m-0 dishes text-white" style="font-weight: 800; font-size:16px ;">
+                <p class=" m-0 dishes" style="font-weight: 800; font-size:16px ;">
                   {{ dish.quantity }} piatto di {{ dish.name }}
                 </p>
               </div>
@@ -233,13 +231,14 @@ export default {
               <button class="btn rounded text-white me-3" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="deleteSingleDish(dish, index)">-</button>
               <button class="btn rounded text-white ms-3 button-cart" style="font-weight: 500; height: 40px; width: 40px;"
-                @click="addToCart(dish)">+</button>
+                @click="addToCart(dish)">+
+              </button>
             </div>
 
           </div>
         </div>
         <!-- Pulsanti e totale carrello -->
-        <div v-if="store.cart.length" class="text-center info-kart">
+        <div v-if="store.cart.length" class="text-center">
             <p class="total">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn button-cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -282,6 +281,27 @@ export default {
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
+
+// .dish-scroll {
+//    min-height: 0px;
+//    height: 400px;
+//    overflow-y: auto;
+//  }
+
+//  .dish-scroll::-webkit-scrollbar {
+//    display: none;
+//  }
+
+.scroll {
+  height: 700px;
+  overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+
 .total{
   font-weight: 800;
   color: $tertiary-color;
@@ -299,12 +319,13 @@ export default {
 
 .rounded:hover {
   background-color: $quaternary-color;
-  color: black !important;
 }
 
-.card {
+.card-custom {
   border: 0.5px solid rgba(0, 0, 0, 0.099);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  width: 45%;
+  border-radius: 0.5rem;
 }
 
 .button-cart {
@@ -320,16 +341,6 @@ export default {
   background-color: $quaternary-color;
 }
 
-.dish-scroll {
-  min-height: 0px;
-  height: 350px;
-  overflow-y: auto;
-}
-
-.dish-scroll::-webkit-scrollbar {
-  display: none;
-}
-
 .margin {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 1.5rem;
@@ -338,10 +349,10 @@ export default {
 
 
 .img-container {
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
 
   .img {
-    border-radius: 1.5rem;
+    border-radius: 0.5rem;
     width: 100%;
     object-fit: cover;
   }
@@ -351,22 +362,16 @@ export default {
   color: $quaternary-color;
 }
 
-.scroll {
-  height: 500px;
-  overflow-y: auto;
-}
-
-.scroll::-webkit-scrollbar {
-  display: none;
-}
-
 .button {
-  @include button;
-  @include shadow
+  background-color: $primary-color;
+  color: $quaternary-color;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-weight: 600
 }
 .button:hover {
-  @include button-hover;
-  @include shadow
+  background-color: $tertiary-color;
+  color: $quaternary-color;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .title {
@@ -378,10 +383,13 @@ export default {
 }
 
 
-.kart {
-  background-color: $primary-color;
+.cart {
+  height: 100%;
   border-radius: 1.2rem;
-  background-image: url('/logo-transparent.png');
+  border: 1px solid #a1a1a151;
+  background-color: white;
+  @include light-shadow
+
 }
 
 .recap {
@@ -390,14 +398,20 @@ export default {
 
 .info-cart {
   display: block; // Mostra i dettagli del carrello su schermi grandi
+  height: 400px;
+  overflow-y: auto;
 }
+
+.info-cart::-webkit-scrollbar {
+    display: none;
+ }
 
 @media(max-width: 768px) {
   .scroll {
     height: 600px;
   }
 
-  .kart-side {
+  .cart-side {
     height: auto;
   }
 

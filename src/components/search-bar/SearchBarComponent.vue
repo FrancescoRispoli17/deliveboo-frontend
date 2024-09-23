@@ -105,6 +105,7 @@ export default {
                     <span>Inizia a Ordinare!</span>
                 </button>
             </div>
+            <a href="/test">/Test</a>
         </div>
     </div>
 </template>
