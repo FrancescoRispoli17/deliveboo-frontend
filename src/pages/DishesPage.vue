@@ -53,10 +53,7 @@ export default {
 
     // Conferma l'aggiunta del piatto al carrello o richiede conferma se il carrello è di un altro ristorante
     confirim(dish) {
-      if (
-        localStorage.getItem("lastRestaurant") &&
-        localStorage.getItem("lastRestaurant") != this.restaurant.id
-      ) {
+      if (localStorage.getItem("lastRestaurant") && localStorage.getItem("lastRestaurant") != this.restaurant.id) {
         // Conferma di svuotare il carrello precedente
         if (confirm("Se crei un nuovo carrello eliminerai quello vecchio. Vuoi proseguire?")) {
           this.addToCart(dish);

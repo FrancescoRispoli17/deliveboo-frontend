@@ -110,6 +110,7 @@ export default {
       dropinInstance: null,
       transactionId: "",
       errorMessage: "",
+      store
     };
   },
   async mounted() {
@@ -234,7 +235,7 @@ export default {
       this.$emit("clear-cart"); // emette un evento verso il paypage per svuotare il carrello
 
       // se il carrello è memorizzato nello store o nel localStorage, aggiorna anche quello
-      localStorage.removeItem("cart");
+      localStorage.clear();
     },
   },
 };

@@ -49,8 +49,7 @@ export default {
       // Svuota il carrello e rimuovi dal localStorage
       this.cart = [];
       this.totale = 0;
-      localStorage.removeItem("cart");
-      localStorage.removeItem("tot");
+      localStorage.clear();
     },
   },
 };
