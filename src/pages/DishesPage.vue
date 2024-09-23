@@ -206,7 +206,7 @@ export default {
         </div>
       </div>
       <!-- Carrello side -->
-      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/cart2.png');">
+      <div class="col-lg-6 col-md-12 kart kart-side py-3" style=" background-image: url('/cart.png');">
         <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap mt-3">
           <p class="text-white" style="font-weight: 800;">
@@ -240,9 +240,7 @@ export default {
         </div>
         <!-- Pulsanti e totale carrello -->
         <div v-if="store.cart.length" class="text-center info-kart">
-          <h4>
-            <p class="text-white" style="font-weight: 700;">Totale: €{{ totale }}</p>
-          </h4>
+            <p class="total">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn button-cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Svuota carrello
@@ -251,9 +249,7 @@ export default {
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
-          <h4>
             <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
-          </h4>
         </div>
       </div>
     </div>
@@ -285,6 +281,11 @@ export default {
 <style lang="scss" scoped>
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
+
+.total{
+  font-weight: 800;
+  color: $tertiary-color;
+}
 
 .dishes {
   color: $secondary-color;
