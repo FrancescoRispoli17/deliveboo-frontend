@@ -157,12 +157,12 @@ export default {
       <hr />
 
       <div class="cart-sidebar-footer">
-        <button v-if="store.cart.length" class="btn button" @click="deleteCart">
+        <button v-if="store.lastCart.length" class="btn button" @click="deleteCart">
           Svuota carrello
         </button>
 
         <router-link
-          v-if="store.cart.length"
+          v-if="store.lastCart.length"
           :to="{ name: 'payPage' }"
           class="btn button mx-3"
           >Conferma ordine</router-link
