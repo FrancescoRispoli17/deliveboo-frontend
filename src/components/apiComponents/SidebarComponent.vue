@@ -97,6 +97,10 @@ export default {
   cursor: pointer;
 }
 
+input:focus{
+  border-color: orange; /* Colore del bordo quando attivo */
+  box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); /* Effetto ombra */
+}
 
 .custom-checkbox {
   width: 1.2rem;
