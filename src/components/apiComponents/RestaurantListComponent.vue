@@ -72,9 +72,10 @@ export default {
   display: inline-block;
   width: 100%;
   height: 100%;
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   margin-bottom: 20px;
-  @include shadow
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .card .card-media {
@@ -83,7 +84,7 @@ export default {
   height: 200px;
   width: 100%;
   object-fit: fit;
-  border-radius: 0.2rem;
+  border-radius: 0.4rem 0.4rem 0rem 0rem;
   position: relative;
 }
 
@@ -125,12 +126,15 @@ export default {
   font-weight: 600;
   padding-bottom: 10px;
   color: rgba(0, 0, 0, 0.87);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
 }
 
 .card .card-description .about-place .place-speciality,
 .card .card-description .about-place .per-person {
   font-size: 14px;
-  color: rgba(128, 128, 128, 0.97);
+  color: $quinary-color;
+  font-weight: 400;
 }
 
 .card .card-description .about-place .rating {

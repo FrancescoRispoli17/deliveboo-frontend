@@ -64,7 +64,7 @@ export default {
 
           
           <div class="col-auto d-flex justify-content-start">
-            <label :for="'checkbox-' + type.id" class="form-check-label fw-light">
+            <label :for="'checkbox-' + type.id" class="form-check-label">
               {{ type.name }}
             </label>
           </div>
@@ -90,8 +90,11 @@ export default {
   color: $primary-color;
 }
 
-label {
+.form-check-label {
   vertical-align: middle;
+  color: $quinary-color;
+  font-weight: 300;
+  cursor: pointer;
 }
 
 
@@ -99,7 +102,7 @@ label {
   width: 1.2rem;
   height: 1.2rem;
   appearance: none;
-  border: 2px solid #b0b0b0;
+  border: 2px solid $quinary-color;
   border-radius: 0.25rem;
   position: relative;
   vertical-align: middle;

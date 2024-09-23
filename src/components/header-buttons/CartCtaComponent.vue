@@ -120,9 +120,11 @@ export default {
 
     <!-- Sidebar -->
     <div class="cart-sidebar" :class="{ 'cart-sidebar-active': showSidebar }">
-      <div class="cart-sidebar-header py-1">
+      <div class="cart-sidebar-header py-2">
         <h4 class="text-light title-kart">Il tuo carrello</h4>
-        <button type="button" class="close-btn" @click="closeSidebar">X</button>
+        <button type="button" class="close-btn" @click="closeSidebar">
+          <font-awesome-icon icon="xmark" />
+        </button>
       </div>
 
       <div class="cart-sidebar-content">
@@ -145,7 +147,11 @@ export default {
             </div>
           </li>
         </ul>
-        <div v-else>Non ci sono articoli nel carrello</div>
+        <div v-else>
+          <p>
+            Non ci sono articoli nel carrello
+          </p>
+        </div>
       </div>
 
       <hr />
@@ -195,7 +201,7 @@ export default {
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn button"
               @click="deleteCart()"
               data-bs-dismiss="modal">
               Svuota
