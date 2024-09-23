@@ -11,11 +11,12 @@ export default {
             isDown: false, // Stato per il drag scrolling
             startX: 0,
             scrollLeft: 0,
+            store
         };
     },
     methods: {
         getTypes() {
-            const typesUrl = `${store.url}${store.types}`;
+            const typesUrl = `${store.url}${store.type}`;
             axios
                 .get(typesUrl)
                 .then((response) => {
@@ -41,11 +42,11 @@ export default {
                 alert('Seleziona almeno un tipo prima di procedere.');
                 return;
             }
-            const type = this.selectedTypes.join(',');
-            this.$router.push({
-                name: 'restaurant',
-                params: { type },
-            });
+            this.store.types = this.selectedTypes;
+            console.log(this.store.types);
+             this.$router.push({
+                 name: 'restaurant',
+             });
         },
 
         isActive(typeName) {
@@ -102,7 +103,7 @@ export default {
         <div class="row">
             <div class="col-md-12 d-flex justify-content-center">
                 <button @click="getPageReciveData" class="btn button">
-                    <span>clicca qui</span>
+                    <span>visualizza</span>
                 </button>
             </div>
         </div>

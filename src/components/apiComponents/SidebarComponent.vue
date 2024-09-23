@@ -1,4 +1,5 @@
 <script>
+import { store } from '../../store';
 export default {
   name: 'SidebarComponent',
   props: {
@@ -7,7 +8,8 @@ export default {
   },
   data() {
     return {
-      isAccordionOpen: true
+      isAccordionOpen: true,
+      store
     };
   },
   methods: {
@@ -58,7 +60,7 @@ export default {
               class="form-check-input custom-checkbox" 
               :id="'checkbox-' + type.id" 
               :value="type.name"
-              :checked="selectedTypes.includes(type.name)" 
+              :checked="selectedTypes.includes(type.name) || store.types.includes(type.name)" 
               @change="updateSelectedTypes($event, type.name)" />
           </div>
 
