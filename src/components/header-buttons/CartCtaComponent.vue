@@ -43,9 +43,8 @@ export default {
     },
 
     toggleSidebar() {
+      //quando la sidebar viene aperta il carrello fa l'update
       this.showSidebar = !this.showSidebar;
-
-      // Quando la sidebar viene aperta, ricarica il carrello
       if (this.showSidebar) {
         this.loadCart();
       }
@@ -55,12 +54,12 @@ export default {
       this.showSidebar = false;
     },
     addToCart(dish) {
-      this.totale = 0; // Reset totale
+      this.totale = 0; 
       const obj = {
         id: dish.id,
         name: dish.name,
         price: dish.price,
-        quantity: 1, // Aggiungi una porzione
+        quantity: 1, 
       };
 
       // Verifica se il piatto è già presente nel carrello
@@ -85,7 +84,7 @@ export default {
     },
     deleteSingleDish(dish, index) {
       if (dish.quantity > 1) {
-        dish.quantity--; // Diminuisci la quantità solo se è maggiore di 1
+        dish.quantity--; // Diminuisce la quantità solo se è maggiore di 1
       } else {
         this.store.cart.splice(index, 1); // Rimuove il piatto se la quantità è 1
       }
@@ -108,9 +107,15 @@ export default {
 
 <template>
   <div>
-    <!-- Pulsante per aprire la sidebar -->
+    <!-- Pulsante per aprire la sidebar, aggiungi un puntno rosso nell angolo in alto a destra se il carrello ha qualcosa all'interno -->
     <button class="btn bg-light cart" type="button" @click="toggleSidebar">
       <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon" />
+
+      <span
+        v-if="store.lastCart.length > 0"
+        class="cart-notification-dot">
+      </span>
+
     </button>
 
     <!-- Sidebar -->
@@ -243,7 +248,6 @@ hr {
 
 .cart-sidebar-active {
   right: 0;
-
 }
 
 .cart-sidebar-header {
@@ -277,9 +281,58 @@ hr {
   width: 100%;
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.057);
+  position: relative; /* Necessario per il posizionamento assoluto del puntino */
 }
 
 .icon {
   color: $primary-color;
+}
+
+/* Stile per il puntino rosso */
+.cart-notification-dot {
+  position: absolute;
+  top: -5px;  /* Posiziona in alto rispetto al bottone */
+  right: -3px; /* Posiziona a destra rispetto al bottone */
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+
+@media (max-width: 1440px) {
+  .cart-notification-dot {
+    top: -5px; 
+    right: -2px; 
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-notification-dot {
+    top: -5px;  
+    right: -2px; 
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-notification-dot {
+    top: 1px;
+    right: 1px;
+    width: 6px;
+    height: 6px;
+  }
+}
+@media (max-width: 425px) {
+  .cart-notification-dot {
+    top: -10px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+  }
 }
 </style>
