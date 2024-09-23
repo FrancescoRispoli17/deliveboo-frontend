@@ -57,6 +57,8 @@ export default {
         // Conferma di svuotare il carrello precedente
         if (confirm("Se crei un nuovo carrello eliminerai quello vecchio. Vuoi proseguire?")) {
           this.addToCart(dish);
+        }else{
+          return 0;
         }
       } else {
         this.addToCart(dish); // Aggiunge il piatto se è lo stesso ristorante
