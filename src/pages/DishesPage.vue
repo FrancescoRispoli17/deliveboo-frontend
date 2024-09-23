@@ -146,10 +146,6 @@ export default {
           <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
           Pagina ristoranti
         </router-link>
-        <!-- <a class="text-white text-decoration-none fw-bold d-flex align-items-center" href="/restaurant">
-          <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
-          Pagina ristoranti
-        </a> -->
       </h5>
       <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
       <div class="row" v-if="restaurant">
