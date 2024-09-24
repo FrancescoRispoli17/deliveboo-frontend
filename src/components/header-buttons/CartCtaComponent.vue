@@ -26,9 +26,16 @@ export default {
   computed: {
     // calcola il numero totale di articoli nel carrello
     cartItemCount() {
-      return this.store.lastCart.reduce((total, dish) => {
+      const total = this.store.lastCart.reduce((total, dish) => {
         return total + dish.quantity;
       }, 0);
+
+      // restituisce '5+' se il totale è maggiore di 5, altrimenti restituisce il totale
+      if (total > 5) {
+        return '+5';
+      } else {
+        return total;
+      }
     },
   },
 
