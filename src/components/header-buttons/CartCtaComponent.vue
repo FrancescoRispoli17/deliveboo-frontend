@@ -31,8 +31,8 @@ export default {
       }, 0);
 
       // restituisce '5+' se il totale è maggiore di 5, altrimenti restituisce il totale
-      if (total > 5) {
-        return '+5';
+      if (total > 4) {
+        return '+4';
       } else {
         return total;
       }
@@ -351,12 +351,14 @@ hr {
   position: absolute;
   top: -5px;
   right: -3px;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
   background-color: red;
   color: white;
   border-radius: 50%;
   width: 20px;
   height: 20px;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
