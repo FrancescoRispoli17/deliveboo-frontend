@@ -167,13 +167,15 @@ export default {
     <div class="row">
       <!-- Sezione dei piatti -->
       <div class=" col-lg-9  col-md-12 scroll  row  py-3" v-if="restaurant.dishes && restaurant.dishes.length">
+
         <div v-for="dish in restaurant.dishes.filter(dish => dish.visible)" :key="dish.id" class="card-custom mb-2 me-2  ">
           <div class="row">
+
             <div class="col-md-2" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTevEY84uoDmQr9dgXTHGxuiFC2FUOBragieQ&s'); background-size: cover; background-position: center;">
             </div>
-            <div class="col-md-8">
-              <div class="card-body p">
-                <h5 class="card-title">{{ dish.name }}</h5>
+            <div class="col-md-8 py-2">
+              <div class="card-body">
+                <h5 class="card-title mb-3">{{ dish.name }}</h5>
                 <p class="card-text">{{ dish.description }}</p>
                 <p class="card-text">{{ dish.price }}€</p>
                 <div class="d-flex align-items-center">
@@ -207,7 +209,7 @@ export default {
       <div class="col-lg-3 col-md-12 cart cart-side py-3" style=" background-image: url('');">
         <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap mt-3">
-          <p class="text-white" style="font-weight: 800;">
+          <p class="recap-text" style="font-weight: 800;">
             Costo totale: €{{ totale }}
           </p>
         </div>
@@ -228,9 +230,9 @@ export default {
               <hr>
             </div>
             <div class="col-6 d-flex justify-content-end py-1">
-              <button class="btn rounded text-white me-3" style="font-weight: 500; height: 40px; width: 40px;"
+              <button class="btn recap-buttons  text-white me-3" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="deleteSingleDish(dish, index)">-</button>
-              <button class="btn rounded text-white ms-3 button-cart" style="font-weight: 500; height: 40px; width: 40px;"
+              <button class="btn recap-buttons  text-white ms-3" style="font-weight: 500; height: 40px; width: 40px;"
                 @click="addToCart(dish)">+
               </button>
             </div>
@@ -239,7 +241,7 @@ export default {
         </div>
         <!-- Pulsanti e totale carrello -->
         <div v-if="store.cart.length" class="text-center">
-            <p class="total">Totale: €{{ totale }}</p>
+            <p class="total ">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn button-cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Svuota carrello
@@ -282,72 +284,18 @@ export default {
 @use 'src/assets/partials/_mixin.scss' as *;
 
 
-// .dish-scroll {
-//    min-height: 0px;
-//    height: 400px;
-//    overflow-y: auto;
-//  }
-
-//  .dish-scroll::-webkit-scrollbar {
-//    display: none;
-//  }
-
-.scroll {
-  height: 700px;
-  overflow-y: auto;
-}
-
-.scroll::-webkit-scrollbar {
-  display: none;
-}
-
-
-.total{
-  font-weight: 800;
-  color: $tertiary-color;
-}
-
-.dishes {
-  color: $secondary-color;
-}
-
-.rounded {
-  border-radius: 100%;
-  background-color: $tertiary-color;
-  color: $quaternary-color;
-}
-
-.rounded:hover {
-  background-color: $quaternary-color;
-}
-
-.card-custom {
-  border: 0.5px solid rgba(0, 0, 0, 0.099);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  width: 45%;
-  border-radius: 0.5rem;
-}
-
-.button-cart {
-  padding: 0.5rem;
-  background-color: $tertiary-color;
-  color: $quaternary-color;
-  font-weight: 600;
-  border-radius: 0.3rem;
-
-}
-
-.button-cart:hover {
-  background-color: $quaternary-color;
-}
-
+//container principale
 .margin {
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
 }
 
+.title {
+  @include title
+}
 
+//img del ristorante
 .img-container {
   border-radius: 0.5rem;
 
@@ -358,8 +306,34 @@ export default {
   }
 }
 
-.icon {
-  color: $quaternary-color;
+
+//scroll della sezione dei piatti
+.scroll {
+  height: 700px;
+  overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+
+//card dei piatti
+.card-custom {
+  border: 0.5px solid rgba(0, 0, 0, 0.099);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  width: 45%;
+  border-radius: 0.5rem;
+}
+
+ .card-title{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.card-text{
+  font-size:1rem ;
 }
 
 .button {
@@ -374,15 +348,8 @@ export default {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 
-.title {
-  @include title
-}
 
-.hr {
-  border-bottom: 1px solid grey;
-}
-
-
+//carrello statico
 .cart {
   height: 100%;
   border-radius: 1.2rem;
@@ -392,9 +359,17 @@ export default {
 
 }
 
+
+// Recap per schermi più piccoli di 768px
 .recap {
-  display: none; // Nascondi il recap per default su schermi grandi
+  display: none;
 }
+
+.recap-text{
+  color: $secondary-color;
+}
+
+// Dettagli del carrello per schermi sopra 768px 
 
 .info-cart {
   display: block; // Mostra i dettagli del carrello su schermi grandi
@@ -405,6 +380,48 @@ export default {
 .info-cart::-webkit-scrollbar {
     display: none;
  }
+
+.dishes {
+  color: $tertiary-color;
+}
+
+.total{
+  font-weight: 800;
+  color: $tertiary-color;
+}
+
+
+.recap-buttons {
+  border-radius: 0.3rem;
+  background-color: $tertiary-color;
+  color: $quaternary-color;
+}
+
+.recap-buttons:hover {
+  background-color: $quaternary-color;
+}
+
+
+
+.button-cart {
+  padding: 0.5rem;
+  background-color: $tertiary-color;
+  color: $quaternary-color;
+  font-weight: 600;
+  border-radius: 0.3rem;
+
+}
+
+.button-cart:hover {
+  background-color: $quaternary-color;
+}
+
+
+.hr {
+  border-bottom: 1px solid grey;
+}
+
+
 
 @media(max-width: 768px) {
   .scroll {
