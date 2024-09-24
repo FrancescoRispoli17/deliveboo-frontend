@@ -30,7 +30,7 @@ export default {
         cardWidth = 'calc(50% - 5px)'; // 2 colonne
       }
       if (viewportWidth <= 768) {
-        cardWidth = 'calc(50% - 0px)'; // 1 colonna
+        cardWidth = 'calc(100% - 0px)'; // 1 colonna
       }
 
       // Applica la larghezza dinamica a ciascuna card
