@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from './pages/HomePage.vue';
-import DesignSystem from './pages/DesignSystem.vue';
 import RestaurantPage from './pages/RestaurantPage.vue';
 import DishesPage from './pages/DishesPage.vue';
 import PayPage from './pages/PayPage.vue';
-import SendData from './pages/SendData.vue';
-import ReciveData from './pages/ReciveData.vue';
+import Test from './pages/Test.vue'
 
 const routes = [
     {
@@ -24,6 +22,11 @@ const routes = [
         name: 'dishes',
         path: '/restaurant/:slug',  // Path con lo slug come parametro
         component: DishesPage,
+    },
+    {
+        name: 'test',
+        path: '/test',
+        component: Test,
     },
     {
         name: 'payPage',

@@ -48,7 +48,7 @@ export default {
                     I piatti dei ristoranti che ami e la spesa, a domicilio
                     </h1>
 
-                    <p class="label mb-3">
+                    <p class="label new mb-3">
                         Scegli prima la tipologia di ristorante
                     </p>
                     <SearchBarComponent/>
@@ -62,6 +62,11 @@ export default {
 <style lang="scss" scoped>
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
+
+.new{
+    color: $secondary-color;
+    font-weight: 500;
+}
 
 .title{
     font-size: 2.8rem;
