@@ -32,7 +32,7 @@ export default {
 
       // restituisce '5+' se il totale è maggiore di 5, altrimenti restituisce il totale
       if (total > 5) {
-        return '5+';
+        return '+5';
       } else {
         return total;
       }
