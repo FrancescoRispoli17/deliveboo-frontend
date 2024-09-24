@@ -179,23 +179,24 @@ export default {
               <div class="card-body">
                 <h5 class="card-title mb-3">{{ dish.name }}</h5>
                 <p class="card-text">{{ dish.description }}</p>
-                <p class="card-text">{{ dish.price }}€</p>
-                <div class="d-flex align-items-center">
-                  <div class="px-5 d-flex gap-4 d-none">
+
+                <div class="d-flex align-items-center justify-content-between">
+                  <p class="card-text">{{ dish.price }}€</p>
+                  <div class="ms-5 d-flex gap-4">
                     <span v-if="dish.gluten_free === 1">
-                      <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xl"
-                        style="color: #dbac00;" />
+                      <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xs"
+                        style="color: #7a7a7aba;" />
                     </span>
                     <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
-                      <FontAwesomeIcon :icon="['fas', 'cow']" size="xl" style="color: #69d5ff;" />
+                      <FontAwesomeIcon :icon="['fas', 'cow']" size="xs" style="color: #7a7a7aba;" />
                       <span
-                        style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #69d5ff; transform: rotate(-45deg); transform-origin: center; border-radius: 2px"></span>
+                        style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color:#7a7a7aba; transform: rotate(-45deg); transform-origin: center; border-radius: 2px"></span>
                     </span>
                     <span v-if="dish.spicy === 1">
-                      <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xl" style="color: #ff0000;" />
+                      <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xs" style="color: #7a7a7aba;" />
                     </span>
                     <span v-if="dish.vegan === 1">
-                      <FontAwesomeIcon :icon="['fas', 'leaf']" size="xl" style="color: #02c031;" />
+                      <FontAwesomeIcon :icon="['fas', 'leaf']" size="xs" style="color: #7a7a7aba;" />
                     </span>
                   </div>
                 </div>
@@ -252,7 +253,7 @@ export default {
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
-            <span class="text-white" style="font-weight: 800;">Il carrello è vuoto</span>
+            <span class="dishes" style="font-weight: 800;">Il carrello è vuoto</span>
         </div>
       </div>
     </div>
