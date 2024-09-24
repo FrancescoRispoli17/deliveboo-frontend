@@ -23,6 +23,15 @@ export default {
     window.removeEventListener("storage", this.loadCart);
   },
 
+  computed: {
+    // calcola il numero totale di articoli nel carrello
+    cartItemCount() {
+      return this.store.lastCart.reduce((total, dish) => {
+        return total + dish.quantity;
+      }, 0);
+    },
+  },
+
   methods: {
     loadCart() {
       // Ricarica il carrello dal localStorage
@@ -54,12 +63,12 @@ export default {
       this.showSidebar = false;
     },
     addToCart(dish) {
-      this.totale = 0; 
+      this.totale = 0;
       const obj = {
         id: dish.id,
         name: dish.name,
         price: dish.price,
-        quantity: 1, 
+        quantity: 1,
       };
 
       // Verifica se il piatto è già presente nel carrello
@@ -111,11 +120,10 @@ export default {
     <button class="btn bg-light cart" type="button" @click="toggleSidebar">
       <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon" />
 
-      <span
-        v-if="store.lastCart.length > 0"
-        class="cart-notification-dot">
+      <!-- mostra il numero di articoli nel carrello nell'icona con un badge numerico -->
+      <span v-if="store.lastCart.length > 0" class="cart-notification-number">
+        {{ cartItemCount }}
       </span>
-
     </button>
 
     <!-- Sidebar -->
@@ -135,9 +143,7 @@ export default {
             <div class="row py-1">
               <div class="col-6">{{ dish.name }} x{{ dish.quantity }}</div>
               <div class="col-6">
-                <button
-                  class="btn kart-button"
-                  @click="deleteSingleDish(dish, index)">
+                <button class="btn kart-button" @click="deleteSingleDish(dish, index)">
                   -
                 </button>
                 <button class="btn kart-button ms-3" @click="addToCart(dish)">
@@ -161,49 +167,29 @@ export default {
           Svuota carrello
         </button>
 
-        <router-link
-          v-if="store.lastCart.length"
-          :to="{ name: 'payPage' }"
-          class="btn button mx-3"
-          >Conferma ordine</router-link
-        >
+        <router-link v-if="store.lastCart.length" :to="{ name: 'payPage' }" class="btn button mx-3">Conferma
+          ordine</router-link>
       </div>
     </div>
 
     <!-- Modal -->
-    <div
-      class="modal fade w-100"
-      id="headerModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div class="modal fade w-100" id="headerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <p class="modal-title fs-5" id="exampleModalLabel">
               Svuota carrello
             </p>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <p>Sei sicuro di voler eliminare il tuo carrello?</p>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Chiudi
             </button>
-            <button
-              type="button"
-              class="btn button"
-              @click="deleteCart()"
-              data-bs-dismiss="modal">
+            <button type="button" class="btn button" @click="deleteCart()" data-bs-dismiss="modal">
               Svuota
             </button>
           </div>
@@ -221,6 +207,7 @@ export default {
   @include button;
   @include shadow;
 }
+
 .button:hover {
   @include button-hover;
   @include shadow;
@@ -243,6 +230,7 @@ hr {
   background-color: $primary-color;
   color: $quaternary-color;
 }
+
 .kart-button:hover {
   background-color: $secondary-color;
   color: $quaternary-color;
@@ -295,30 +283,30 @@ hr {
   width: 100%;
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.057);
-  position: relative; 
+  position: relative;
 }
 
 .icon {
   color: $primary-color;
 }
 
-/* Stile per il puntino rosso */
-.cart-notification-dot {
-  position: absolute;
-  top: -5px; 
-  right: -3px; 
-  width: 8px;
-  height: 8px;
-  background-color: red;
-  border-radius: 50%;
-  z-index: 10;
-}
+// /* Stile per il puntino rosso */
+// .cart-notification-dot {
+//   position: absolute;
+//   top: -5px;
+//   right: -3px;
+//   width: 8px;
+//   height: 8px;
+//   background-color: red;
+//   border-radius: 50%;
+//   z-index: 10;
+// }
 
 
 @media (max-width: 1440px) {
   .cart-notification-dot {
-    top: -5px; 
-    right: -2px; 
+    top: -5px;
+    right: -2px;
     width: 8px;
     height: 8px;
   }
@@ -326,8 +314,8 @@ hr {
 
 @media (max-width: 768px) {
   .cart-notification-dot {
-    top: -5px;  
-    right: -2px; 
+    top: -5px;
+    right: -2px;
     width: 8px;
     height: 8px;
   }
@@ -341,6 +329,7 @@ hr {
     height: 6px;
   }
 }
+
 @media (max-width: 425px) {
   .cart-notification-dot {
     top: -10px;
@@ -348,5 +337,22 @@ hr {
     width: 6px;
     height: 6px;
   }
+}
+
+// stile badge numerico icona carrello
+.cart-notification-number {
+  position: absolute;
+  top: -5px;
+  right: -3px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  z-index: 10;
 }
 </style>
