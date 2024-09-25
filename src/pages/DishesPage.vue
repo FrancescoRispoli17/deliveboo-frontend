@@ -134,23 +134,20 @@ export default {
 };
 </script>
 
+
 <template>
   <HeaderEmptyComponent />
   <div class="margin" style="background-image: url('');">
     <div class="container py-5">
       <div class="mb-3">
-      <router-link class="text-decoration-none fw-bold d-flex align-items-center" :to="{ name: 'restaurant' }">
-        <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon go-back" />
-        <span class="go-back">Pagina ristoranti</span>
-      </router-link>
-    </div>
+        <router-link class="text-decoration-none fw-bold d-flex align-items-center" :to="{ name: 'restaurant' }">
+          <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon go-back" />
+          <span class="go-back">Pagina ristoranti</span>
+        </router-link>
+      </div>
 
-
-      
-      <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
       <div class="row" v-if="restaurant">
         <div class="col-md-4 mb-3">
-          <!-- Foto del ristorante -->
           <div class="img-container">
             <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img">
           </div>
@@ -167,19 +164,14 @@ export default {
 
   <div class="container py-3 mb-5">
     <div class="row">
-      <!-- Sezione dei piatti -->
       <div class="col-lg-8 py-3 scroll margin-phone" v-if="restaurant.dishes && restaurant.dishes.length">
         <div class="row">
-          <div v-for="dish in restaurant.dishes.filter(dish => dish.visible)" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%;">
+          <div v-for="dish in restaurant.dishes.filter(dish => dish.visible === 1)" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%;">
             <div class="row">
-
-              <div class="col-md-2 py-5 dish-image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTevEY84uoDmQr9dgXTHGxuiFC2FUOBragieQ&s'); background-size: cover; background-position: center;">
+              <div class="col-md-2 py-5 dish-image" :style="{ backgroundImage: `url('http://localhost:8000/storage/dishes/pollo tandori.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }">
               </div>
-
               <div class="col-md-8 py-2 card-body-container">
-
                 <div class="card-body">
-
                   <h5 class="card-title mb-3">{{ dish.name }}</h5>
                   <p class="card-text">{{ dish.description }}</p>
                   <div class="d-flex align-items-center justify-content-between">
@@ -190,9 +182,7 @@ export default {
                       </span>
                       <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
                         <FontAwesomeIcon :icon="['fas', 'cow']" size="xs" style="color: #7a7a7aba;" />
-                        <span
-                          style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #7a7a7aba; transform: rotate(-45deg); transform-origin: center; border-radius: 2px;">
-                        </span>
+                        <span style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #7a7a7aba; transform: rotate(-45deg); transform-origin: center; border-radius: 2px;"></span>
                       </span>
                       <span v-if="dish.spicy === 1">
                         <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xs" style="color: #7a7a7aba;" />
@@ -202,33 +192,26 @@ export default {
                       </span>
                     </div>
                   </div>
-
                 </div>
-
               </div>
-
               <div class="col-md-2 py-3 d-flex justify-content-center align-items-center btn button buy-cta" @click="confirim(dish)">
                 <font-awesome-icon :icon="['fas', 'cart-shopping']" class="text-white" />
               </div>
-
             </div>
           </div> 
         </div>
       </div>
       <div v-else>
-        <p>Non ci sono piatti</p>
+        <p>Non ci sono piatti disponibili</p>
       </div>
 
       <!-- Carrello side -->
       <div class="col-lg-4 col-md-12 cart cart-side py-3">
-        <!-- Recap per schermi più piccoli di 768px -->
         <div v-if="store.cart.length" class="recap-container-tablet mt-3">
           <p class="recap-text-tablet" style="font-weight: 800;">
             Costo totale: €{{ totale }}
           </p>
         </div>
-
-        <!-- Dettagli del carrello per schermi sopra 768px -->
         <div class="p-4 info-cart">
           <div v-for="(dish, index) in store.cart" class="d-flex">
             <div class="col-6 py-1">
@@ -250,8 +233,6 @@ export default {
             </div>
           </div>
         </div>
-
-        <!-- Pulsanti e totale carrello -->
         <div v-if="store.cart.length" class="text-center total-static-cart">
           <p class="total">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
@@ -261,9 +242,8 @@ export default {
             <router-link :to="{ name: 'payPage' }" class="btn button-cart mx-3">Conferma ordine</router-link>
           </div>
         </div>
-
         <div v-else class="d-flex justify-content-center align-items-center">
-          <span class="text-empty-cart" style="font-weight: 800;">di cosa hai voglia?</span>
+          <span class="text-empty-cart" style="font-weight: 800;">Di cosa hai voglia?</span>
         </div>
       </div>
     </div>
@@ -290,6 +270,7 @@ export default {
   <FontAwesomeIcon />
   <FooterComponent />
 </template>
+
 
 
 <style lang="scss" scoped>
