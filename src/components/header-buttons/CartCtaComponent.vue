@@ -47,6 +47,7 @@ export default {
       // Controlla che il valore di `cart` non sia `null` o `"undefined"`
       if (cart && cart !== "undefined") {
         this.store.lastCart = JSON.parse(cart);
+        console.log('lastCart pieno')
       } else {
         this.store.lastCart = [];
       }
@@ -96,7 +97,8 @@ export default {
       // Aggiorna il localStorage con i dati del carrello
       localStorage.setItem("cart", JSON.stringify(this.store.lastCart));
       this.calcoloTotale();
-      this.store.cart = this.store.lastCart;
+      if(this.store.cart.length)
+        this.store.cart = this.store.lastCart;
     },
     deleteSingleDish(dish, index) {
       if (dish.quantity > 1) {
@@ -111,7 +113,8 @@ export default {
         localStorage.clear();
         console.log('elimina localstorage');
       };
-      this.store.cart = this.store.lastCart;
+      if(this.store.cart.length)
+        this.store.cart = this.store.lastCart;
     },
     calcoloTotale() {
       this.totale = 0; // Reset del totale
