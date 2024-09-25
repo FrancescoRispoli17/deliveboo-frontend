@@ -175,6 +175,11 @@ export default {
   display: block;
 }
 
+.form-label{
+  font-size: 1rem;
+  color: #616161;
+}
+
 /* Personalizzazione per smartphone */
 @media (max-width: 576px) {
   .form-label {

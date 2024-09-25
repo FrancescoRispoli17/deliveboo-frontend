@@ -31,7 +31,7 @@ export default {
                 <div class="col-6 ms-2 ">
                     <LogoComponent/>
                 </div>
-                <div class="col-6 d-flex justify-content-end py-2 ">
+                <div class="col-6 d-flex justify-content-end py-2 col-cta">
                     <HeaderCta/>
                 </div>
 

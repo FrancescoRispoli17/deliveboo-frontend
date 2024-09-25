@@ -38,6 +38,14 @@ export default {
     width: 30%;
 }
 
+@media(max-width: 1026px){
+
+    .headerCta{
+        width: 40%;
+    }
+}
+
+
 @media only screen and (max-width: 768px) {
     .headerCta {
         width: 60%;

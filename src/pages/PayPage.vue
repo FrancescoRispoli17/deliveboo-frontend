@@ -57,11 +57,11 @@ export default {
 
 <template>
   <HeaderEmptyComponent />
-  <div class="container bg-white py-5">
+  <div class="container bg-white my-5 py-5">
     <div class="row">
       <!-- Form e BraintreePayment -->
       <div class="col-12 col-lg-8">
-        <h2 class="mb-4">Informazioni di consegna</h2>
+        <h2 class="mb-5 title">Informazioni di consegna</h2>
         <UserFormInfo
           @formSubmitted="handleFormSubmit"
           @formValid="handleFormValid"></UserFormInfo>
@@ -77,15 +77,15 @@ export default {
 
       <!-- Tabella per visualizzare il carrello -->
       <div class="col-12 col-lg-4">
-        <h2 class="mb-0">Carrello</h2>
+        <h3 class="mb-4  title">Riepilogo</h3>
         <div class="table-responsive">
           <table class="table table-striped mb-2">
             <thead>
               <tr>
-                <th scope="col" class="text">Piatto</th>
-                <th scope="col" class="text">Qtà</th>
-                <th scope="col" class="text">Unità</th>
-                <th scope="col" class="text">Totale</th>
+                <th scope="col" class="tab-header">Piatto</th>
+                <th scope="col" class="tab-header">Qtà</th>
+                <th scope="col" class="tab-header">Unità</th>
+                <th scope="col" class="tab-header">Totale</th>
               </tr>
             </thead>
             <tbody>
@@ -116,6 +116,10 @@ export default {
 @use "src/assets/partials/_variables.scss" as *;
 @use "src/assets/partials/_mixin.scss" as *;
 
+.title{
+  font-weight: 600;
+}
+
 .recap-order {
   background-color: $secondary-color;
 }
@@ -128,7 +132,14 @@ export default {
   text-align: right;
 }
 
+.tab-header{
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
+  .tab-header {
+    font-size: 14px;
+  }
   .text {
     font-size: 14px;
   }

@@ -49,4 +49,5 @@ export default {
 header {
     border-bottom: solid 0.1px rgba(255, 166, 0, 0.2);
 }
+
 </style>
