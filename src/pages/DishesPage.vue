@@ -1,6 +1,8 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal } from 'bootstrap';
 
 // Importa i componenti header e footer
 import HeaderEmptyComponent from "../components/headers/HeaderEmptyComponent.vue";
@@ -19,6 +21,7 @@ export default {
     return {
       restaurant: {}, // Dettagli del ristorante
       totale: null,
+      lastName:null,
       store, // Totale prezzo carrello
     };
   },
@@ -39,15 +42,13 @@ export default {
               this.store.cart = JSON.parse(localStorage.getItem("cart")); // Recupera carrello
               this.totale = JSON.parse(localStorage.getItem("tot")); // Recupera totale
             } else {
-              this.store.cart = []; // Nuovo carrello se si tratta di un altro ristorante
+              this.store.cart = []; 
+              this.lastName=JSON.parse(localStorage.getItem("lastRestaurantName"));
             }
           }
         })
         .catch((error) => {
-          console.error(
-            "Errore nel recupero dei piatti del ristorante:",
-            error
-          );
+          console.error("Errore nel recupero dei piatti del ristorante:",error);
         });
     },
 
@@ -58,15 +59,9 @@ export default {
         localStorage.getItem("lastRestaurant") != this.restaurant.id
       ) {
         // Conferma di svuotare il carrello precedente
-        if (
-          confirm(
-            "Se crei un nuovo carrello eliminerai quello vecchio. Vuoi proseguire?"
-          )
-        ) {
-          this.addToCart(dish);
-        } else {
-          return 0;
-        }
+        const myModal = new Modal(document.getElementById('confirm'));
+        myModal.show();
+
       } else {
         this.addToCart(dish); // Aggiunge il piatto se è lo stesso ristorante
       }
@@ -99,10 +94,8 @@ export default {
 
       // Aggiorna il localStorage con i dati del carrello
       localStorage.setItem("cart", JSON.stringify(this.store.cart));
-      localStorage.setItem(
-        "lastRestaurant",
-        JSON.stringify(this.restaurant.id)
-      );
+      localStorage.setItem("lastRestaurant",JSON.stringify(this.restaurant.id));
+      localStorage.setItem("lastRestaurantName",JSON.stringify(this.restaurant.name));
       this.calcoloTotale();
       this.store.lastCart = this.store.cart;
     },
@@ -133,7 +126,7 @@ export default {
       }
       this.calcoloTotale(); // Aggiorna il totale
       if (this.store.cart)
-        localStorage.setItem("cart", JSON.stringify(this.cart));
+        localStorage.setItem("cart", JSON.stringify(this.store.cart));
       else localStorage.clear();
       this.store.lastCart = this.store.cart;
     },
@@ -179,8 +172,7 @@ export default {
       <div class="col-lg-8 py-3 scroll margin-phone" v-if="restaurant.dishes && restaurant.dishes.length">
         <div class="row">
           <div v-for="dish in restaurant.dishes.filter(
-            (dish) => dish.visible === 1
-          )" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%">
+            (dish) => dish.visible === 1)" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%">
             <div class="row">
               <div class="col-md-2 py-5 dish-image" :style="{
                 backgroundImage: `url(${dish.image_path_url || '/dish-placeholder.jpg'
@@ -224,10 +216,27 @@ export default {
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 py-3 d-flex justify-content-center align-items-center btn button buy-cta"
-                @click="confirim(dish)">
+              <div class="col-md-2 py-3 d-flex justify-content-center align-items-center btn button buy-cta" @click="confirim(dish)">
                 <font-awesome-icon :icon="['fas', 'cart-shopping']" class="text-white" />
               </div>
+              <!-- Modale -->
+              <div class="modal fade" id="confirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="title fs-5" id="exampleModalLabel">Vuoi creare un nuovo carrello </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>In questo modo cancelli il carrello esistente da {{lastName}} e crei un nuovo carrelllo da {{ restaurant.name }} </p>
+                      </div>
+                      <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-primary" @click="addToCart(dish)" data-bs-dismiss="modal">Continua</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
