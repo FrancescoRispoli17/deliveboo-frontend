@@ -1,9 +1,9 @@
 <script>
 export default {
-  name: 'RestaurantListComponent',
+  name: "RestaurantListComponent",
   props: {
-    results: Array
-  }
+    results: Array,
+  },
 };
 </script>
 
@@ -14,9 +14,18 @@ export default {
   </div>
 
   <div class="cards-container row">
-    <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 mb-3 shape-card">
+    <div
+      v-for="restaurant in results"
+      :key="restaurant.id"
+      class="col-md-3 mb-3 shape-card">
       <div class="card">
-        <div class="card-media" :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
+        <div
+          class="card-media"
+          :style="{
+            backgroundImage: `url(${
+              restaurant.image_path_url || '/restaurant-placeholder.jpg'
+            })`,
+          }">
           <!-- <div class="discount">20% OFF</div>
           <div class="delivery-time"> mins</div> -->
         </div>
@@ -24,10 +33,14 @@ export default {
           <div class="about-place">
             <div class="place">
               <p class="place-name">{{ restaurant.name }}</p>
-              <p class="place-speciality">{{ restaurant.types.map(type => type.name).join(', ') }}</p>
+              <p class="place-speciality">
+                {{ restaurant.types.map((type) => type.name).join(", ") }}
+              </p>
             </div>
             <div class="place-review">
-              <router-link :to="{ name: 'dishes', params: { slug: restaurant.slug } }" class="button">
+              <router-link
+                :to="{ name: 'dishes', params: { slug: restaurant.slug } }"
+                class="button">
                 Menù
               </router-link>
             </div>
@@ -39,8 +52,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@use 'src/assets/partials/_variables.scss' as *;
-@use 'src/assets/partials/_mixin.scss' as *;
+@use "src/assets/partials/_variables.scss" as *;
+@use "src/assets/partials/_mixin.scss" as *;
 
 .title {
   @include title;
@@ -145,7 +158,7 @@ export default {
   font-weight: 600;
   padding-bottom: 10px;
   color: rgba(0, 0, 0, 0.87);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
 }
 
