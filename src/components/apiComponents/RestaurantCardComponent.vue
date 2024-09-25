@@ -131,8 +131,10 @@ export default {
     <div class="row">
       <!-- Sidebar per il filtro -->
       <div class="col-3 sidebar">
-        <SidebarComponent :availableTypes="availableTypes" :selectedTypes="selectedTypes"
+        <div class="row">
+          <SidebarComponent :availableTypes="availableTypes" :selectedTypes="selectedTypes"
           @update-selected-types="updateSelectedTypes" />
+        </div>
       </div>
 
       <!-- Area dei ristoranti -->
@@ -151,13 +153,10 @@ export default {
   height: 100%;
 }
 
-.sidebar {
-  height: 100%;
-}
 
 .content {
   overflow-y: auto;
-  height: 100%;
+  height: 100vh;
 }
 
 .content::-webkit-scrollbar {
@@ -166,6 +165,19 @@ export default {
 
 .title {
   @include title
+}
+
+
+@media only screen and (max-width: 1025px){
+
+  .sidebar{
+    width: 40%;
+  }
+
+  .content{
+    width: 60%;
+  }
+
 }
 
 // Nascondi SelectType su schermi più grandi di 768px (laptop e desktop)
@@ -181,6 +193,7 @@ export default {
     display: block;
   }
 }
+
 
 // Nascondi Sidebar su schermi più piccoli di 768px (tablet e smartphone)
 @media only screen and (max-width: 768px) {

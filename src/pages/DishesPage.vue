@@ -20,7 +20,6 @@ export default {
   data() {
     return {
       restaurant: {}, // Dettagli del ristorante
-      // cart: [], // Carrello degli ordini
       totale: null,
       store // Totale prezzo carrello
     };
@@ -138,144 +137,136 @@ export default {
 
 <template>
   <HeaderEmptyComponent />
-  <div class="margin" style=" background-image: url('');">
+  <div class="margin" style="background-image: url('');">
     <div class="container py-5">
-      <!-- <p class="mb-3">
-        <router-link 
-          class=" text-decoration-none fw-bold d-flex align-items-center" 
-          :to="{ name: 'restaurant' }"
-        >
-        <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon" style="height: 1.3rem;" />
-          Pagina ristoranti
+      <div class="mb-3">
+        <router-link class="text-decoration-none fw-bold d-flex align-items-center" :to="{ name: 'restaurant' }">
+          <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon go-back" />
+          <span class="go-back">Pagina ristoranti</span>
         </router-link>
+      </div>
 
-      </p> -->
-      <!-- Controllo per assicurarsi che i dettagli del ristorante siano stati caricati -->
       <div class="row" v-if="restaurant">
-        <div class="col-md-4">
-          <!-- foto del ristorante -->
+        <div class="col-md-4 mb-3">
           <div class="img-container">
             <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img">
           </div>
         </div>
-        <div class="col-md-8 p-1">
-          <h1 class="title">{{ restaurant.name }}</h1>
-          <p class="card-text">{{ restaurant.address }}</p>
+        <div class="col-md-8 d-flex align-items-center">
+          <div>
+            <h1 class="title">{{ restaurant.name }}</h1>
+            <p class="card-text">{{ restaurant.address }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="container py-3 mb-5">
     <div class="row">
-      <!-- Sezione dei piatti -->
-      <div class=" col-lg-9  col-md-12 scroll  row  py-3" v-if="restaurant.dishes && restaurant.dishes.length">
-
-        <div v-for="dish in restaurant.dishes.filter(dish => dish.visible)" :key="dish.id" class="card-custom mb-2 me-2  ">
-          <div class="row">
-
-            <div class="col-md-2" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTevEY84uoDmQr9dgXTHGxuiFC2FUOBragieQ&s'); background-size: cover; background-position: center;">
-            </div>
-            <div class="col-md-8 py-2">
-              <div class="card-body">
-                <h5 class="card-title mb-3">{{ dish.name }}</h5>
-                <p class="card-text">{{ dish.description }}</p>
-
-                <div class="d-flex align-items-center justify-content-between">
-                  <p class="card-text">{{ dish.price }}€</p>
-                  <div class="ms-5 d-flex gap-4">
-                    <span v-if="dish.gluten_free === 1">
-                      <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xs"
-                        style="color: #7a7a7aba;" />
-                    </span>
-                    <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
-                      <FontAwesomeIcon :icon="['fas', 'cow']" size="xs" style="color: #7a7a7aba;" />
-                      <span
-                        style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color:#7a7a7aba; transform: rotate(-45deg); transform-origin: center; border-radius: 2px"></span>
-                    </span>
-                    <span v-if="dish.spicy === 1">
-                      <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xs" style="color: #7a7a7aba;" />
-                    </span>
-                    <span v-if="dish.vegan === 1">
-                      <FontAwesomeIcon :icon="['fas', 'leaf']" size="xs" style="color: #7a7a7aba;" />
-                    </span>
+      <div class="col-lg-8 py-3 scroll margin-phone" v-if="restaurant.dishes && restaurant.dishes.length">
+        <div class="row">
+          <div v-for="dish in restaurant.dishes.filter(dish => dish.visible === 1)" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%;">
+            <div class="row">
+              <div class="col-md-2 py-5 dish-image" :style="{ backgroundImage: `url('http://localhost:8000/storage/dishes/pollo tandori.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+              </div>
+              <div class="col-md-8 py-2 card-body-container">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">{{ dish.name }}</h5>
+                  <p class="card-text">{{ dish.description }}</p>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <p class="card-text">{{ dish.price }}€</p>
+                    <div class="ms-5 d-flex gap-4">
+                      <span v-if="dish.gluten_free === 1">
+                        <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xs" style="color: #7a7a7aba;" />
+                      </span>
+                      <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
+                        <FontAwesomeIcon :icon="['fas', 'cow']" size="xs" style="color: #7a7a7aba;" />
+                        <span style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #7a7a7aba; transform: rotate(-45deg); transform-origin: center; border-radius: 2px;"></span>
+                      </span>
+                      <span v-if="dish.spicy === 1">
+                        <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xs" style="color: #7a7a7aba;" />
+                      </span>
+                      <span v-if="dish.vegan === 1">
+                        <FontAwesomeIcon :icon="['fas', 'leaf']" size="xs" style="color: #7a7a7aba;" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="col-md-2 py-3 d-flex justify-content-center align-items-center btn button buy-cta" @click="confirim(dish)">
+                <font-awesome-icon :icon="['fas', 'cart-shopping']" class="text-white" />
+              </div>
             </div>
-            <div class="col-md-2 d-flex justify-content-center align-items-center btn button" @click="confirim(dish)">
-              <font-awesome-icon :icon="['fas', 'cart-shopping']" class="text-white" />
-            </div>
-          </div>
+          </div> 
         </div>
       </div>
+      <div v-else>
+        <p>Non ci sono piatti disponibili</p>
+      </div>
+
       <!-- Carrello side -->
-      <div class="col-lg-3 col-md-12 cart cart-side py-3" style=" background-image: url('');">
-        <!-- Recap per schermi più piccoli di 768px -->
-        <div v-if="store.cart.length" class="recap mt-3">
-          <p class="recap-text" style="font-weight: 800;">
+      <div class="col-lg-4 col-md-12 cart cart-side py-3">
+        <div v-if="store.cart.length" class="recap-container-tablet mt-3">
+          <p class="recap-text-tablet" style="font-weight: 800;">
             Costo totale: €{{ totale }}
           </p>
         </div>
-        <!-- Dettagli del carrello per schermi sopra 768px -->
-        <div class=" p-4 info-cart">
-          <div v-for="(dish, index) in store.cart" class=" d-flex">
+        <div class="p-4 info-cart">
+          <div v-for="(dish, index) in store.cart" class="d-flex">
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
-                <p class=" m-0 dishes" style="font-weight: 800; font-size:16px ;">
+                <p class="m-0 dishes" style="font-weight: 800; font-size:16px;">
                   {{ dish.quantity }} piatti di {{ dish.name }}
                 </p>
               </div>
               <div v-else>
-                <p class=" m-0 dishes" style="font-weight: 800; font-size:16px ;">
+                <p class="m-0 dishes" style="font-weight: 800; font-size:16px;">
                   {{ dish.quantity }} piatto di {{ dish.name }}
                 </p>
               </div>
               <hr>
             </div>
             <div class="col-6 d-flex justify-content-end py-1">
-              <button class="btn recap-buttons  text-white me-3" style="font-weight: 500; height: 40px; width: 40px;"
-                @click="deleteSingleDish(dish, index)">-</button>
-              <button class="btn recap-buttons  text-white ms-3" style="font-weight: 500; height: 40px; width: 40px;"
-                @click="addToCart(dish)">+
-              </button>
+              <button class="btn recap-buttons text-white me-3" style="font-weight: 500; height: 40px; width: 40px;" @click="deleteSingleDish(dish, index)">-</button>
+              <button class="btn recap-buttons text-white ms-3" style="font-weight: 500; height: 40px; width: 40px;" @click="addToCart(dish)">+</button>
             </div>
-
           </div>
         </div>
-        <!-- Pulsanti e totale carrello -->
-        <div v-if="store.cart.length" class="text-center">
-            <p class="total ">Totale: €{{ totale }}</p>
+        <div v-if="store.cart.length" class="text-center total-static-cart">
+          <p class="total">Totale: €{{ totale }}</p>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn button-cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Svuota carrello
+              Svuota ordine
             </button>
             <router-link :to="{ name: 'payPage' }" class="btn button-cart mx-3">Conferma ordine</router-link>
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
-            <span class="dishes" style="font-weight: 800;">Il carrello è vuoto</span>
+          <span class="text-empty-cart" style="font-weight: 800;">Di cosa hai voglia?</span>
         </div>
       </div>
     </div>
-    <!-- modale -->
+
+    <!-- Modale -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Svuota carrello</h1>
+            <h1 class="title fs-5" id="exampleModalLabel">Svuota ordine</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p>Sei sicuro di voler eliminare il carrello?</p>
+            <p>Sei sicuro di voler eliminare l'ordine in corso?</p>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-            <button type="button" class="btn btn-primary" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn modal-button" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <FontAwesomeIcon />
   <FooterComponent />
 </template>
@@ -287,9 +278,14 @@ export default {
 @use 'src/assets/partials/_mixin.scss' as *;
 
 
+.go-back{
+  color: $quinary-color;
+  font-weight: 400;
+}
+
 //container principale
 .margin {
-  // box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
 }
@@ -316,6 +312,7 @@ export default {
   overflow-y: auto;
 }
 
+
 .scroll::-webkit-scrollbar {
   display: none;
 }
@@ -325,7 +322,7 @@ export default {
 .card-custom {
   border: 0.5px solid rgba(0, 0, 0, 0.099);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  width: 45%;
+  width: 47%;
   border-radius: 0.5rem;
 }
 
@@ -364,12 +361,8 @@ export default {
 
 
 // Recap per schermi più piccoli di 768px
-.recap {
+.recap-container-tablet {
   display: none;
-}
-
-.recap-text{
-  color: $secondary-color;
 }
 
 // Dettagli del carrello per schermi sopra 768px 
@@ -401,7 +394,8 @@ export default {
 }
 
 .recap-buttons:hover {
-  background-color: $quaternary-color;
+  background-color: $quinary-color;
+  color: $secondary-color;
 }
 
 
@@ -416,26 +410,53 @@ export default {
 }
 
 .button-cart:hover {
-  background-color: $quaternary-color;
+  background-color: $quinary-color;
+  color: $quaternary-color;
 }
 
-
-.hr {
-  border-bottom: 1px solid grey;
+.text-empty-cart{
+  color: $tertiary-color;
 }
 
+.modal-button{
+  @include button
+}
+.modal-button:hover{
+  @include button-hover
+}
+
+@media(max-width: 1024px){
+  .card-custom{
+    width: 90%;
+  }
+}
+
+@media(max-width: 769px) {
 
 
-@media(max-width: 768px) {
-  .scroll {
-    height: 600px;
+  //card
+  .card-custom {
+    width: 100%;
+  }
+
+
+  //carrello statico
+  .cart{
+    background-color: $primary-color;
+  }
+  .recap-text-tablet{
+    color:$quaternary-color;
+  }
+
+  .total-static-cart{
+    display: none;
   }
 
   .cart-side {
     height: auto;
   }
 
-  .recap {
+  .recap-container-tablet {
     display: block; // Mostra il recap su schermi piccoli
   }
 
@@ -448,5 +469,52 @@ export default {
     color: rgb(31, 2, 2);
     text-decoration: none;
   }
+
+  .text-empty-cart{
+  color: $quaternary-color;
+  }
+
 }
+
+
+@media(max-width: 426px){
+
+  .margin {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0);
+  border-bottom-left-radius:0;
+  border-bottom-right-radius: 0;
+  }
+
+  .dish-image{
+    height: 300px;
+  }
+
+  .card-custom{
+    width: 95%;
+    margin: auto;
+  }
+
+  .card-body{
+    height: 150px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .button {
+  background-color: $primary-color;
+  color: $quaternary-color;
+  border-radius: 0 0 0.5rem 0.5rem;
+  font-weight: 600
+  }
+
+  .scroll {
+  height: 400px;
+  overflow-y: auto;
+  box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.093);
+  }
+
+}
+
+
+
 </style>

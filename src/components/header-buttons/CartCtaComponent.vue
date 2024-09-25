@@ -297,19 +297,6 @@ hr {
   color: $primary-color;
 }
 
-// /* Stile per il puntino rosso */
-// .cart-notification-dot {
-//   position: absolute;
-//   top: -5px;
-//   right: -3px;
-//   width: 8px;
-//   height: 8px;
-//   background-color: red;
-//   border-radius: 50%;
-//   z-index: 10;
-// }
-
-
 @media (max-width: 1440px) {
   .cart-notification-dot {
     top: -5px;

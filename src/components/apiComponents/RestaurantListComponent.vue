@@ -26,13 +26,16 @@ export default {
       if (viewportWidth <= 1200) {
         cardWidth = 'calc(33.33% - 5px)'; // 3 colonne
       }
+      if (viewportWidth <= 1026) {
+        cardWidth = 'calc(50% - 5px)'; // 3 colonne
+      }
       if (viewportWidth <= 992) {
         cardWidth = 'calc(50% - 5px)'; // 2 colonne
       }
-      if (viewportWidth <= 768) {
+      if (viewportWidth <= 769) {
         cardWidth = 'calc(50% - 0px)'; // 1 colonna
       }
-      if (viewportWidth <= 425) {
+      if (viewportWidth <= 426) {
         cardWidth = 'calc(100% - 0px)'; // 1 colonna
       }
 
@@ -56,8 +59,8 @@ export default {
     <div v-for="restaurant in results" :key="restaurant.id" class="col-md-3 mb-3 shape-card">
       <div class="card">
         <div class="card-media" :style="{ backgroundImage: `url(${restaurant.image_path_url})` }">
-          <div class="discount">20% OFF</div>
-          <div class="delivery-time">{{ restaurant.delivery_time }} mins</div>
+          <!-- <div class="discount">20% OFF</div>
+          <div class="delivery-time"> mins</div> -->
         </div>
         <div class="card-description">
           <div class="about-place">
@@ -181,5 +184,11 @@ export default {
   padding: 2px 0;
   margin-bottom: 6px;
   margin-left: 30px;
+}
+
+@media(max-width: 769px){
+  .head-title{
+    display: none;
+  }
 }
 </style>

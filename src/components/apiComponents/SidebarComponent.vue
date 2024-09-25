@@ -24,8 +24,9 @@ export default {
 </script>
 
 <template>
-  <div class="sidebar p-5">
-    <div class="container">
+  <div class="sidebar-intern">
+    <div class="container p-5">
+      <!-- Sezione immagine e città -->
       <div class="row align-items-center">
         <div class="col-auto">
           <img src="/rider.png" alt="rider" style="width: 100px; height: 100px;">
@@ -35,56 +36,53 @@ export default {
           <label class="fs-5 fw-bold">Milano</label>
         </div>
       </div>
-    </div>
+      
+      <hr>
 
-    <hr>
-
-    <!-- toggle dell'accordion -->
-    <div class="accordion-header d-flex align-items-center justify-content-between" @click="toggleAccordion"
-      style="cursor: pointer;">
-      <h5 class="mb-2 fw-bold">Cucine</h5>
-      <div>
-        <font-awesome-icon v-if="isAccordionOpen" icon="chevron-down" class="icon" />
-        <font-awesome-icon v-else icon="chevron-up" class="icon" />
+      <!-- Toggle dell'accordion -->
+      <div class="accordion-header d-flex align-items-center justify-content-between" @click="toggleAccordion" style="cursor: pointer;">
+        <h5 class="mb-2 fw-bold">Cucine</h5>
+        <div>
+          <font-awesome-icon v-if="isAccordionOpen" icon="chevron-down" class="icon" />
+          <font-awesome-icon v-else icon="chevron-up" class="icon" />
+        </div>
       </div>
-    </div>
 
-    <!-- Sezione delle checkbox, visibile solo se isAccordionOpen è true -->
-    <div v-if="isAccordionOpen" class="mt-4">
-      <div v-for="type in availableTypes" :key="type.id" class="form-check py-2">
-        <div class="row">
-          <div class="col-auto">
-           
-            <input 
-              type="checkbox" 
-              class="form-check-input custom-checkbox" 
-              :id="'checkbox-' + type.id" 
-              :value="type.name"
-              :checked="selectedTypes.includes(type.name) || store.types.includes(type.name)" 
-              @change="updateSelectedTypes($event, type.name)" />
-          </div>
-
-          
-          <div class="col-auto d-flex justify-content-start">
-            <label :for="'checkbox-' + type.id" class="form-check-label">
-              {{ type.name }}
-            </label>
+      <!-- Sezione delle checkbox, visibile solo se isAccordionOpen è true -->
+      <div v-if="isAccordionOpen" class="mt-4">
+        <div v-for="type in availableTypes" :key="type.id" class="form-check py-2">
+          <div class="row">
+            <div class="col-auto">
+              <input 
+                type="checkbox" 
+                class="form-check-input custom-checkbox" 
+                :id="'checkbox-' + type.id" 
+                :value="type.name"
+                :checked="selectedTypes.includes(type.name) || store.types.includes(type.name)" 
+                @change="updateSelectedTypes($event, type.name)" 
+              />
+            </div>
+            <div class="col-auto d-flex justify-content-start">
+              <label :for="'checkbox-' + type.id" class="form-check-label">
+                {{ type.name }}
+              </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <hr>
+      <hr>
+    </div>
   </div>
 </template>
+
 
 <style lang="scss" scoped>
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
 
-.sidebar {
-  height: 100%;
-  background-color: $quaternary-color;
+.sidebar-intern {
+  width: 100%;
 }
 
 .icon {
@@ -123,4 +121,14 @@ input:focus{
 hr {
   color: $primary-color;
 }
+
+@media (max-width: 1025px){
+
+  .sidebar-intern {
+    width: 100%;
+  }
+  
+
+}
+
 </style>
