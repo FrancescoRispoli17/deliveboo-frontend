@@ -33,10 +33,9 @@ export default {
                 <div class="col-6 d-flex justify-content-start ms-3 py-2">
                     <LogoFilledComponent />
                 </div>
-                <div class="col-6 d-flex justify-content-end  py-2">
-                    <HeaderCta />
+                <div class="col-6 d-flex justify-content-end py-2">
+                    <HeaderCta v-if="$route.name !== 'payPage' && $route.name !== 'dishes'" />
                 </div>
-
             </div>
         </div>
     </header>
