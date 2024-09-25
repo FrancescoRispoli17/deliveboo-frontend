@@ -47,7 +47,6 @@ export default {
       // Controlla che il valore di `cart` non sia `null` o `"undefined"`
       if (cart && cart !== "undefined") {
         this.store.lastCart = JSON.parse(cart);
-        console.log('lastCart pieno')
       } else {
         this.store.lastCart = [];
       }
