@@ -6,6 +6,11 @@ export default {
         availableTypes: Array,
         selectedTypes: Array
     },
+    data(){
+        return{
+            store
+        }
+    },
     methods: {
         // Metodo per emettere l'aggiornamento dei tipi selezionati
         toggleType(event, typeName) {
@@ -53,7 +58,7 @@ export default {
         @mousemove="onMouseMove"
     >
         <div class="button-container">
-            <div v-for="type in availableTypes" :key="type.id" :class="['button-item', { active: isActive(type.name) }]"
+            <div v-for="type in availableTypes" :key="type.id" :class="['button-item', { active: isActive(type.name) || store.types.includes(type.name) }]"
                 @click="toggleType($event, type.name)">
                 {{ type.name }}
             </div>
