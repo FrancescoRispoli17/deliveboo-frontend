@@ -1,29 +1,25 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal } from 'bootstrap';
 
 // Importa i componenti header e footer
-import HeaderEmptyComponent from '../components/headers/HeaderEmptyComponent.vue';
-import FooterComponent from '../components/footers/FooterComponent.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
+import HeaderEmptyComponent from "../components/headers/HeaderEmptyComponent.vue";
+import FooterComponent from "../components/footers/FooterComponent.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
-  name: 'RestaurantDetailPage',
+  name: "RestaurantDetailPage",
   components: {
     HeaderEmptyComponent,
     FontAwesomeIcon,
     FooterComponent,
-
   },
 
   data() {
     return {
       restaurant: {}, // Dettagli del ristorante
       totale: null,
-      store // Totale prezzo carrello
+      store, // Totale prezzo carrello
     };
   },
   methods: {
@@ -48,15 +44,29 @@ export default {
           }
         })
         .catch((error) => {
-          console.error("Errore nel recupero dei piatti del ristorante:", error);
+          console.error(
+            "Errore nel recupero dei piatti del ristorante:",
+            error
+          );
         });
     },
 
     // Conferma l'aggiunta del piatto al carrello o richiede conferma se il carrello è di un altro ristorante
     confirim(dish) {
-      if (localStorage.getItem("lastRestaurant") && localStorage.getItem("lastRestaurant") != this.restaurant.id) {
-        const myModal = new Modal(document.getElementById('confirm'));
-        myModal.show();
+      if (
+        localStorage.getItem("lastRestaurant") &&
+        localStorage.getItem("lastRestaurant") != this.restaurant.id
+      ) {
+        // Conferma di svuotare il carrello precedente
+        if (
+          confirm(
+            "Se crei un nuovo carrello eliminerai quello vecchio. Vuoi proseguire?"
+          )
+        ) {
+          this.addToCart(dish);
+        } else {
+          return 0;
+        }
       } else {
         this.addToCart(dish); // Aggiunge il piatto se è lo stesso ristorante
       }
@@ -89,7 +99,10 @@ export default {
 
       // Aggiorna il localStorage con i dati del carrello
       localStorage.setItem("cart", JSON.stringify(this.store.cart));
-      localStorage.setItem("lastRestaurant", JSON.stringify(this.restaurant.id));
+      localStorage.setItem(
+        "lastRestaurant",
+        JSON.stringify(this.restaurant.id)
+      );
       this.calcoloTotale();
       this.store.lastCart = this.store.cart;
     },
@@ -119,7 +132,8 @@ export default {
         this.store.cart.splice(index, 1); // Rimuove il piatto se la quantità è 1
       }
       this.calcoloTotale(); // Aggiorna il totale
-      if (this.store.cart) localStorage.setItem("cart", JSON.stringify(this.cart));
+      if (this.store.cart)
+        localStorage.setItem("cart", JSON.stringify(this.cart));
       else localStorage.clear();
       this.store.lastCart = this.store.cart;
     },
@@ -132,10 +146,9 @@ export default {
 };
 </script>
 
-
 <template>
   <HeaderEmptyComponent />
-  <div class="margin" style="background-image: url('');">
+  <div class="margin" style="background-image: url('')">
     <div class="container py-5">
       <div class="mb-3">
         <router-link class="text-decoration-none fw-bold d-flex align-items-center" :to="{ name: 'restaurant' }">
@@ -147,7 +160,8 @@ export default {
       <div class="row" v-if="restaurant">
         <div class="col-md-4 mb-3">
           <div class="img-container">
-            <img :src="restaurant.image_path_url" alt="Immagine del ristorante" class="img">
+            <img :src="restaurant.image_path_url || '/restaurant-placeholder.jpg'" alt="Immagine del ristorante"
+              class="img" />
           </div>
         </div>
         <div class="col-md-8 d-flex align-items-center">
@@ -164,16 +178,18 @@ export default {
     <div class="row">
       <div class="col-lg-8 py-3 scroll margin-phone" v-if="restaurant.dishes && restaurant.dishes.length">
         <div class="row">
-          <div v-for="dish in restaurant.dishes.filter(dish => dish.visible === 1)" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%;">
+          <div v-for="dish in restaurant.dishes.filter(
+            (dish) => dish.visible === 1
+          )" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%">
             <div class="row">
+              <div class="col-md-2 py-5 dish-image" :style="{
+                backgroundImage: `url(${dish.image_path_url || '/dish-placeholder.jpg'
+                  })`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }"></div>
 
-              <!-- :style="{ backgroundImage: `url(${dish.image_path_url})`, backgroundSize: 'cover', backgroundPosition: 'center' }" -->
-               
-              <div class="col-md-2 py-5 dish-image" :style="{ backgroundImage: `url('http://localhost:8000/storage/dishes/pollo tandori.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }">
-              </div>
-
-
-              <div class="col-md-8 py-2 card-body-container">
+              <div style="height: 175px;" class="col-md-8 py-2 card-body-container">
                 <div class="card-body">
                   <h5 class="card-title mb-3">{{ dish.name }}</h5>
                   <p class="card-text">{{ dish.description }}</p>
@@ -181,46 +197,39 @@ export default {
                     <p class="card-text">{{ dish.price }}€</p>
                     <div class="ms-5 d-flex gap-4">
                       <span v-if="dish.gluten_free === 1">
-                        <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xs" style="color: #7a7a7aba;" />
+                        <FontAwesomeIcon :icon="['fas', 'wheat-awn-circle-exclamation']" size="xs"
+                          style="color: #7a7a7aba" />
                       </span>
-                      <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block;">
-                        <FontAwesomeIcon :icon="['fas', 'cow']" size="xs" style="color: #7a7a7aba;" />
-                        <span style="position: absolute; top: 9px; left: -3px; width: 140%; height: 3px; background-color: #7a7a7aba; transform: rotate(-45deg); transform-origin: center; border-radius: 2px;"></span>
+                      <span v-if="dish.lactose_free === 1" style="position: relative; display: inline-block">
+                        <FontAwesomeIcon :icon="['fas', 'cow']" size="xs" style="color: #7a7a7aba" />
+                        <span style="
+                            position: absolute;
+                            top: 9px;
+                            left: -3px;
+                            width: 140%;
+                            height: 3px;
+                            background-color: #7a7a7aba;
+                            transform: rotate(-45deg);
+                            transform-origin: center;
+                            border-radius: 2px;
+                          "></span>
                       </span>
                       <span v-if="dish.spicy === 1">
-                        <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xs" style="color: #7a7a7aba;" />
+                        <FontAwesomeIcon :icon="['fas', 'pepper-hot']" size="xs" style="color: #7a7a7aba" />
                       </span>
                       <span v-if="dish.vegan === 1">
-                        <FontAwesomeIcon :icon="['fas', 'leaf']" size="xs" style="color: #7a7a7aba;" />
+                        <FontAwesomeIcon :icon="['fas', 'leaf']" size="xs" style="color: #7a7a7aba" />
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 py-3 d-flex justify-content-center align-items-center btn button buy-cta" @click="confirim(dish)">
+              <div class="col-md-2 py-3 d-flex justify-content-center align-items-center btn button buy-cta"
+                @click="confirim(dish)">
                 <font-awesome-icon :icon="['fas', 'cart-shopping']" class="text-white" />
               </div>
-              <!-- Modale -->
-              <div class="modal fade" id="confirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="title fs-5" id="exampleModalLabel">Svuota ordine</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p>Il tuo carello contiene già prodotti di un altro ristorante. Se continui </p>
-                      </div>
-                      <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                        <button type="button" class="btn btn-primary" @click="addToCart(dish)" data-bs-dismiss="modal">Continua</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
             </div>
-          </div> 
-          
+          </div>
         </div>
       </div>
       <div v-else>
@@ -230,28 +239,34 @@ export default {
       <!-- Carrello side -->
       <div class="col-lg-4 col-md-12 cart cart-side py-3">
         <div v-if="store.cart.length" class="recap-container-tablet mt-3">
-          <p class="recap-text-tablet" style="font-weight: 800;">
+          <p class="recap-text-tablet" style="font-weight: 800">
             Costo totale: €{{ totale }}
           </p>
         </div>
         <div class="p-4 info-cart">
-          <div v-for="(dish, index) in store.cart" class="d-flex">
+          <div v-for="(dish, index) in store.cart" class="d-flex" :key="dish">
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
                 <p class="m-0 dishes" style="font-weight: 800; font-size: 16px">
-                  {{ dish.quantity }} piatti di {{ dish.name }}
+                  {{ dish.quantity }} x {{ dish.name }}
                 </p>
               </div>
               <div v-else>
                 <p class="m-0 dishes" style="font-weight: 800; font-size: 16px">
-                  {{ dish.quantity }} piatto di {{ dish.name }}
+                  {{ dish.quantity }} x {{ dish.name }}
                 </p>
               </div>
-              <hr>
+              <hr />
             </div>
             <div class="col-6 d-flex justify-content-end py-1">
-              <button class="btn recap-buttons text-white me-3" style="font-weight: 500; height: 40px; width: 40px;" @click="deleteSingleDish(dish, index)">-</button>
-              <button class="btn recap-buttons text-white ms-3" style="font-weight: 500; height: 40px; width: 40px;" @click="addToCart(dish)">+</button>
+              <button class="btn recap-buttons text-white me-3" style="font-weight: 500; height: 40px; width: 40px"
+                @click="deleteSingleDish(dish, index)">
+                -
+              </button>
+              <button class="btn recap-buttons text-white ms-3" style="font-weight: 500; height: 40px; width: 40px"
+                @click="addToCart(dish)">
+                +
+              </button>
             </div>
           </div>
         </div>
@@ -265,7 +280,7 @@ export default {
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
-          <span class="text-empty-cart" style="font-weight: 800;">Di cosa hai voglia?</span>
+          <span class="text-empty-cart" style="font-weight: 800">Di cosa hai voglia?</span>
         </div>
       </div>
     </div>
@@ -282,7 +297,9 @@ export default {
             <p>Sei sicuro di voler eliminare l'ordine in corso?</p>
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn modal-button" @click="deleteCart()" data-bs-dismiss="modal">Svuota</button>
+            <button type="button" class="btn modal-button" @click="deleteCart()" data-bs-dismiss="modal">
+              Svuota
+            </button>
           </div>
         </div>
       </div>
@@ -293,14 +310,11 @@ export default {
   <FooterComponent />
 </template>
 
-
-
 <style lang="scss" scoped>
-@use 'src/assets/partials/_variables.scss' as *;
-@use 'src/assets/partials/_mixin.scss' as *;
+@use "src/assets/partials/_variables.scss" as *;
+@use "src/assets/partials/_mixin.scss" as *;
 
-
-.go-back{
+.go-back {
   color: $quinary-color;
   font-weight: 400;
 }
@@ -313,7 +327,7 @@ export default {
 }
 
 .title {
-  @include title
+  @include title;
 }
 
 //img del ristorante
@@ -327,18 +341,15 @@ export default {
   }
 }
 
-
 //scroll della sezione dei piatti
 .scroll {
   height: 700px;
   overflow-y: auto;
 }
 
-
 .scroll::-webkit-scrollbar {
   display: none;
 }
-
 
 //card dei piatti
 .card-custom {
@@ -348,28 +359,28 @@ export default {
   border-radius: 0.5rem;
 }
 
- .card-title{
-  font-family: 'Poppins', sans-serif;
+.card-title {
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
 }
 
-.card-text{
-  font-size:1rem ;
+.card-text {
+  font-size: 1rem;
 }
 
 .button {
   background-color: $primary-color;
   color: $quaternary-color;
   border-radius: 0 0.5rem 0.5rem 0;
-  font-weight: 600
+  font-weight: 600;
 }
+
 .button:hover {
   background-color: $tertiary-color;
   color: $quaternary-color;
   border-radius: 0 0.5rem 0.5rem 0;
 }
-
 
 //carrello statico
 .cart {
@@ -377,17 +388,15 @@ export default {
   border-radius: 1.2rem;
   border: 1px solid #a1a1a151;
   background-color: white;
-  @include light-shadow
-
+  @include light-shadow;
 }
-
 
 // Recap per schermi più piccoli di 768px
 .recap-container-tablet {
   display: none;
 }
 
-// Dettagli del carrello per schermi sopra 768px 
+// Dettagli del carrello per schermi sopra 768px
 
 .info-cart {
   display: block; // Mostra i dettagli del carrello su schermi grandi
@@ -396,18 +405,17 @@ export default {
 }
 
 .info-cart::-webkit-scrollbar {
-    display: none;
- }
+  display: none;
+}
 
 .dishes {
   color: $tertiary-color;
 }
 
-.total{
+.total {
   font-weight: 800;
   color: $tertiary-color;
 }
-
 
 .recap-buttons {
   border-radius: 0.3rem;
@@ -420,15 +428,12 @@ export default {
   color: $secondary-color;
 }
 
-
-
 .button-cart {
   padding: 0.5rem;
   background-color: $tertiary-color;
   color: $quaternary-color;
   font-weight: 600;
   border-radius: 0.3rem;
-
 }
 
 .button-cart:hover {
@@ -436,41 +441,41 @@ export default {
   color: $quaternary-color;
 }
 
-.text-empty-cart{
+.text-empty-cart {
   color: $tertiary-color;
 }
 
-.modal-button{
-  @include button
-}
-.modal-button:hover{
-  @include button-hover
+.modal-button {
+  @include button;
 }
 
-@media(max-width: 1024px){
-  .card-custom{
+.modal-button:hover {
+  @include button-hover;
+}
+
+@media (max-width: 1024px) {
+  .card-custom {
     width: 90%;
   }
 }
 
-@media(max-width: 769px) {
-
+@media (max-width: 769px) {
 
   //card
   .card-custom {
     width: 100%;
   }
 
-
   //carrello statico
-  .cart{
+  .cart {
     background-color: $primary-color;
   }
-  .recap-text-tablet{
-    color:$quaternary-color;
+
+  .recap-text-tablet {
+    color: $quaternary-color;
   }
 
-  .total-static-cart{
+  .total-static-cart {
     display: none;
   }
 
@@ -486,57 +491,49 @@ export default {
     display: none; // Nascondi i dettagli del carrello su schermi piccoli
   }
 
-
   .text {
     color: rgb(31, 2, 2);
     text-decoration: none;
   }
 
-  .text-empty-cart{
-  color: $quaternary-color;
+  .text-empty-cart {
+    color: $quaternary-color;
   }
-
 }
 
-
-@media(max-width: 426px){
-
+@media (max-width: 426px) {
   .margin {
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0);
-  border-bottom-left-radius:0;
-  border-bottom-right-radius: 0;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
-  .dish-image{
+  .dish-image {
     height: 300px;
   }
 
-  .card-custom{
+  .card-custom {
     width: 95%;
     margin: auto;
   }
 
-  .card-body{
+  .card-body {
     height: 150px;
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
 
   .button {
-  background-color: $primary-color;
-  color: $quaternary-color;
-  border-radius: 0 0 0.5rem 0.5rem;
-  font-weight: 600
+    background-color: $primary-color;
+    color: $quaternary-color;
+    border-radius: 0 0 0.5rem 0.5rem;
+    font-weight: 600;
   }
 
   .scroll {
-  height: 400px;
-  overflow-y: auto;
-  box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.093);
+    height: 400px;
+    overflow-y: auto;
+    box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.093);
   }
-
 }
-
-
-
 </style>
