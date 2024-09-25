@@ -248,12 +248,12 @@ export default {
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
                 <p class="m-0 dishes" style="font-weight: 800; font-size: 16px">
-                  {{ dish.quantity }} piatti di {{ dish.name }}
+                  {{ dish.quantity }} x {{ dish.name }}
                 </p>
               </div>
               <div v-else>
                 <p class="m-0 dishes" style="font-weight: 800; font-size: 16px">
-                  {{ dish.quantity }} piatto di {{ dish.name }}
+                  {{ dish.quantity }} x {{ dish.name }}
                 </p>
               </div>
               <hr />

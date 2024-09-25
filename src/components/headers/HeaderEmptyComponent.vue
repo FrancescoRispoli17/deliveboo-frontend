@@ -34,7 +34,7 @@ export default {
                     <LogoFilledComponent />
                 </div>
                 <div class="col-6 d-flex justify-content-end  py-2">
-                    <HeaderCta />
+                    <HeaderCta v-if="$route.name !== 'payPage'" />
                 </div>
 
             </div>
