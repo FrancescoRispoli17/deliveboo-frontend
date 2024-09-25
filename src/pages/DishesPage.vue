@@ -57,14 +57,6 @@ export default {
       if (localStorage.getItem("lastRestaurant") && localStorage.getItem("lastRestaurant") != this.restaurant.id) {
         const myModal = new Modal(document.getElementById('confirm'));
         myModal.show();
-        // Conferma di svuotare il carrello precedente
-        // if (confirm("Se crei un nuovo carrello eliminerai quello vecchio. Vuoi proseguire?")) {
-        //   this.addToCart(dish);
-        // }else{
-        //   return 0;
-        // }
-
-        
       } else {
         this.addToCart(dish); // Aggiunge il piatto se è lo stesso ristorante
       }
@@ -246,12 +238,12 @@ export default {
           <div v-for="(dish, index) in store.cart" class="d-flex">
             <div class="col-6 py-1">
               <div v-if="dish.quantity > 1">
-                <p class="m-0 dishes" style="font-weight: 800; font-size:16px;">
+                <p class="m-0 dishes" style="font-weight: 800; font-size: 16px">
                   {{ dish.quantity }} piatti di {{ dish.name }}
                 </p>
               </div>
               <div v-else>
-                <p class="m-0 dishes" style="font-weight: 800; font-size:16px;">
+                <p class="m-0 dishes" style="font-weight: 800; font-size: 16px">
                   {{ dish.quantity }} piatto di {{ dish.name }}
                 </p>
               </div>
