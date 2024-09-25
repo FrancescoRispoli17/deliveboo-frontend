@@ -3,51 +3,9 @@ export default {
   name: 'RestaurantListComponent',
   props: {
     results: Array
-  },
-  
-  mounted() {
-    this.adjustCardLayout(); // Regola il layout all'avvio
-    window.addEventListener('resize', this.adjustCardLayout); // Regola il layout al ridimensionamento della finestra
-  },
-  
-  beforeDestroy() {
-    window.removeEventListener('resize', this.adjustCardLayout); // Pulisci l'evento quando il componente viene distrutto
-  },
-  
-  methods: {
-    adjustCardLayout() {
-      const viewportWidth = window.innerWidth;
-
-      const container = document.querySelector('.cards-container');
-      const cards = container.querySelectorAll('.shape-card');
-
-      let cardWidth = 'calc(25% - 5px)'; // Predefinito per schermi grandi (4 colonne)
-
-      if (viewportWidth <= 1200) {
-        cardWidth = 'calc(33.33% - 5px)'; // 3 colonne
-      }
-      if (viewportWidth <= 1026) {
-        cardWidth = 'calc(50% - 5px)'; // 3 colonne
-      }
-      if (viewportWidth <= 992) {
-        cardWidth = 'calc(50% - 5px)'; // 2 colonne
-      }
-      if (viewportWidth <= 769) {
-        cardWidth = 'calc(50% - 0px)'; // 1 colonna
-      }
-      if (viewportWidth <= 426) {
-        cardWidth = 'calc(100% - 0px)'; // 1 colonna
-      }
-
-      // Applica la larghezza dinamica a ciascuna card
-      cards.forEach(card => {
-        card.style.width = cardWidth;
-      });
-    }
   }
 };
 </script>
-
 
 <template>
   <div class="py-3 head-title mt-4">
@@ -85,23 +43,47 @@ export default {
 @use 'src/assets/partials/_mixin.scss' as *;
 
 .title {
-  @include title
+  @include title;
 }
 
 .button {
   @include button;
-  @include shadow
+  @include shadow;
 }
 
 .button:hover {
   @include button-hover;
-  @include shadow
+  @include shadow;
 }
 
 .cards-container {
   display: flex;
   flex-wrap: wrap;
   margin: 20px 0;
+
+  .shape-card {
+    width: calc(25% - 5px); // 4 colonne per schermi grandi
+
+    @media (max-width: 1200px) {
+      width: calc(33.33% - 5px); // 3 colonne per schermi fino a 1200px
+    }
+
+    @media (max-width: 1026px) {
+      width: calc(50% - 5px); // 2 colonne per schermi fino a 1026px
+    }
+
+    @media (max-width: 992px) {
+      width: calc(50% - 5px); // 2 colonne per schermi fino a 992px
+    }
+
+    @media (max-width: 769px) {
+      width: calc(50% - 0px); // 2 colonne per schermi fino a 769px
+    }
+
+    @media (max-width: 426px) {
+      width: calc(100% - 0px); // 1 colonna per schermi fino a 426px
+    }
+  }
 }
 
 .card {
@@ -112,7 +94,7 @@ export default {
   border-radius: 0.4rem;
   margin-bottom: 20px;
   border: 1px solid #b5b5b570;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card .card-media {
@@ -186,8 +168,8 @@ export default {
   margin-left: 30px;
 }
 
-@media(max-width: 769px){
-  .head-title{
+@media (max-width: 769px) {
+  .head-title {
     display: none;
   }
 }

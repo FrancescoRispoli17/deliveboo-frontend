@@ -168,8 +168,13 @@ export default {
         <div class="row">
           <div v-for="dish in restaurant.dishes.filter(dish => dish.visible === 1)" :key="dish.id" class="card-custom mb-3 me-2" style="height: 100%;">
             <div class="row">
+
+              <!-- :style="{ backgroundImage: `url(${dish.image_path_url})`, backgroundSize: 'cover', backgroundPosition: 'center' }" -->
+               
               <div class="col-md-2 py-5 dish-image" :style="{ backgroundImage: `url('http://localhost:8000/storage/dishes/pollo tandori.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }">
               </div>
+
+
               <div class="col-md-8 py-2 card-body-container">
                 <div class="card-body">
                   <h5 class="card-title mb-3">{{ dish.name }}</h5>
