@@ -38,15 +38,21 @@ export default {
         },
 
         getPageReciveData() {
+            // Verifica se non sono stati selezionati tipi
             if (this.selectedTypes.length === 0) {
-                alert('Seleziona almeno un tipo prima di procedere.');
-                return;
+                this.store.types = [];
+                this.$router.push({
+                    name: 'restaurant',
+                    params: { type: null }  // Il parametro "type" è nullo
+                });
+            } else {
+                // Memorizza i tipi selezionati nello store e reindirizza con i tipi selezionati
+                this.store.types = this.selectedTypes;
+                this.$router.push({
+                    name: 'restaurant',
+                    params: { type: this.selectedTypes.join(',') }  // Passa i tipi selezionati come parametro
+                });
             }
-            this.store.types = this.selectedTypes;
-            console.log(this.store.types);
-             this.$router.push({
-                 name: 'restaurant',
-             });
         },
 
         isActive(typeName) {
