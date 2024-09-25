@@ -141,9 +141,9 @@ export default {
 
 <template>
   <HeaderEmptyComponent />
-  <div class="margin" style="background-image: url('')">
-    <div class="container py-5">
-      <div class="mb-3">
+  <div class="margin">
+    <div class="container py-5" >
+      <div class="mb-3 margin-top">
         <router-link class="text-decoration-none fw-bold d-flex align-items-center" :to="{ name: 'restaurant' }">
           <FontAwesomeIcon :icon="['fas', 'arrow-left']" class="me-2 icon go-back" />
           <span class="go-back">Pagina ristoranti</span>
@@ -323,6 +323,10 @@ export default {
 @use "src/assets/partials/_variables.scss" as *;
 @use "src/assets/partials/_mixin.scss" as *;
 
+.margin-top{
+  margin-top: 4rem;
+}
+
 .go-back {
   color: $quinary-color;
   font-weight: 400;
@@ -352,8 +356,7 @@ export default {
 
 //scroll della sezione dei piatti
 .scroll {
-  height: 700px;
-  overflow-y: auto;
+  height: auto;
 }
 
 .scroll::-webkit-scrollbar {
@@ -540,7 +543,7 @@ export default {
   }
 
   .scroll {
-    height: 400px;
+    height: auto;
     overflow-y: auto;
     box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.093);
   }

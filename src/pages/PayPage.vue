@@ -57,8 +57,8 @@ export default {
 
 <template>
   <HeaderEmptyComponent />
-  <div class="container bg-white my-5 py-5">
-    <div class="row">
+  <div class="container bg-white py-5">
+    <div class="row margin-top">
       <!-- Form e BraintreePayment -->
       <div class="col-12 col-lg-8">
         <h2 class="mb-5 title">Informazioni di consegna</h2>
@@ -115,6 +115,10 @@ export default {
 <style lang="scss" scoped>
 @use "src/assets/partials/_variables.scss" as *;
 @use "src/assets/partials/_mixin.scss" as *;
+
+.margin-top{
+  margin-top: 5rem;
+}
 
 .title{
   font-weight: 600;

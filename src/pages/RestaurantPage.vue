@@ -34,7 +34,7 @@ export default {
 <template>
     <div class="body">
         <HeaderEmptyComponent/>
-        <RestaurantCardComponent :types="type" />
+        <RestaurantCardComponent :types="type" class="boh" />
         <FooterComponent/> 
     </div>
 </template>
@@ -47,5 +47,10 @@ export default {
     overflow-x: hidden;
     height: 100vh;
 }
+
+.boh{
+    margin-top: 3000px;
+}
+
 
 </style>

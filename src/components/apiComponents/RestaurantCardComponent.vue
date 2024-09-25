@@ -113,8 +113,8 @@ export default {
 
 
 <template>
-  <div class="col-md-12 selectType">
-    <div class="container-fluid">
+  <div class="col-md-12 selectType margin-top">
+    <div class="container-fluid ">
       <div class="py-2">
         <h1 class="title mb-3 ms-2">Novità su Deliveboo</h1>
         <p class="sub-title ms-2"> Scrolla sulle tipologie e trova quello che ti piace!</p>
@@ -127,7 +127,7 @@ export default {
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid margin-top">
     <div class="row">
       <!-- Sidebar per il filtro -->
       <div class="col-3 sidebar">
@@ -148,6 +148,10 @@ export default {
 <style lang="scss" scoped>
 @use 'src/assets/partials/_variables.scss' as *;
 @use 'src/assets/partials/_mixin.scss' as *;
+
+.margin-top{
+  margin-top: 5rem;
+}
 
 .row {
   height: 100%;
