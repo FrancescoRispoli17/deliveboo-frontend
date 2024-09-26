@@ -49,7 +49,7 @@ header {
     border-bottom: solid 0.1px rgba(255, 166, 0, 0.2);
     position: fixed;
     margin: auto;
-    background-color: white;
+    background-color: $quaternary-color;
     z-index: 4;
 }
 

@@ -50,7 +50,7 @@ export default {
 
 <template>
 
-    <div class="scroll-container "
+    <div class="scroll-containe"
     ref="scrollContainer"
         @mousedown="onMouseDown"
         @mouseleave="onMouseLeave"
