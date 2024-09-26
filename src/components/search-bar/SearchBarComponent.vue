@@ -188,10 +188,6 @@ export default {
     white-space: normal;
     }
 
-    .button-item.active {
-        @include button-radius;
-    }
-
     .button-item:hover {
         background-color: $primary-color;
         @include shadow;

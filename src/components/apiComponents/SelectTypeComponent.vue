@@ -50,7 +50,7 @@ export default {
 
 <template>
 
-    <div class="scroll-containe"
+    <div class="scroll-container"
     ref="scrollContainer"
         @mousedown="onMouseDown"
         @mouseleave="onMouseLeave"
@@ -107,10 +107,6 @@ export default {
     @include button-radius
 }
 
-.button-item:hover {
-    background-color: $primary-color;
-}
-
 .scroll-container::-webkit-scrollbar {
     height: 8px;
 }
@@ -123,4 +119,5 @@ export default {
 .scroll-container::-webkit-scrollbar-thumb:hover {
     background-color: #999;
 }
+
 </style>
